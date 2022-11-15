@@ -61,9 +61,22 @@
 __history/
 __recovery/
 *.~*
+/temp/
+/qlang_so/
+*.ipch
+/QPlugins/
+/logos/
+/QPluginsDemo/
+/QUpgrade/
+*.log.gz
+*.stat
+*.log
+*.7z
+
 
 # Castalia statistics file (since XE7 Castalia is distributed with Delphi)
 *.stat
 
 # Boss dependency manager vendor folder https://github.com/HashLoad/boss
 modules/
+Setup/

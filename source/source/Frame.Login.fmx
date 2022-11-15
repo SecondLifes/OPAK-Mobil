@@ -1,0 +1,1158 @@
+inherited Frame_login: TFrame_login
+  inherited rect_back: TSkinFMXCalloutRect
+    inherited rect_orta: TSkinFMXCalloutRect
+      object SkinFMXImage1: TSkinFMXImage
+        ParentMouseEvent = False
+        DirectUIVisible = False
+        ComponentTypeUseKind = ctukDefault
+        MaterialUseKind = mukSelfOwn
+        KeepSelfOwnMaterial = True
+        SelfOwnMaterial.BackColor.Color = claWhite
+        SelfOwnMaterial.BackColor.DrawEffectSetting.MouseDownEffect.FillColorChangeType = cctNone
+        SelfOwnMaterial.BackColor.DrawEffectSetting.MouseOverEffect.FillColorChangeType = cctNone
+        SelfOwnMaterial.BackColor.DrawEffectSetting.PushedEffect.FillColorChangeType = cctNone
+        SelfOwnMaterial.BackColor.DrawEffectSetting.DisabledEffect.FillColorChangeType = cctNone
+        SelfOwnMaterial.BackColor.DrawEffectSetting.FocusedEffect.FillColorChangeType = cctNone
+        SelfOwnMaterial.IsTransparent = False
+        SelfOwnMaterial.DrawPictureParam.IsAutoFit = True
+        SelfOwnMaterial.DrawPictureParam.PictureHorzAlign = phaCenter
+        SelfOwnMaterial.DrawPictureParam.PictureVertAlign = pvaCenter
+        SelfOwnMaterial.DrawPictureParam.DrawRectSetting.PositionHorzType = dpphtCenter
+        SelfOwnMaterial.DrawPictureParam.DrawRectSetting.PositionVertType = dppvtCenter
+        SelfOwnMaterial.DrawCaptionParam.FontTrimming = fttNone
+        SelfOwnMaterial.DrawCaptionParam.FontHorzAlign = fhaLeft
+        SelfOwnMaterial.DrawCaptionParam.FontVertAlign = fvaTop
+        MouseDownFocus = False
+        Align = MostTop
+        Size.Width = 350.000000000000000000
+        Size.Height = 137.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 1
+        Properties.AutoSize = False
+        Properties.Picture.IsClipRound = False
+        Properties.Picture.ImageIndex = 0
+        Properties.Picture.SkinImageList = DB.SkinImageList1
+        Properties.Animated = False
+        Properties.AnimateSpeed = 10.000000000000000000
+        Properties.GIFDelayExp = 12
+        Properties.CurrentRotateAngle = 0
+        Properties.Rotated = False
+        Properties.RotateSpeed = 5.000000000000000000
+        Properties.RotateIncrement = 20
+        Properties.IsToolBar = False
+      end
+      object btn_login: TSkinFMXButton
+        ParentMouseEvent = False
+        DirectUIVisible = False
+        ComponentTypeUseKind = ctukDefault
+        MaterialUseKind = mukSelfOwn
+        KeepSelfOwnMaterial = True
+        SelfOwnMaterial.BackColor.Color = xFF00ABFF
+        SelfOwnMaterial.BackColor.IsFill = True
+        SelfOwnMaterial.BackColor.FillColor.UseThemeColor = ctThemeColor1
+        SelfOwnMaterial.BackColor.FillColor.Color = xFF00ABFF
+        SelfOwnMaterial.BackColor.IsRound = True
+        SelfOwnMaterial.BackColor.RoundWidth = 10.000000000000000000
+        SelfOwnMaterial.BackColor.RoundHeight = 10.000000000000000000
+        SelfOwnMaterial.BackColor.BorderColor.UseThemeColor = ctThemeColor
+        SelfOwnMaterial.BackColor.BorderColor.Color = xFF04487B
+        SelfOwnMaterial.BackColor.BorderWidth = 1.000000000000000000
+        SelfOwnMaterial.BackColor.DrawEffectSetting.MouseDownEffect.IsFill = True
+        SelfOwnMaterial.BackColor.DrawEffectSetting.MouseDownEffect.FillColor.Color = claRed
+        SelfOwnMaterial.BackColor.DrawEffectSetting.MouseDownEffect.FillColorChangeType = cctBrightness
+        SelfOwnMaterial.BackColor.DrawEffectSetting.MouseDownEffect.EffectTypes = [drpetIsFillChange]
+        SelfOwnMaterial.BackColor.DrawEffectSetting.MouseOverEffect.IsFill = True
+        SelfOwnMaterial.BackColor.DrawEffectSetting.MouseOverEffect.FillColor.Color = xB4457B9D
+        SelfOwnMaterial.BackColor.DrawEffectSetting.MouseOverEffect.FillColorChangeType = cctNone
+        SelfOwnMaterial.BackColor.DrawEffectSetting.MouseOverEffect.EffectTypes = [drpetFillColorChange, drpetIsFillChange]
+        SelfOwnMaterial.BackColor.DrawEffectSetting.PushedEffect.CommonEffectTypes = [dpcetOffsetChange, dpcetAlphaChange]
+        SelfOwnMaterial.BackColor.DrawEffectSetting.PushedEffect.FillColor.Color = claRed
+        SelfOwnMaterial.BackColor.DrawEffectSetting.PushedEffect.FillColorChangeType = cctBrightness
+        SelfOwnMaterial.BackColor.DrawEffectSetting.PushedEffect.EffectTypes = [drpetFillColorChange, drpetIsFillChange]
+        SelfOwnMaterial.BackColor.DrawEffectSetting.DisabledEffect.FillColorChangeType = cctNone
+        SelfOwnMaterial.BackColor.DrawEffectSetting.FocusedEffect.FillColorChangeType = cctBrightness
+        SelfOwnMaterial.BackColor.DrawEffectSetting.FocusedEffect.EffectTypes = [drpetFillColorChange, drpetIsFillChange]
+        SelfOwnMaterial.IsTransparent = False
+        SelfOwnMaterial.IsAutoCenterIconAndCaption = True
+        SelfOwnMaterial.DrawDetailParam.FontTrimming = fttNone
+        SelfOwnMaterial.DrawDetailParam.FontHorzAlign = fhaLeft
+        SelfOwnMaterial.DrawDetailParam.FontVertAlign = fvaTop
+        SelfOwnMaterial.DrawDetail1Param.FontTrimming = fttNone
+        SelfOwnMaterial.DrawDetail1Param.FontHorzAlign = fhaLeft
+        SelfOwnMaterial.DrawDetail1Param.FontVertAlign = fvaTop
+        SelfOwnMaterial.DrawHelpTextParam.FontColor = claGray
+        SelfOwnMaterial.DrawHelpTextParam.DrawFont.Color = claGray
+        SelfOwnMaterial.DrawHelpTextParam.DrawFont.FontColor.Color = claGray
+        SelfOwnMaterial.DrawHelpTextParam.FontTrimming = fttNone
+        SelfOwnMaterial.DrawHelpTextParam.FontHorzAlign = fhaLeft
+        SelfOwnMaterial.DrawHelpTextParam.FontVertAlign = fvaTop
+        SelfOwnMaterial.DrawCaptionParam.FontStyle = [fsBold]
+        SelfOwnMaterial.DrawCaptionParam.FontSize = 16.000000000000000000
+        SelfOwnMaterial.DrawCaptionParam.FontColor = claWhite
+        SelfOwnMaterial.DrawCaptionParam.DrawFont.Size = 16.000000000000000000
+        SelfOwnMaterial.DrawCaptionParam.DrawFont.Color = claWhite
+        SelfOwnMaterial.DrawCaptionParam.DrawFont.FontColor.Color = claWhite
+        SelfOwnMaterial.DrawCaptionParam.DrawFont.StyleExt = {00070000000000000004000000}
+        SelfOwnMaterial.DrawCaptionParam.FontTrimming = fttNone
+        SelfOwnMaterial.DrawCaptionParam.FontHorzAlign = fhaCenter
+        SelfOwnMaterial.DrawCaptionParam.FontVertAlign = fvaCenter
+        SelfOwnMaterial.NormalPicture.IsClipRound = False
+        SelfOwnMaterial.HoverPicture.IsClipRound = False
+        SelfOwnMaterial.DownPicture.IsClipRound = False
+        SelfOwnMaterial.DisabledPicture.IsClipRound = False
+        SelfOwnMaterial.FocusedPicture.IsClipRound = False
+        SelfOwnMaterial.PushedPicture.IsClipRound = False
+        MouseDownFocus = False
+        Anchors = [akLeft, akTop, akRight]
+        Margins.Left = 10.000000000000000000
+        Margins.Right = 10.000000000000000000
+        Position.X = 62.000000000000000000
+        Position.Y = 446.000000000000000000
+        Size.Width = 228.000000000000000000
+        Size.Height = 46.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 10
+        OnClick = btn_loginClick
+        Caption = 'G'#304'R'#304#350
+        Text = 'G'#304'R'#304#350
+        Properties.AutoSize = False
+        Properties.IsAutoPush = False
+        Properties.IsPushed = False
+        Properties.Icon.IsClipRound = False
+        Properties.PushedIcon.IsClipRound = False
+        Properties.ButtonIndex = -1
+        Properties.PushedGroupIndex = 0
+      end
+      object pages: TSkinFMXPageControl
+        ParentMouseEvent = False
+        DirectUIVisible = False
+        ComponentTypeUseKind = ctukDefault
+        MaterialUseKind = mukRef
+        KeepSelfOwnMaterial = False
+        RefMaterial = pcColorStyle_Material
+        MouseDownFocus = False
+        Align = Top
+        ClipChildren = True
+        Padding.Top = 40.000000000000000000
+        Position.Y = 137.000000000000000000
+        Size.Width = 350.000000000000000000
+        Size.Height = 296.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 0
+        Properties.CanGesutreSwitch = False
+        Properties.SwitchPageAnimated = False
+        Properties.ActivePage = ts01
+        Properties.ActivePageIndex = 0
+        Properties.IsAfterPaintTabIcon = False
+        Properties.IsTabHeaderCenter = False
+        Properties.TabSize = 60
+        Properties.TabSizeCalcType = tsctEqual
+        Properties.Orientation = toTop
+        Properties.TabHeaderHeight = 40
+        Top = 50
+        object ts02: TSkinFMXTabSheet
+          ParentMouseEvent = True
+          DirectUIVisible = False
+          ComponentTypeUseKind = ctukDefault
+          MaterialUseKind = mukSelfOwn
+          KeepSelfOwnMaterial = True
+          SelfOwnMaterial.BackColor.Color = claWhite
+          SelfOwnMaterial.BackColor.IsFill = True
+          SelfOwnMaterial.BackColor.DrawEffectSetting.MouseDownEffect.FillColorChangeType = cctNone
+          SelfOwnMaterial.BackColor.DrawEffectSetting.MouseOverEffect.FillColorChangeType = cctNone
+          SelfOwnMaterial.BackColor.DrawEffectSetting.PushedEffect.FillColorChangeType = cctNone
+          SelfOwnMaterial.BackColor.DrawEffectSetting.DisabledEffect.FillColorChangeType = cctNone
+          SelfOwnMaterial.BackColor.DrawEffectSetting.FocusedEffect.FillColorChangeType = cctNone
+          SelfOwnMaterial.BackGndPicture.IsClipRound = False
+          SelfOwnMaterial.BackGndPictureParam.IsStretch = True
+          SelfOwnMaterial.DrawBackGndPictureParam.IsStretch = True
+          MouseDownFocus = False
+          ClipChildren = True
+          Locked = True
+          Padding.Top = 40.000000000000000000
+          Position.Y = 40.000000000000000000
+          Size.Width = 350.000000000000000000
+          Size.Height = 256.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 1
+          Visible = False
+          Caption = 'Server Bilgileri'
+          Text = 'Server Bilgileri'
+          Properties.TabVisible = True
+          Properties.Icon.IsClipRound = False
+          Properties.PageIndex = 1
+          Properties.TabSize = 60.000000000000000000
+          Properties.PushedIcon.IsClipRound = False
+          Properties.PageControl = pages
+          Top = 40
+          object Layout2: TLayout
+            Align = Top
+            Margins.Left = 60.000000000000000000
+            Margins.Right = 60.000000000000000000
+            Position.X = 60.000000000000000000
+            Position.Y = 40.000000000000000000
+            Size.Width = 230.000000000000000000
+            Size.Height = 193.000000000000000000
+            Size.PlatformDefault = False
+            TabOrder = 0
+            object edt_ip: TSkinFMXEdit
+              Touch.InteractiveGestures = [LongTap, DoubleTap]
+              Align = Top
+              TabOrder = 2
+              TextSettings.Font.StyleExt = {00070000000000000004000000}
+              Position.Y = 10.000000000000000000
+              Margins.Top = 10.000000000000000000
+              Size.Width = 230.000000000000000000
+              Size.Height = 41.000000000000000000
+              Size.PlatformDefault = False
+              TextPrompt = 'Server IP'
+              StyledSettings = []
+              ParentMouseEvent = False
+              DirectUIVisible = False
+              ComponentTypeUseKind = ctukDefault
+              MaterialUseKind = mukRef
+              KeepSelfOwnMaterial = False
+              RefMaterial = D_Edit
+              ContentMarginsLeft = 38
+              ContentMarginsTop = 5
+              ContentMarginsRight = 5
+              ContentMarginsBottom = 5
+              IsUseDefaultStyle = False
+              EditProperties.HelpIcon.IsClipRound = False
+              EditProperties.HelpIcon.ImageIndex = 39
+              EditProperties.HelpIcon.SkinImageList = DB.img_Color1
+              EditProperties.IsDrawHelpWhenFocused = False
+              EditProperties.IsAlwaysDrawHelp = False
+              Properties.HelpIcon.IsClipRound = False
+              Properties.HelpIcon.ImageIndex = 39
+              Properties.HelpIcon.SkinImageList = DB.img_Color1
+              Properties.IsDrawHelpWhenFocused = False
+              Properties.IsAlwaysDrawHelp = False
+              IsInScrollBox = False
+              IsAutoEditInItem = False
+              object ClearEditButton8: TClearEditButton
+                CanFocus = False
+                Cursor = crArrow
+                Size.Width = 28.000000000000000000
+                Size.Height = 37.000000000000000000
+                Size.PlatformDefault = False
+                TabOrder = 0
+              end
+            end
+            object edt_sql_user: TSkinFMXEdit
+              Touch.InteractiveGestures = [LongTap, DoubleTap]
+              Align = Top
+              TabOrder = 0
+              TextSettings.Font.StyleExt = {00070000000000000004000000}
+              Position.Y = 61.000000000000000000
+              Margins.Top = 10.000000000000000000
+              Size.Width = 230.000000000000000000
+              Size.Height = 41.000000000000000000
+              Size.PlatformDefault = False
+              TextPrompt = 'Kullan'#305'c'#305' Ad'#305
+              StyledSettings = []
+              ParentMouseEvent = False
+              DirectUIVisible = False
+              ComponentTypeUseKind = ctukDefault
+              MaterialUseKind = mukRef
+              KeepSelfOwnMaterial = False
+              RefMaterial = D_Edit
+              ContentMarginsLeft = 38
+              ContentMarginsTop = 5
+              ContentMarginsRight = 5
+              ContentMarginsBottom = 5
+              IsUseDefaultStyle = False
+              EditProperties.HelpIcon.IsClipRound = False
+              EditProperties.HelpIcon.ImageIndex = 41
+              EditProperties.HelpIcon.SkinImageList = DB.img_Color1
+              EditProperties.IsDrawHelpWhenFocused = False
+              EditProperties.IsAlwaysDrawHelp = False
+              Properties.HelpIcon.IsClipRound = False
+              Properties.HelpIcon.ImageIndex = 41
+              Properties.HelpIcon.SkinImageList = DB.img_Color1
+              Properties.IsDrawHelpWhenFocused = False
+              Properties.IsAlwaysDrawHelp = False
+              IsInScrollBox = False
+              IsAutoEditInItem = False
+              object ClearEditButton4: TClearEditButton
+                CanFocus = False
+                Cursor = crArrow
+                Size.Width = 28.000000000000000000
+                Size.Height = 37.000000000000000000
+                Size.PlatformDefault = False
+                TabOrder = 0
+              end
+            end
+            object edt_sql_pass: TSkinFMXEdit
+              Touch.InteractiveGestures = [LongTap, DoubleTap]
+              Align = Top
+              TabOrder = 1
+              Password = True
+              TextSettings.Font.StyleExt = {00070000000000000004000000}
+              Position.Y = 112.000000000000000000
+              Margins.Top = 10.000000000000000000
+              Size.Width = 230.000000000000000000
+              Size.Height = 41.000000000000000000
+              Size.PlatformDefault = False
+              TextPrompt = #350'ifre'
+              StyledSettings = []
+              ParentMouseEvent = False
+              DirectUIVisible = False
+              ComponentTypeUseKind = ctukDefault
+              MaterialUseKind = mukRef
+              KeepSelfOwnMaterial = False
+              RefMaterial = D_Edit
+              ContentMarginsLeft = 38
+              ContentMarginsTop = 5
+              ContentMarginsRight = 5
+              ContentMarginsBottom = 5
+              IsUseDefaultStyle = False
+              EditProperties.HelpIcon.IsClipRound = False
+              EditProperties.HelpIcon.ImageIndex = 40
+              EditProperties.HelpIcon.SkinImageList = DB.img_Color1
+              EditProperties.IsDrawHelpWhenFocused = False
+              EditProperties.IsAlwaysDrawHelp = False
+              Properties.HelpIcon.IsClipRound = False
+              Properties.HelpIcon.ImageIndex = 40
+              Properties.HelpIcon.SkinImageList = DB.img_Color1
+              Properties.IsDrawHelpWhenFocused = False
+              Properties.IsAlwaysDrawHelp = False
+              IsInScrollBox = False
+              IsAutoEditInItem = False
+              object ClearEditButton5: TClearEditButton
+                CanFocus = False
+                Cursor = crArrow
+                Size.Width = 28.000000000000000000
+                Size.Height = 37.000000000000000000
+                Size.PlatformDefault = False
+                TabOrder = 0
+              end
+            end
+          end
+        end
+        object ts01: TSkinFMXTabSheet
+          ParentMouseEvent = True
+          DirectUIVisible = False
+          ComponentTypeUseKind = ctukDefault
+          MaterialUseKind = mukSelfOwn
+          KeepSelfOwnMaterial = True
+          SelfOwnMaterial.BackColor.Color = claWhite
+          SelfOwnMaterial.BackColor.DrawEffectSetting.MouseDownEffect.FillColorChangeType = cctNone
+          SelfOwnMaterial.BackColor.DrawEffectSetting.MouseOverEffect.FillColorChangeType = cctNone
+          SelfOwnMaterial.BackColor.DrawEffectSetting.PushedEffect.FillColorChangeType = cctNone
+          SelfOwnMaterial.BackColor.DrawEffectSetting.DisabledEffect.FillColorChangeType = cctNone
+          SelfOwnMaterial.BackColor.DrawEffectSetting.FocusedEffect.FillColorChangeType = cctNone
+          SelfOwnMaterial.IsTransparent = False
+          SelfOwnMaterial.BackGndPicture.IsClipRound = False
+          SelfOwnMaterial.BackGndPictureParam.IsStretch = True
+          SelfOwnMaterial.DrawBackGndPictureParam.IsStretch = True
+          MouseDownFocus = False
+          ClipChildren = True
+          Locked = True
+          Padding.Top = 40.000000000000000000
+          Position.Y = 40.000000000000000000
+          Size.Width = 350.000000000000000000
+          Size.Height = 256.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 0
+          Caption = 'Kullan'#305'c'#305' Bilgileri'
+          Text = 'Kullan'#305'c'#305' Bilgileri'
+          Properties.TabVisible = True
+          Properties.Icon.IsClipRound = False
+          Properties.PageIndex = 0
+          Properties.TabSize = 60.000000000000000000
+          Properties.PushedIcon.IsClipRound = False
+          Properties.PageControl = pages
+          Top = 40
+          object Layout1: TLayout
+            Align = Top
+            Margins.Left = 60.000000000000000000
+            Margins.Right = 60.000000000000000000
+            Position.X = 60.000000000000000000
+            Position.Y = 40.000000000000000000
+            Size.Width = 230.000000000000000000
+            Size.Height = 201.000000000000000000
+            Size.PlatformDefault = False
+            TabOrder = 0
+            object edt_pass: TSkinFMXEdit
+              Touch.InteractiveGestures = [LongTap, DoubleTap]
+              Align = Top
+              TabOrder = 1
+              Password = True
+              TextSettings.Font.StyleExt = {00070000000000000004000000}
+              Position.Y = 112.000000000000000000
+              Margins.Top = 10.000000000000000000
+              Size.Width = 230.000000000000000000
+              Size.Height = 41.000000000000000000
+              Size.PlatformDefault = False
+              TextPrompt = #350'ifre'
+              StyledSettings = []
+              ParentMouseEvent = False
+              DirectUIVisible = False
+              ComponentTypeUseKind = ctukDefault
+              MaterialUseKind = mukRef
+              KeepSelfOwnMaterial = False
+              RefMaterial = D_Edit
+              ContentMarginsLeft = 38
+              ContentMarginsTop = 5
+              ContentMarginsRight = 5
+              ContentMarginsBottom = 5
+              IsUseDefaultStyle = False
+              EditProperties.HelpIcon.IsClipRound = False
+              EditProperties.HelpIcon.ImageIndex = 40
+              EditProperties.HelpIcon.SkinImageList = DB.img_Color1
+              EditProperties.IsDrawHelpWhenFocused = False
+              EditProperties.IsAlwaysDrawHelp = False
+              Properties.HelpIcon.IsClipRound = False
+              Properties.HelpIcon.ImageIndex = 40
+              Properties.HelpIcon.SkinImageList = DB.img_Color1
+              Properties.IsDrawHelpWhenFocused = False
+              Properties.IsAlwaysDrawHelp = False
+              IsInScrollBox = False
+              IsAutoEditInItem = False
+              object ClearEditButton2: TClearEditButton
+                CanFocus = False
+                Cursor = crArrow
+                Size.Width = 28.000000000000000000
+                Size.Height = 37.000000000000000000
+                Size.PlatformDefault = False
+                TabOrder = 0
+              end
+            end
+            object Layout4: TLayout
+              Align = Top
+              Margins.Left = 10.000000000000000000
+              Margins.Top = 10.000000000000000000
+              Margins.Right = 10.000000000000000000
+              Margins.Bottom = 10.000000000000000000
+              Position.X = 10.000000000000000000
+              Position.Y = 163.000000000000000000
+              Size.Width = 210.000000000000000000
+              Size.Height = 30.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 7
+              object sw_hatirla: TSkinFMXCheckBox
+                ParentMouseEvent = False
+                DirectUIVisible = False
+                ComponentTypeUseKind = ctukDefault
+                MaterialUseKind = mukSelfOwn
+                KeepSelfOwnMaterial = True
+                SelfOwnMaterial.BackColor.Color = claWhite
+                SelfOwnMaterial.BackColor.DrawEffectSetting.MouseDownEffect.FillColorChangeType = cctNone
+                SelfOwnMaterial.BackColor.DrawEffectSetting.MouseOverEffect.FillColorChangeType = cctNone
+                SelfOwnMaterial.BackColor.DrawEffectSetting.PushedEffect.FillColorChangeType = cctNone
+                SelfOwnMaterial.BackColor.DrawEffectSetting.DisabledEffect.FillColorChangeType = cctNone
+                SelfOwnMaterial.BackColor.DrawEffectSetting.FocusedEffect.FillColorChangeType = cctNone
+                SelfOwnMaterial.IsAutoPosition = False
+                SelfOwnMaterial.DrawCaptionParam.FontTrimming = fttNone
+                SelfOwnMaterial.DrawCaptionParam.FontHorzAlign = fhaLeft
+                SelfOwnMaterial.DrawCaptionParam.FontVertAlign = fvaTop
+                SelfOwnMaterial.NormalUnCheckedPicture.IsClipRound = False
+                SelfOwnMaterial.NormalUnCheckedPicture.PNG = {
+                  89504E470D0A1A0A0000000D49484452000000690000004B080600000073E6A9
+                  07000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
+                  134A49444154785EED9DD96F55C79AC5CFEC89E379C036A301031E80C40E900E
+                  60E02A51149110758BDCDB8A5A4AB7D2B94F79C93F10F1927F206FF7A1A57E88
+                  BA3BBC7422029D16CD986083ECE40236E00133C413C6F3EC33F66F1567FBDAC6
+                  36068CCF390E4B2AD5DEFBECBDABEA5BB5BEFA6A4FC7F60AB10F7B247F29F8F2
+                  CB2F1D9D9D9DCE1D3B76247CF2C927AB929393B30281405628144AB3DBED5EF2
+                  14A7D399C0AE2E25D61D20C07290E40B87C363A451D230FBF50583C1DEDADADA
+                  FE6FBFFD766CFFFEFD818F3EFA48FBAD78BC349230ACE3C68D1B69274F9ECCDA
+                  B87163EE912347D62425256D86A44DFC5CC8EF791092CD7AEAC8C848E2D8D898
+                  637474D49E919111F27ABD7E8FC73306917DECF788BC8B63EE4154737D7DFDBD
+                  EFBFFFBEA3A0A0A0F7C08103BDC5C5C593A6C0158CA526C98E7A9CEFBFFFBEA7
+                  ACACAC706262A2A2AFAFAF128397666666E6BBDDEE54A9C7EFF7273F7AF428B1
+                  B0B0500A9A17E7CE9D0BEFDEBD7B32313171024247210B3E47067A7B7B5B20FC
+                  AF9CF36A4F4F4F7D4D4DCD48434343E0F8F1E3A1C8A12B0A4B4992FDD4A9535E
+                  08D9B665CB965D393939E5090909DB71515BFAFBFB5763500FAA88ECFAFC404D
+                  369FCF3700E1F721BC09D26E7474745C7BF8F0E1B5C3870FFF06912B8EA82521
+                  09F5784A4A4A0AE9F5AFE5E7E7FF01431E9C9C9C5C37383898D0D4D4E4DCB76F
+                  9F6329081220C1E48D8D8DC1D5AB570756AD5A35C4B63ADCE5999B376F5E4455
+                  77BEF8E28B7EB62D4D813180172209C3DBCF9F3F9F82DB2A4B4D4DFD202D2DAD
+                  0AB7B4F9D2A54B398C174BED4AE784481B1F1F1FC3FD750E0F0FFF42FAA1BDBD
+                  FDCC8F3FFEF810F7A72024EEE18CE4CF0C456E6D6D6D85E5E5E57F2030F81346
+                  7A8FF1A12425252575FDFAF5CB42900597CBE586AC4C3AC89AECECECFCF4F474
+                  FA4CEAF86BAFBD36880BF645768B5B3C1749151515EED75F7F7DDDBBEFBEFB1E
+                  847C4C80F04E757575EEF6EDDB170C045E36202991B1A9109236E7E6E626E172
+                  47C87B2E5FBE1CD7443D738FFFECB3CFDC6FBCF1C6E6B7DF7EFB086EEE18AEA6
+                  1415252FD598B314507041C0D241E7F9BFAB57AF9E3873E6CCE5BABABA09E66B
+                  B677DE79C796979717D97369C174224CA708DFB973274CE01422820D1D3C7830
+                  F8A2E3E333912482F6ECD9B385828FA2A0BF1F181828C7AD68321A7360AC0C57
+                  55553D1C1A1AAA4349375B5B5BC750986DF3E6CD36E54486262D054402C99A80
+                  4F9014CCF4A2EC4E521B01CDA31799782F9AA463C78E397171EBC98F6DD8B0E1
+                  187395F2A50AAB5F1644D4CE9D3BFD182A40870A1301DA08D9CD6F4485265F2A
+                  A0DA30F3B90073C011A6073DD8A503A2EE906E527E132A6B635BF7AE5DBB0645
+                  6AE4B0456151242948282A2A5A43C4F6DE9A356BFE85D07A07915C422C136441
+                  AE0FA3D888FA6C4CAC4D8E2B34DB945E062827949595352EC2086A86B0530F9B
+                  AF53DE05D45B4D70D5F9CD37DFF8173BF95E54E0F0E9A79F7AF7EFDF7F78EDDA
+                  B5FFC418F43ABD30291E08B2A0BACAB5891C8289974E1263B44EEC4141926B16
+                  E5AC25ADA30E856C5B4BF9890459C38C8D23172E5C78AA211D917C2E9816E0DD
+                  3CA5A5A5650409EF21E9DDB116243C0DAAAB524242827171C9C9C9465D1671CB
+                  8573E7CEE540D001163FA5EC3F43D407478F1EDD545B5BEB7EBCC7FC588824C1
+                  4E44B416D77694E5030CC029F144D06C8828021D439445DE72E1D0A143EAF422
+                  249DB41F65FD19D2FE95F1ABBCBEBEDEA37DE6C3824AFAEAABAF3289E42A3232
+                  320E104E16440A8A4B88108C2257641263C5D4F6282019924A51F23F50FE3FA3
+                  AA3D4CBAE78D92E72549C14259595931D1C8617ADE26E27F77941AB464D01824
+                  72441283B7214D2E2F1AEDA22E4E02B00DE47F546238299DCFF5CD26494A3189
+                  C9582291DC2EC2CA032D2D2D99F14E90A036882891A4F1498459ED8A46FB98C2
+                  3818ABB229FB08ABFF88EB2B62F909E1CC19DD7DFEF9E7096FBEF9E626267E1F
+                  30C8EECBCFCF4F8C46235E16ACC041911E61B2D926F294961B1B376EB45317DD
+                  A54E63B5BFBDBDBD0B7B0F4F8FFAE674774CF85261B9223B3BBB4437E796330A
+                  5A0E880C7AAD5194721116CD36521FFA8D532A7A1F75577EFCF1C733DCDE7492
+                  2C57A728289371A89283363537373BD5889504B5476A5294A7884FEBD3539490
+                  C2185909617F87C2D7508F29593F31261130B82A2B2BF3BC5EEFB6A1A1A1AC78
+                  8EE816828206112425095126C80082D2A84325AADE5D5757976A11359D245343
+                  66C1DEBD7BF7AECDCACA2A484F4F8FC98BA72F0A9161B93C2511160B208890D7
+                  DA4AAAF2783CF90D0D0DA60759B5338C1D3B76CC4568BA1A6CA2F25E35466925
+                  43119EA5A6688FBDF25A74981C16CBE944EBA94F8AB6CFE842F86807BE7A352C
+                  6A87A4C8E61509ABF38924DA6BD414239D526ACA6382BB351008646B8348928A
+                  8C92F0D10E2AAD1F0A7D3E5FB2B6AD7448452249B0488A365174182F5929B9B9
+                  3B394349302716335053EE83070FE2E256C48B40E392A23C11A5E568BB3B0BD4
+                  2585B419FB3FA124FBF0F030E4395651D98C929292E77E48251E60754091A424
+                  C44AA7C4FEBA78904F4AD5BA515255559571776C546D53707992DB8A8748D158
+                  A42448494AD1260B153949D9D4CB0C39A67623232386A489093DCDEBF03068AD
+                  C8D07B36E4E294A693146D822C50172F754BD4B283B0DB3E3E3E6E484A4C4CD4
+                  7524373B3CAEF5EF0022484459881592A897EEA5FC6D9E545A5AAA4CB795EDBF
+                  27822C8824916311140B445187292E1CDDDDDD0A184C5722BA53FEC2CF89C513
+                  44C86C37A7E5681305072192794C7ABA6AEC5212950B10EDAC8867A89F068B0C
+                  91A4646D8B118C5317F3EED50C9222B91EF01B8F2CAF78881C3A67642D36A0F7
+                  B2A8D3203C4C687D8AA48A8A0AB3CC8F63547C483B4E1F50571AD4362511849B
+                  8F2505D9F6EEDDEBC39B75113C0C6BDD10634577FC10A6C223A4BEB2B2B2C7B7
+                  2C5730448C08F2F97C53EE2E16909494344E7DEEC347BFD6A794343838E8D0A3
+                  B2F4AC212ADE93929212F7AF8C2C04CB4BE8F6B94892A262C8738C929AA8D323
+                  AD1892602E4C65355F0A13E9F530B96D77BBDD7AB1583FAF48586D1341B47B8A
+                  A468B759CFAF93F5E3EA1A1212121E6ADB9492B2B3B31D22A9A7A7A7FB373039
+                  39393E7BA2B7126191247767B5359A6D663C1AA52EAD88A6150E06B5CDA1F769
+                  BC5EAF5112EA09353737F7DDBE7DFBB7A1A1A1C108AB2B162246242959814334
+                  89D283FE1E8FA70D715C8193DF76EEDC69A23BE7CD9B37EDB83B3DAEE2A0B28E
+                  81818110324BDBBA756B4979797901C42DF8086C3C420488A0D1D151F3A6855E
+                  8791D7D07D25ECF0C4A5A2E5023C4C50EE05CAFF766C6CACB9B0B0F06F93D955
+                  AB56996EE472B9C2483F44C507A8F82D0EE8BA74E952EC843D4B0411A0A84EAF
+                  C1C8D569DD2246294A102177493510D458595939155D4F8D49101552080E9B0E
+                  2ADF8FDBBBFEE8D1A3D6E2E2E2A01AB0526011211747446BD38B655A9782A24C
+                  92BEFE7216855753273316593077BBEEDFBFAFF1C84184E3C0D5E919E500CBFE
+                  D5AB57AFD9B66DDB56149624F710EF10011A7B9418736D5D5D5D46497ACE4177
+                  67956B9FE576774C7D46E824D5D8F8DF49756FBDF5D68C4FF1581209E38FC372
+                  775213AECE7FF7EEDDBEB6B6B6DBA8EA360D32915EBCC3528AC6A2FEFE7EF398
+                  B1D6AD71C8DA67394127D16779AE5287FF2478FB05373716F9690A5396D7DBD2
+                  C9C9C921760C1259A8A7059A9A9A6E1358D45071BDA4BBEC0D586AA8FEF20872
+                  730A18342E493D6A5B943AE11804FD42BDFE8B0E737AF7EEDD7D91ED33603DC7
+                  A00F2DD95B5B5BED696969727B2E0E72D09831A4685B07525252F2E239D2B308
+                  D218F4F0E1435B6F6FAFD9AE884E44596A5A8ECEA8509BB17F98FA5CA1BC7FC3
+                  AEA777ECD8A1AF91CD39E599EA3E274E9C084350085717E220A5203E7B9C3953
+                  6B6363E34564D9C2725C061132BAEAAD60A1BBBBDBB83A112662A693B34C6D0B
+                  A6A7A72B8AFB6FCAFE0B75FB9F929292AEF9081266D44AA17846464690060494
+                  743B9D08AFAFB6B6B60682AA8B8A8ABAF54A463C112582944490C8918A342689
+                  1C4B41FADDDAF765816045F7433AC9AF929FC0867FA14E27998B76EB67ED331F
+                  663CB64594A737E074DBD6CEB864E7244EC6A83044F960DF9F959595842CF398
+                  3B256DD8B0212E062891A0684E0475747498A84E64E8617D2545754ADACFC252
+                  90157169013C9022E509CAB8C1E693D4E53F28EB34026884A089E3C78F3F3E60
+                  01CC2009D8919E7A9B2109824C580E59FA1AE018279FC8CECE4E2D2D2DCD82A8
+                  C458274A8A1741528E1424A2040C64DE4D52AE31C91A97448EF67F5EE81E1CD3
+                  161FE7192208EBA0FC5BD8AC86F4BFFC7C8A32CEB05C0B390FBFFEFAEB45DF69
+                  9C6D64AD3B223700DD34248181369193271240B8D7AF5F9FF3E1871FEE3D74E8
+                  D0BB54E60D1A9926DFAE144B90B1451063AA1FB5F4DDB87163002FE1D3AD188C
+                  64C6DCC89443CB8615EDCF982C77FF5C64B1BF8C3EC9B1232CEBE31A1DE42DE4
+                  3729A3056F3476F0E0413FBF3FF36DE0B948B2EB31AF5F7FFDD545833CA9A9A9
+                  1E727D23559FA8F16CD9B225EFC89123BB0F1F3EFC766E6EEE9E9F7FFE3995C2
+                  F56CC4E3334419D309A237DFB976EDDA4FDF7DF7DDAFCDCDCDBDB443CF6FF820
+                  C7249675E92548246BE6897BF7EEB5EDDBB7CFB83FBCC8E3132E129C8BBE1AD2
+                  433C013C8F8F0EACF9CE081D6378FA259EE7C15CEECA10859A9C54D64565A9BF
+                  2741E592445C222E310F35EDA241875157C5952B57F20E1C3820D7F8F80C5182
+                  08A27E9A074D50EFDBD7AF5FBF74E6CC994BE7CF9FD7847C10622630DE04E3C5
+                  644B4B8B0C17179751668F4953E8ECEC341FA650AFD2CC9C06DA69A0DCA093DF
+                  26E8A97D1865407EBDB8B8D84B8F4926E870C950CB0D2947E428F22C2828E827
+                  CCAEC713E8EB91977EFAE9A77B8C4913D44D520F515FF5F83041900D0F6063B2
+                  FEF824318C794912F0A336F9681901A2B0BF7903D71EB9823CD9DEDE3E343030
+                  A0CF410FE6E4E42441A417B7E2D20D4491F5B209B3CA8008DD5E09A0EA2ECAFF
+                  F9E2C58BA74E9F3E5D5B5F5FDF49C0338E27D015663F4AF79134B508D0A6102A
+                  939262C34F2F808548321656B4470061674CD2432A8630C87092DB752116D731
+                  D803206D00838DAC5BB74E4F19A5545757BBF5FABB39D11293A5F345EA617BF0
+                  E04160DBB66D5D446E7FC5ED5E84B08B94DDD0D4D4D48BCBF32B0CE690493CC2
+                  246AF2E3B2FD282BB875EBD6102A8A798284A79164272A0AA30CA32811458FD5
+                  4DC2302E035BD9350ED9EFDDBB37DADADADACEEF8A6886F82D20B2308C887432
+                  4916A9C6B0E6C411D216224FBF59C93A562E4DB9DC1AD1E52873901ECE7F0742
+                  AE40CCD91F7EF8E1724D4DCD7D5D10665F3FF5D0C3348620D4E443553ECD5B98
+                  42047585E57149B18FC57471439602095C9A839EAB87C83DF44A7D2A2C9146EB
+                  2D0C6CE27412C22613F1A5E701F6DF4454B3ADB0B0701BA4AE63BF645D0FA4C7
+                  3B70A3729976BD233A5F546811A8B9078A09332733178031B6FE2BA11B725A1A
+                  1B1B6FA19CDB0401ED9CB797F30EA1121FE5A907F9D84F81D624F5F2CF419095
+                  621E8B2149301210515205C65094E7C6B727D05B3D4AF4560FDE45D1A026872E
+                  5C50E6F6EDDBD742DA5AC82DC8CFCFCFA5F767A7A7A767729C5E8E5A45B091C4
+                  B8E6C67033147DF6ECD930C70730EE24048D72CE118CDF8F57EDEDE8E8E82170
+                  E9C4CDB6A3E0071A770862F46493BEDCA831465F8AF471CCA472AD2BC52B41C2
+                  6249326AD282A5288CA548CEEDF57ADDA8C243D23B4DFAF4B3B6BB508859863C
+                  179154A248638E550851051C930D917AED338D5CAF1E4A953A86457B9073C9B0
+                  086F7208630F60E07E94D385EB6DBB75EB56D7DDBB7719028703EC1F607FB935
+                  B3CC319A1B49319A374C6A3BE7E514FE40515151281E0912164B920543565555
+                  955C965E82969AF49EAD1B97E7C160FA92975B06C730BADDA13BBE7AEDDDA949
+                  312919579482011338D62255EE53E7326AC5B09C222C77C52983262283341136
+                  8E9A4621671CD7A56F9D6A7CD4158420E7332449398C8B7ECAF1B3DD8FD2028C
+                  A7C178264878569204634C8B280CE2643C70A12E17C633EAE2675D527269F2AB
+                  650CA6A763F557081A834C99185999056D93F1ACFA4C191292234B663E64269F
+                  2206328390E41739520CDB7CCA95A41CC892BB0CC53B41C2F39034FD18739D0F
+                  57E4C0204E8CA628CE4574E566EC92928CEBC3804ED4A0DF9C28C3A806632A59
+                  E79AAB1EBA2522FFA73CC4714A418E551684BCA00852625FE3F2448E820BCA0F
+                  D269424481D3E741714990B0E0647631600C0F979797EB7E8D1E05C356213380
+                  6B2EA2279064445414C478A6F70B18DD18592E6DAEC4EF725D0A19657C050252
+                  8C8F634C58CDB2C26A29C724B938CE6F6E0BA0EC20F3B3D0A953A7444A5C5CF6
+                  791A9E4749B3A17398F3582E508105AECF3C79849A1C18D40951529A46712949
+                  5723CDF7C3741C4637C76B1B8418F5681DE2CD556BC69C20C7853897B982CDF6
+                  20EE5449DB74A7D37CCDBEAEAE6EBA72560441C20B2B693A74D350C6624E13B6
+                  94452417A2A787A42648924B92428CAB625981811FD24C9486C1A5161391B1BF
+                  AE526BAEE3975220507FC3A309A9B9ACC33C2D40594639999999717389E779B0
+                  144A9A0DEB9CE696476B6BAB09347045FA64A85198D6E1C78ED1CD32E3D513F5
+                  80385DB1081394985C897992B90F8482C21C6BFE17625A5020BC22E939618800
+                  0ADD7587D79449D4657242EAA94F14581009CA5161B8A1A1C1AC8B94699FBCB4
+                  885991A4CCC6729034BD8CA965A94C6FBE4756E78494A23CA2160BD6F2EF82A0
+                  577885577885DF0D6CB6FF07084551DE54C3855D0000000049454E44AE426082}
+                SelfOwnMaterial.NormalCheckedPicture.IsClipRound = False
+                SelfOwnMaterial.NormalCheckedPicture.PNG = {
+                  89504E470D0A1A0A0000000D494844520000008A0000005E0806000000FC288C
+                  5D000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
+                  202449444154785EED7D49931CC795A6BBC7969199B52F580A0BB1900009881B
+                  4423A52607A4BA35624FAB4D7D685ADB1CF403FAD0A7B139B7B5CD696C6C2ED3
+                  66739DC31C29B3199349981E494D12ADA6248E8885205028008502AA0A5BADB9
+                  67642CEE3EDFF38C28568105A0B0D7921FE9F058B3C25F7CFEBDF73C36CE3A58
+                  338EFFFDDFDBE1850B4ECCB9EBFEE878AFFBC69121E1E6F6E820D8CD381BC126
+                  839AF101AE751FD3BA9731E54BE63882698727DCA5DFD0B68E14E3B1C5E29831
+                  1130CECB9AF312677A01ABE7996637B9EF4FABA835159DB930E7FEF68F95B0D1
+                  08BD2347E293FFF00F09FDC6F38095D61D3C00C7BEFCD26152F6DB32D8C60BFE
+                  2EE7855DFBF860FF7EAED901A6D47E5060AFE662842BB5432BB12D89F9B65088
+                  0137607D3CC7BB99CDF254B8E05DBCA1BB035B1459CC0B82632D08857D7D102C
+                  CF18E6B14C6BE5F36AAD10954ABE3DDCEF25875EE1DFFB4FFF3E1EFDEF1FCBF4
+                  909E293A8AB2061CFFF47FE4447ECF01590F0EB16AE5304BD47E3ED0B79B77E7
+                  FB98B08B3256794B272082CAE99AE3810A463DD60A5DD311EF8A43968896E476
+                  D3724493A9A4AEABCD925A5CBCC18535C1FBBA2F31D71D0B6F94AFFEE16FFE26
+                  48777D66E810E51E78E5A38FDCDEE1E141FBC8BE6D6CDFEEDDA2B7EF65667B87
+                  98631F865BD9C7B4DA0E2549B77E4A10026748DCC13FD7B58A2EB12819530BE5
+                  8B7C6A722ABA7265B67A63716EF4E38FA374EBA78A0E5156C1877FF7775EE5E5
+                  3D2F3A83DBDEE4FD3DC794E7BC64D9EE2EE678BD614EF4E5B428E804E1827CCA
+                  5EC0B218B76DD6E2AA610749996B59D6616B5A84F165552A9FE677E64FE72F5F
+                  BFFC4FFFF88F61BAC753438728CBF0CE5FFFB56F1FDCB543EDDE73D07EF9C5D7
+                  C5E0C077C18537ADE9F93D6C67B7936EF67C71AB1ACBDD8353E0D01935BFF065
+                  72F1CA19313D359E8CDFB8FD879FFDECA9B9A40E5152FCF0BFFC874263F8E597
+                  454FFE3D2B9F7F5BF7F51E56F9DC766B3618E23DF0014AA75B3E6708E44715F8
+                  BC617F9E35823BAC5CB9289BCD2F54A5F9DBC2ECC58BBFFE8FFFB5916EF944B1
+                  E5B39E63C78E39BB7FFAD39DFC8D37DFB45FDCF7A77CB8FF87CCB5FF4470B14F
+                  C449917B1C6726DD783D00C742C7C493A4C085D8C6F2DE4EB16DB0DB1EE8F362
+                  244EDBF7BE186E6FB582DBB76F3FD1006A2B126549458924DE4FFE7CBFFBF66B
+                  EFF19DDB7FA21DF78792CBC316B3FACC19594F04590D50176ED97E22543FE7F6
+                  6E512C0CDAFDDD4CF4F43487AB8DEA32B23CB6E7D8B28A72ECC73FCEDBDF7FEB
+                  90F7D61BFF86EFDDFD6F95E3BC6F45D1012BD13993CDAC779210E81871AC74CC
+                  5CCA61E5E506AD9E1E5FF839AE5C373868398DC9C9C92792156D49A21C3F7E3C
+                  C7DE7DE7A8F3D61B7F2676EFF8B1B49DB71DA5763CF574F729C312A23BB1AC41
+                  BBE80F889E5E214196FD4C949791E59195E58907B3E7B52E16182BC65A17388B
+                  7358E429C61DCD99C3358D0C700B49E53309A273E80734E63D797994FDCB895F
+                  B1ABA74FB30AD25A75685F7FEBCDD7BE13EDDDF57D65E9B79C50F6B4F7D81C88
+                  7356C556D6293D39FDCFD1EF4FFD469C1FBBF8BB9FFFBC96AE7E243CB113A6B5
+                  B6AE333694E878BF62620F5471A7D07A10ABFA35D345CE441ED3441C1AB57C26
+                  4469FF19CD5AF53A9BBB7D93DFBE3DAB6FB6EA6C2A67E5A6FC42FF6CC1DDEECA
+                  A4D74A9ECBA8F853037790C95BA2CCA2E8BC9CBEF37FE2D3E73EE367BEFE7A19
+                  59DA8679083CD6099B52CA0FCD85B07810E4D88E9F1B0139F683187B1069ED84
+                  820C42CEFB232729BAB74A79B673DB73188BD0CC61369445B31919B20B95323B
+                  5F5960D76A55568D4264BD9AD93402BA09A11D5D65DCFE525DBFF16B28CB89DC
+                  EFFE78F9E4C993AD74F543E1916394CB4A752B9E1C86577F8F6BFE2148F2E75C
+                  B0E35CB2D7B9D4875B51BCD7A954B6B3EE421FB2881CEB2A3ED378080A87A400
+                  FD00FD260163CB3A61D7C3261B6DD4D8F5669DD562B86D6C433D05C9667BA7CD
+                  02D20A3449D89EC785D5A773BEEF14BBEA2DD7AA1CE4761D314B76157ACD0D7F
+                  680B9D8742E458BC5332F11292B3EFC0D66F72A5BF73F35FFF75EFC8FBEFAD9B
+                  AE4944B14100890075316AB1B16A859DAB96D8E57A959592D890C4D9A44AB204
+                  D301A0EF9E37ABE3E4B7FAEAE42FD41FFFDF279FFFE7FF36D5DEC09CFF35B9A0
+                  87EAE56388392C26DF666D05F94B10E44F78220F7FFAF9BFEC7CF583E3EBC2EA
+                  441010389B61CD386653CD063B5B596497A12625BA0D84A26A18D128CE16003F
+                  79322FF6EEEBD7BEC7B4EFCFECDFB56F7EF28B2FC805650678A021D66429B819
+                  0FD52ECED431F8F4E34AF3EF55CAE557FA077A69F9BA0211C562C45904B1508E
+                  1B20C9D7D545760A44B9D90A98C47A77B32BC9DDA00E81762BEE5C1261E3E3F8
+                  FCC55FB67EFEEB73A77EF18B66B605CA7D95E58116A36C46B1F810FECC5F49CD
+                  7ECA15FB77AD5AEDE5F5481202B558509BE1724A0856AFC0D55C4259A0C015CB
+                  D7D433361B40128225ECBDAC50785F7415DE13DBFB7699856BC47D5DCF4DADF3
+                  333A3A8ACDFE0C36FEB16885DF639EBDCDCD7976BAC9FA04ECD2849A90CBF9BA
+                  5A66D710BC36956416A26DEA199B2E785D23B82BEC44CA8268C5090B83A93DC5
+                  BE3BEFBCFAAA1C1D1D7DE048E33D89F2A9D6B6A3E3EF302D7E82ACE62F5B61F8
+                  AA93F7BAD3D5EB0E26CB694FC0E5246C066E66BC513571C91CDD3C86E514DC6E
+                  559264108CE7A5EB2AABABB080335C2E8D4FD46E8E8F67F7B3DCD338ABBA1E8A
+                  49B6EBE865F8FA1F80243F62D3D3C7FC754C920C16DA2940884612B1E9A0CE26
+                  A124154C93F06EB1A864754808075CB2DD55D8C677EFFAAEB577D7EBCED0506F
+                  BAF6BE58D57E48B2F70A66FD084EFD2F54B37994BDB07BDDBA1A52122AE91C53
+                  3046398C8CDB990A025697493B6ED9E24AD206EC045B4155FBB4B05F673D5D6F
+                  26C3FD3BD29504325256566005512870859A0C09A6DE4006F9411086AF8BAE3C
+                  0DBDAF6B9856C1060948D280DB59885A6C266CB132D424565B2B155E1312695B
+                  6A7E27CBFB2FDAFB76ED7DF76FFFB6EFA38F3EBA6FBCBA82289718EBD34CBEC5
+                  91026BA98E6C04774300A98DAA0420C96C18B0DBAD262B8124214842FFADDA45
+                  B63034DDEBAB7B1DABBB3862EDDFF7B27A61E4C00463C56C755AAFC012516068
+                  F023DA01A37F1F936FEB566B285DB5EE418DC0C19B4C8782D819280A65392422
+                  08DEDA1B75F00DC855A324BED32F86FA0E8BFEEEC35C44240AAB9284B044940B
+                  5AF721787D09FDEFBB22080EAD779793C526544CC311A43540943B5094993064
+                  017A0D65381D97B30A529B3989DBA32DEF25E67A875CCB1DC09ACC585467C5C0
+                  1085B29C1C4FF661DF5799D2FB59D12F98B51B01D40770E0744DA749F1491C19
+                  B713619E1AB7D4133AF8367EFB8927B51AE1AEFB02EBE9ED3B76EC98895310AF
+                  7CAB77892FB5A64BFF43528B3739E3C75A51B4ADBD6A03000421452192845013
+                  BA225C42A921D389B46A77898EA2DC13FAF8716E0B3EC0FABB77B1970E0E178F
+                  1E3502313B3BFB6DA214B4CE31160FC1C7BF9A287DD82F97FD74DDC6008812C3
+                  CDD4E39855A124149BC444A0747507F7013A18EC67F3AEEE3E67CFCEE1F0851D
+                  831F7EF8E1AA9766844B3935133B109B1CAC562ABB9ECFCD458F06437B90A205
+                  0529C5212B4794E94843928E92AC01B01D15EDB945D6DBB3CB4299EBB3BBEAF5
+                  3A19CF98D16C0708A9E39D981FC1F6C3EBF542DF3D61E2136586EC2B703915B8
+                  9FD8C4260862DB5B74703F1051088AE594EBEE609EBBD38A735DED852B017B8A
+                  83703BFB94D61BE206E3E5D90EA5C49AE213280AB99D2A88626213F483A57B52
+                  3A78202C6DE72D476C678EB743B8AC180481315E1AD49A421D8FEE71DD6D2BB5
+                  EE476057807A83D270B3885140161A91A5F824C174D6BA0ED608BF96D3DC1E00
+                  1B06A0D2FE5063C808F2F2A056C0E0BB518D0449B2815262102455150D0521A2
+                  3411D0D2D8095D252635E9C4286B007536B2E1BCE7318BF732C1FBB1D40F7784
+                  C67869AC62A605CC3ACC351B84DC6CACF8C44019B2908AB4D2B2B11FE17A3E10
+                  433901C31599B08A4882DC388E0D39321744A09BC1CC23155F9D3BF3506F097A
+                  5EA0235F1EA768B89E04AA12822421E6DB394FC7F53C14A0BE516C1738BDF7C5
+                  622E08625C4F14453C8B5304FEED0AE2B8EB830F3ED858B625F54021D743754C
+                  2E08DDA2A3288F06AF5072211B1E0C6AF74A69C8313232B2C4098A518AFEECEC
+                  8609644D468CF24D8C0215490BDD138BCAA8C9C662FD3AC0675FD96083CB85B0
+                  C3629114858761C827262604A98A407AE9AFE71B93EE0B1A5834998F322E871E
+                  0C6D3B9E0E1E1A1FFC80C38C0ED7DAF2A3481C3F7E5C349B4DE38208026B3744
+                  6C9261457C0277635C0FA68DA280251DA23C02CCC013658A200A635602D74319
+                  4F92249C025A4A939718B3A10052A413662CC590A63DD721CA6302B6E4B1EF7F
+                  8B17420BF14C5E3FF9C4402421622C2B348F3C1F2EB6139B3C12521B425212CE
+                  B99650944AA5227A7B7B39653EA42E02C14BC0AE4F3FB757673F2EB287BAE846
+                  0A2A1B5322D7013EFD847C7782784FFB4A7DABBF09B0A81E0C0F678F166E0880
+                  FB062626A18EA0B97954830A8DC8D2FA6C9B0ED60032D6FBAF9158C43020F21B
+                  C507070757F43952EC9AEF38B54F3FFD74C3DA3653144ADD3A8AF268081BBD91
+                  D63286FDC0137F354561F34C88C5D75E7D63DDC72A59D0BA621AFF58F8C74543
+                  5CA84946940DCBFA670993EDB46DE95951932BDDD48853644E724A8D29EBA141
+                  37CA7CE8F5B6B350EE79DFA797276D4C103928C7A7D2519487879E6F29C9E943
+                  0D8ACAAAF12AC528D3509B9BBE6D3F95371E3F4950FC9169E2522C820516A673
+                  69A138C52C375B75F060C0A6BD4E64455155474945296904A31886C2B66D7DF3
+                  E64D0D11D1D40127B0E97422C0A80D0A1B8DF541121FBCDF9843CCCF175AC711
+                  93498527310A5B3504A1D8651C7EE99AE0BC922E5BF7C854C5A806661C90A4C0
+                  050A0D2D668AD2D1940702B63225D12DD56CCEEB66B0C0E23840CCC2D3EB3D4B
+                  1016776EC1AC37B1FDECE2427943C62914C476812845F09EB21FBA82DCB98ABC
+                  06D09BA7603B1EC7A1AC54E765B93AC7A2C87CA1830259B34D0A819CA8C499BA
+                  8D7E38DEDDD37383DD9A89D375EB13692F3077B0A5B50B9274718B155188341D
+                  3D5923521BAA46ABC966E767F9CCDC0C521C13827429C5CBE5B2765D57178B45
+                  2D1A9CB720DE73703FE76CC1C782DEDE67FE19B287862103D5ED697A4FAC2F2C
+                  5640ED6121C529E9161DDC0FB0D72C6352379B75756B6651CDCC9793466355AF
+                  22BECB3929C89CC5D569F4C35339D79D69AF5A9F30994F5A187D5D02B5404D2F
+                  F0A338A50B14C9D3482D24A51DAB74F02D90EDA8C03AC3415293B5DA1C9B9D5B
+                  64F3F34D49177A38BD1F024902B21ECA788687874DD6C35E12226C69FB1AF63D
+                  07E34FB07AB0EE53E536401410848A40C9A1F4204EA10753E829366A6D2756B9
+                  0F68CC44C673A2D1BCA51ACDAA0A0209D7A32DCBD281EBAA7C3EBF64BEA5C8F6
+                  08E725C9D465C42A5F2ADFBFA46ACD75992E1B6F83426F29302431BDA34D961C
+                  6A7AE6A01F5BE4503A8A720F648AD2ACD565BD3AA9CBD5EBBC155610C01A6240
+                  491491C5F33CBD7FFF7EF5F1C71FB715854072C3B97B1BAAFD3B4C7EC172B9F9
+                  74D5FA0491C45468425A7C940104B403E03F7D9DA143947BC0426E08772DC3B0
+                  A2A66E5E57376F5D67ADA08AC0157E3B4F3755AB7ABDAE68B02DDDE31B45211C
+                  620C1990F54730E6A4B0C4F9A01956D355EB0674E4A422A610594C8D62812830
+                  401F0A91A5081A39D8D83C4D98EED7411BE6967AA513B6589FD35726AEA9896B
+                  D3BAD2A8C5421825711C47517C42190FA90976F946510830BA44BC32A7983803
+                  65F9CCF7BCB3EBD50511CCC113595048596C9084B29F6E10A5170D28A289D9B8
+                  4A872840EA72D47CA892385E60A5EA0D7DEBCE1D39B35091CD66482E0776D441
+                  10AC884F082B889201E9E5A462F29FB0F697229F3FBFEE6E6C42634D8C921522
+                  0A48C22D1BB58D34D962C320CA10D8E1A70CE9100580ADA82436AF89C5F2B89A
+                  9FBF0C219887AF89659250C2832A91884D14C52794F1602F63BA55894259D01D
+                  EE5E4470FB89E6FAFFB2DDBB4FAF3B3794116459D1703FE47F495586A12A4416
+                  7A0E8562994EF603D8D057D887B56A253D397D494E4D5F51B55A197E06D13F7D
+                  4A5125E476283E999B9B5314C8A67BAE4E14C2079C27DDDC19155CFD6F38A89F
+                  7979EF0C6BB4EAE9EAE7862515490B290B9104BED5A809D53EEA7E61832C82F5
+                  290E55D1CCDACAB10A6CB45492468D2F2E4C27A397AF246313D779A95471B44E
+                  C8E5202691711C4B2809125F7F293EA1724FA21046386F1EE4EE578CC95F71CD
+                  7EC9FCDC491DABC946B9469FF078FE40C339C8B0A42A501461DB94DE311FBDA7
+                  0FCAB20DCDEC47BFA071157AEE674B2A0B6CC3486D93F9582DD4A7F4F4AD313D
+                  7D635ACFCF57418C088A22D1C120282A21B7532C16A9ACE853F7250A01BD56BA
+                  DCBD8453F0BFD039FF27B3F8895C57D7C5F57001113469673C8624A426200929
+                  0B4862812C5D20CA08C2D99D6047379A4D0F5AAF68FD560111050D9765319B4C
+                  4E9D931393E764A97A0719610C7BD1486CACA12A488B91318792DC0E8DC662CF
+                  25733D9028847D9CB75E14621CA7E3139C9B5F585C9FE8EBEBFD8C25FA220B93
+                  F9E77ABFED324531EE0704E1289015E6910B42ACB203C23924352BA050BC6294
+                  8526363B280D26927CF6197D81B3AC67672FB32B5317E4F4ADEB2208EACC75C9
+                  6E743335DD7DBFA426434343DF12DE8736177D2ACE62F108BD9316BB1F559A1D
+                  134A1F7DD69F8AA3FB3C89EF542B8D1C2D4EE8D2388BA3884561C85AAD169328
+                  542F46219B5231BB2614BB0D096E9001F1BFFDFCE8FD6C40812B108024DE5C75
+                  545EBCF407F5E5575FAA29B89D30AC69C7A1D8A40192B44092B05AAD46B0617C
+                  E4C81189F824238BB1D223F7ABAB5AF768161F944C1CA36F0AA2AF1E843E0DF1
+                  4477217CEEA217F3F8F57A8E0D0F3CF14756CD915380CAE16A3049ECA456D1D5
+                  CD84DE314B2FFD034162224A10C050019B8F2336AD133601DBCDA0D54D2D99A6
+                  AF4D8064ED4B609B0859E0EA584C475153CF2E8E83249FCB0B63A7D5E56B5309
+                  3DDDC558837B5E04B74317020D515255894F9E3C49E6CCACF2784421D0E76C63
+                  CEA1EAD1C07D3E673B10C471FB8D094FF061783A7A381C738F6C362FF11F8233
+                  0667CBE06B4194B6B224F4950DCCCFCB984D629B29A1D91C0E8E22728A5AE899
+                  954D855449986A0449A975555F9E382B4F9DFD22B972FD2A473A8CA024248220
+                  E8271304B0110DB645411024CBD46485551E8B28CB0117F0AD0F6423581AC21F
+                  40D2A18B38A934A4416F75228579ACBF4BE4A038A35E2FB3F9DB777879B10C29
+                  C112D050460A9E30E651980819C5224E5A42865244716C0561C867B5B2E6BA7D
+                  6F61B0B73BB0BA7A59BF93C70ED400183653DB0D0A8A47484910CCEB286CEA85
+                  C5697575EA54F2F5C5B36AECD21536B7B890404C9D7C1E1E3A6A3A8ED3C2790B
+                  504728469097A9C9D3214A86BB3FB90FE6E6701E1C048F367AAE45390A4EE963
+                  FD5DFA943EE1D2E551F6BB13BF6297CE9D23A27227971342293B0169B9940EFE
+                  8E8348CD6352BA58EFC5ADC88EB9F6C2EDC303F1D1970E24075E386CF5F7ECE7
+                  C26EBF1F86BE3AB191912A89564953962A13ECCAB573F2F4B9D3C9D5C909562A
+                  2D502C620BD1422E1C12415CD76D813094BD1249E253A74E910132823C5DA2AC
+                  138877DE79C783947AC8847C046844D83CFCB5EB705EB0868606C591432F5A47
+                  0FBF6AEFDBF35A52ECDFE3F4E47A965465A311860892AA495C6955ECFAE25472
+                  6DEA2B397AF1EBE4C2F8B8585C2C21AD094849B0751324314A02DB44CD6633EC
+                  EBEB934887E365036C841544499DD9A683BE71E346B26BD72ED96834CC955078
+                  65C3017AE50E8FA244375B21A748578B5014D0CF3CA7C02CDB37D2BDD15C5016
+                  93B49A25363F3B26C7AE9E96E7CE7FAD2F5DA391D792424CA26D9B942342E04A
+                  F108294A843A2E140A49BD5E97BFF9CD6F56753919361B51E8E574D426E7C081
+                  032EA436875EE3C1FFE6DCBCEB719B7B16A6113B09D124B280287112E84445F0
+                  5C9C59D2166ECEE5AE6B9B91CCF52AB844662287639B0BA14C262D599A9F5153
+                  7397D4956B67D5C52B17E4D5EBD37AB15A510C6DB32CBA8643CFEB50101B92BB
+                  411D23358E8947870E1D52A3A3A3AB1224C3A653143498BDF2CA2BD49168D69C
+                  69BA2187C658401A4E851483DEF8460FD7AA4633E2B56A9537828A50BCC55DCB
+                  D1B157E0BEE550EA6C705F133E07A4E34034D8A817A326ABCC5D9757A6CEA8D1
+                  B1537AECF298BC717B86D7EB15A565C48508D13948415A26464176836693B220
+                  190C121A5C3B71E244A626F7C4A6230AC0272727892CCCF77D64833596CBE50C
+                  61882CE849347A8BF8D5B6B4945C85A14216D964CD468D358306BDB4965B8A36
+                  D40CDBF1CF3F77D98B07A136A9C2985F32FF3C1B907A9811D6B682D088333B79
+                  52EB9D233556AECEEA995B57A12217D4C5CB6711B48ECB99D939DD6CB6B0472C
+                  3C2F46CFA0F19116B91C8A494845409078606040C2EDC834CB7920362551E81F
+                  22CBE0E02043A0461991210815186C69DA58484A6D16C6C8AF2BB5865C5828E9
+                  7275412B5DE39690FCA543DE2C32B782E9BECF415A8828A64504CE6671AC85ED
+                  3B16F4CCECB8A4ACE6ECD76792D1B1517DE3F60D5DAB55AD568B025513938014
+                  4645B00B29C91251BABABA4C5CF2FBDFFFFE814A9261D31285EA77DF7D97CDCC
+                  CC98EB403018B91DF392181444241009B821584A409A495D10B7344356AAD474
+                  BD5981DF6FB0300C742308F38D16E2983811B62575835BBCE858DC71DA714236
+                  769115F397974DDF0FCBF7CB7E876A520D8A3F4841A026BA94440829AA72A1B4
+                  98BF353BA9A66E8CAB6BD72FC82B1317D5D8F838BB756786B55A4DB4457104A8
+                  085E2950CD94A485B6D238498479BA012D019724DD6B426E7AADD88C44590205
+                  6844968585057430DB1006C53C8E406E08CB603B85C856A013229C45C882C418
+                  89914C54B3D16277E64AEAF6CC8C5A2CDD114A97151701CBD30B1410410AEE2D
+                  F545A334282BFAE61A3AAAE192F9A78D6C920893A6EA3A8CAA4AD66FAB99D255
+                  766DEA4272EEC25979616C545DBD3621E7E66675B55E316440168386D190BC51
+                  0F34C7B81B9A26929092E09793388E93F4CEFACCE5ACE140571CE5A6C392D9E9
+                  85BAF4625D188C98E1C068368C4883700E4893C3348DB77854639D8760866E5F
+                  71CC788A6D3BF05F5DE2853DDBC5C8F6113ED83B220AC5215DF407501778DEF7
+                  A4C53DDBD31EB3BBEC59CB72863954C7049C74085453951E0E11C09C1AAAB579
+                  4FEEACD67258CA9825B524097908DD0A919185AA516F20C85E50F5FA9C9E2FDF
+                  5437EFDC54D7A7EEB052A986638CD3B438C631C66817B99690C8410A82797241
+                  310279730D8788B28C2474041941B2FABE488F7E53C3B4116411195988282959
+                  1C220CD48552684AA73D1839678822258DF072F8294BB8BE27BAF2459ECF1759
+                  3ED7A57D6445FDBD3D56FF402FDF31D44F819055F07B58CE2B72D7CB43BEF2AC
+                  65E578B7E5B2939F59EC4F7F4003D2E6604C26F5CF9F6876FC7DA9AB326239A8
+                  41923469C89DB5C2BA44F6052294F4EDB945B9B850D68BE50A0FC2066BB66AE6
+                  D1CF1A4A1484904189505B832C248D743F490B6D0AE94624D4E46A48550C4188
+                  288FAA2419B60C51A85EAE2CD56A15A18963E7F379A32C30A6A961D85C3A6D0A
+                  8883F3C16D220EFC15273F85598BF776E5ACC1FE6E3D3C3860F5F7F48962B197
+                  796E51396E01F1858FB4CA17967695655B826B0B3E0F010780938608490A9948
+                  2579A45562C672441C21268AEA508FB25CAC94F8ECFC829C5FACEA720DCA9020
+                  3D437065DB861844002AA41C548818584DB1088D8D44884122AC370AD2DDDD4D
+                  B7373EB29264D80A44C9B042598AC5A285C89FBAB9714554C3B8A430465D689E
+                  0843B5D906CA02D373458375004E9AAD7CDFE3B99C6FF9AEAF1CC74358ECD27B
+                  44DA8F03685B73CC718E0008728209FC0E4E0FC9141C8ED60A9544F899308D98
+                  48EA982919C14184328802DD6A0522807240EE701C0AEC5408A0B58292E057CC
+                  B5192205D540446E878842F3D8DCBCE1916E42A2ECE6719424C396230AD599B2
+                  0441C07DDFB73DCFA31B461D18DA26B21041689A6A6CBF44185A96D6B4BD0506
+                  50144CC5FC763ABFCCA6563A7DF7B5A32C87406A9E02BF09E65012D69E468184
+                  707ACE46E2370D39501B026404A19A96518DEDCD7A4CC7743B230DA6D10DD28F
+                  AB2419B6125132983693B2509DA90BC202E38A60E88C0CC6E5642449CBD23A28
+                  0F72270DA1518278409E802E5A638A5BED3B2E816F1E876AAF23127C438EF6CF
+                  812EE6316922874421F74259B28067E2F4E41E11C5100425AB974892ADC37198
+                  38842EF0652A82E5EC719524C396254A86CC15D14D5F3D3D3D16A90B91053DD2
+                  D43811C635519D9107BB39F008E4568858A42EA84C8E6D8843C036208E3685FE
+                  0E4EB8A9413073C2B02FA9064DD3D80EED0401A148A43D0D1882C0C32DA90915
+                  6C634891D5500D4935A908DA20D106F33CCE328264E810E5314136E0F4D991B9
+                  B939313434242876C189B5617C7A33A25119CC5B983744A179144314A32C9645
+                  978D4C8D9386550863539250A13F8275AB12850A9102FB28ACA32BDDA8E49292
+                  D03A22024D83C4E6713E9A27609EF6492816A13BE7E9BACDBD6E3C7A5C6CEA01
+                  B735C29C401AF27FFFFDF7358DE4424D742E97A3B441D333B87049342D297EA5
+                  1385936A0A3DDE904E93FCD34924B6D0C9A5DE4EEEC1B80590C1CCE364D3B489
+                  27A8C6F6E6D23FB63317EAB0AFC962B09D99C7DF33B70360DFC8755DFA8D88C8
+                  82EDE80E35490F6C351A0D2294B9027CE2C489274E900C1D45F906992D4CB04B
+                  DFA859AE30208F80CC531C638134A4344B357107B5A01A2713C9092549E65201
+                  2D37BF8B93696A10C19C481081D227921F22A1A94100920A5213AA257E67A926
+                  A2E218CC537CCB15849EBF7912C1EA83D021CA37B8DB16C61D8124E615DF4418
+                  B81E4EE32F3851342DBABABAE8736A34E429D0D34D4D84C0B419F6A0921184A6
+                  A92642504D84A1692AF80DE3828810982605A387C455AD56A397D9986781693C
+                  04D39A0842D90C8E41DF75B77C860E519E31C836C63E99C2D074A632441A1083
+                  48445913A909A5DAE6FDF1B41DCD1339A8A6F9BB01D53024A19AE6A13CE67513
+                  344FC420E50061CC5B8F32F5A0ED96290881EAA7428CBBB16A233A30B8DB3666
+                  3E23CD72A5A1E5449CEC4303344F1F45A23A43B69C086116A4A05774524DCB29
+                  1E2262D0FC72E558851CCB71F7FC53C1DDC6E8E0C1209B2DD98D8843F572F2D0
+                  3C82CD15B6CD3E0DBBFC75570404A4667E3929687E19310834BD62BF678D158D
+                  E9604DB8DB66667E3961A826D2509D21231011C22C4841E4A07A1582DC4D8CBB
+                  E79F2118FBFF5ABDB38FBA07164B0000000049454E44AE426082}
+                SelfOwnMaterial.HoverUnCheckedPicture.IsClipRound = False
+                SelfOwnMaterial.HoverCheckedPicture.IsClipRound = False
+                SelfOwnMaterial.DisabledCheckedPicture.IsClipRound = False
+                SelfOwnMaterial.DisabledUnCheckedPicture.IsClipRound = False
+                SelfOwnMaterial.DrawPictureParam.IsAutoFit = True
+                MouseDownFocus = False
+                Align = Right
+                Position.X = 145.000000000000000000
+                Size.Width = 65.000000000000000000
+                Size.Height = 30.000000000000000000
+                Size.PlatformDefault = False
+                TabOrder = 14
+                Properties.AutoSize = False
+                Properties.Checked = False
+                Properties.IsAutoChecked = True
+                Properties.IsAutoCaption = False
+              end
+              object SkinFMXLabel2: TSkinFMXLabel
+                ParentMouseEvent = False
+                DirectUIVisible = False
+                ComponentTypeUseKind = ctukDefault
+                MaterialUseKind = mukSelfOwn
+                KeepSelfOwnMaterial = True
+                SelfOwnMaterial.BackColor.Color = claWhite
+                SelfOwnMaterial.BackColor.DrawEffectSetting.MouseDownEffect.FillColorChangeType = cctNone
+                SelfOwnMaterial.BackColor.DrawEffectSetting.MouseOverEffect.FillColorChangeType = cctNone
+                SelfOwnMaterial.BackColor.DrawEffectSetting.PushedEffect.FillColorChangeType = cctNone
+                SelfOwnMaterial.BackColor.DrawEffectSetting.DisabledEffect.FillColorChangeType = cctNone
+                SelfOwnMaterial.BackColor.DrawEffectSetting.FocusedEffect.FillColorChangeType = cctNone
+                SelfOwnMaterial.DrawCaptionParam.FontName = 'Default'
+                SelfOwnMaterial.DrawCaptionParam.FontStyle = [fsBold]
+                SelfOwnMaterial.DrawCaptionParam.DrawFont.Family = 'Default'
+                SelfOwnMaterial.DrawCaptionParam.DrawFont.StyleExt = {00070000000000000004000000}
+                SelfOwnMaterial.DrawCaptionParam.FontTrimming = fttNone
+                SelfOwnMaterial.DrawCaptionParam.FontHorzAlign = fhaLeft
+                SelfOwnMaterial.DrawCaptionParam.FontVertAlign = fvaCenter
+                MouseDownFocus = False
+                Align = Client
+                Opacity = 0.500000000000000000
+                Size.Width = 145.000000000000000000
+                Size.Height = 30.000000000000000000
+                Size.PlatformDefault = False
+                TabOrder = 15
+                Caption = 'Beni Hat'#305'rla'
+                Text = 'Beni Hat'#305'rla'
+                Properties.AutoSize = False
+              end
+            end
+            object edt_username: TSkinFMXEdit
+              Touch.InteractiveGestures = [LongTap, DoubleTap]
+              Align = Top
+              TabOrder = 0
+              TextSettings.Font.StyleExt = {00070000000000000004000000}
+              Position.Y = 61.000000000000000000
+              Margins.Top = 10.000000000000000000
+              Size.Width = 230.000000000000000000
+              Size.Height = 41.000000000000000000
+              Size.PlatformDefault = False
+              TextPrompt = 'Kullan'#305'c'#305' Ad'#305
+              StyledSettings = []
+              ParentMouseEvent = False
+              DirectUIVisible = False
+              ComponentTypeUseKind = ctukDefault
+              MaterialUseKind = mukRef
+              KeepSelfOwnMaterial = False
+              RefMaterial = D_Edit
+              ContentMarginsLeft = 38
+              ContentMarginsTop = 5
+              ContentMarginsRight = 5
+              ContentMarginsBottom = 5
+              IsUseDefaultStyle = False
+              EditProperties.HelpIcon.IsClipRound = False
+              EditProperties.HelpIcon.ImageIndex = 41
+              EditProperties.HelpIcon.SkinImageList = DB.img_Color1
+              EditProperties.IsDrawHelpWhenFocused = False
+              EditProperties.IsAlwaysDrawHelp = False
+              Properties.HelpIcon.IsClipRound = False
+              Properties.HelpIcon.ImageIndex = 41
+              Properties.HelpIcon.SkinImageList = DB.img_Color1
+              Properties.IsDrawHelpWhenFocused = False
+              Properties.IsAlwaysDrawHelp = False
+              IsInScrollBox = False
+              IsAutoEditInItem = False
+              object ClearEditButton1: TClearEditButton
+                CanFocus = False
+                Cursor = crArrow
+                Size.Width = 28.000000000000000000
+                Size.Height = 37.000000000000000000
+                Size.PlatformDefault = False
+                TabOrder = 0
+              end
+            end
+            object edt_db: TSkinFMXEdit
+              Touch.InteractiveGestures = [LongTap, DoubleTap]
+              Align = Top
+              TabOrder = 2
+              TextSettings.Font.StyleExt = {00070000000000000004000000}
+              Position.Y = 10.000000000000000000
+              Margins.Top = 10.000000000000000000
+              Size.Width = 230.000000000000000000
+              Size.Height = 41.000000000000000000
+              Size.PlatformDefault = False
+              TextPrompt = #350'irket'
+              StyledSettings = []
+              ParentMouseEvent = False
+              DirectUIVisible = False
+              ComponentTypeUseKind = ctukDefault
+              MaterialUseKind = mukRef
+              KeepSelfOwnMaterial = False
+              RefMaterial = D_Edit
+              ContentMarginsLeft = 38
+              ContentMarginsTop = 5
+              ContentMarginsRight = 5
+              ContentMarginsBottom = 5
+              IsUseDefaultStyle = False
+              EditProperties.HelpIcon.IsClipRound = False
+              EditProperties.HelpIcon.ImageIndex = 42
+              EditProperties.HelpIcon.SkinImageList = DB.img_Color1
+              EditProperties.IsDrawHelpWhenFocused = False
+              EditProperties.IsAlwaysDrawHelp = False
+              Properties.HelpIcon.IsClipRound = False
+              Properties.HelpIcon.ImageIndex = 42
+              Properties.HelpIcon.SkinImageList = DB.img_Color1
+              Properties.IsDrawHelpWhenFocused = False
+              Properties.IsAlwaysDrawHelp = False
+              IsInScrollBox = False
+              IsAutoEditInItem = False
+              object ClearEditButton3: TClearEditButton
+                CanFocus = False
+                Cursor = crArrow
+                Size.Width = 28.000000000000000000
+                Size.Height = 37.000000000000000000
+                Size.PlatformDefault = False
+                TabOrder = 0
+              end
+            end
+          end
+        end
+      end
+    end
+    inherited pnlToolBar: TSkinFMXPanel
+      inherited lbl_Info: TSkinFMXLabel
+        SelfOwnMaterial.DrawCaptionParam.DrawFont.StyleExt = {00070000000000000004000000}
+        Caption = ''
+        Text = ''
+      end
+    end
+  end
+  object D_Edit: TSkinEditDefaultMaterial
+    StyleName = 'SkinLight'
+    BackColor.Color = xFF33A1BD
+    BackColor.FillColor.Color = xFF33A1BD
+    BackColor.IsRound = True
+    BackColor.BorderColor.UseThemeColor = ctThemeColor1
+    BackColor.BorderWidth = 1.000000000000000000
+    BackColor.DrawEffectSetting.MouseDownEffect.FillColorChangeType = cctNone
+    BackColor.DrawEffectSetting.MouseOverEffect.FillColorChangeType = cctNone
+    BackColor.DrawEffectSetting.PushedEffect.FillColorChangeType = cctNone
+    BackColor.DrawEffectSetting.DisabledEffect.FillColorChangeType = cctNone
+    BackColor.DrawEffectSetting.FocusedEffect.FillColorChangeType = cctNone
+    IsTransparent = False
+    NormalPicture.IsClipRound = False
+    HoverPicture.IsClipRound = False
+    FocusedPicture.IsClipRound = False
+    DisabledPicture.IsClipRound = False
+    DrawHelpTextParam.FontColor = claGray
+    DrawHelpTextParam.DrawFont.Color = claGray
+    DrawHelpTextParam.DrawFont.FontColor.Color = claGray
+    DrawHelpTextParam.FontTrimming = fttNone
+    DrawHelpTextParam.FontHorzAlign = fhaLeft
+    DrawHelpTextParam.FontVertAlign = fvaCenter
+    DrawTextParam.FontStyle = [fsBold, fsItalic, fsUnderline]
+    DrawTextParam.DrawFont.StyleExt = {04070000000200000004000000}
+    DrawTextParam.IsDrawVert = True
+    DrawTextParam.IsWordWrap = True
+    DrawTextParam.FontTrimming = fttNone
+    DrawTextParam.FontHorzAlign = fhaRight
+    DrawTextParam.FontVertAlign = fvaTop
+    DrawTextParam.DrawRectSetting.Enabled = True
+    DrawTextParam.DrawEffectSetting.IsMixedMouseDownAndPushedEffect = True
+    DrawTextParam.DrawEffectSetting.PushedEffect.FontStyle = [fsBold]
+    DrawHelpIconParam.Alpha = 180
+    DrawHelpIconParam.IsAutoFit = True
+    DrawHelpIconParam.StretchStyle = issSquare
+    DrawHelpIconParam.PictureHorzAlign = phaCenter
+    DrawHelpIconParam.PictureVertAlign = pvaCenter
+    DrawHelpIconParam.DrawRectSetting.Left = 5.000000000000000000
+    DrawHelpIconParam.DrawRectSetting.Width = 28.000000000000000000
+    DrawHelpIconParam.DrawRectSetting.Height = 28.000000000000000000
+    DrawHelpIconParam.DrawRectSetting.Enabled = True
+    DrawHelpIconParam.DrawRectSetting.SizeType = dpstPixel
+    DrawHelpIconParam.DrawRectSetting.PositionHorzType = dpphtLeft
+    DrawHelpIconParam.DrawRectSetting.PositionVertType = dppvtCenter
+    Left = 280
+    Top = 208
+  end
+  object pcColorStyle_Material: TSkinPageControlDefaultMaterial
+    BackColor.Color = claWhite
+    BackColor.IsFill = True
+    BackColor.DrawEffectSetting.MouseDownEffect.FillColorChangeType = cctNone
+    BackColor.DrawEffectSetting.MouseOverEffect.FillColorChangeType = cctNone
+    BackColor.DrawEffectSetting.PushedEffect.FillColorChangeType = cctNone
+    BackColor.DrawEffectSetting.DisabledEffect.FillColorChangeType = cctNone
+    BackColor.DrawEffectSetting.FocusedEffect.FillColorChangeType = cctNone
+    IsTransparent = False
+    DrawTabCaptionParam.FontStyle = [fsBold]
+    DrawTabCaptionParam.FontSize = 14.000000000000000000
+    DrawTabCaptionParam.FontColor = xFFB7B7B7
+    DrawTabCaptionParam.DrawFont.Size = 14.000000000000000000
+    DrawTabCaptionParam.DrawFont.Color = xFFB7B7B7
+    DrawTabCaptionParam.DrawFont.FontColor.Color = xFFB7B7B7
+    DrawTabCaptionParam.DrawFont.StyleExt = {00070000000000000004000000}
+    DrawTabCaptionParam.FontTrimming = fttNone
+    DrawTabCaptionParam.FontHorzAlign = fhaCenter
+    DrawTabCaptionParam.FontVertAlign = fvaCenter
+    DrawTabCaptionParam.DrawEffectSetting.PushedEffect.EffectTypes = [dtpetFontColorChange]
+    TabNormalPicture.IsClipRound = False
+    TabHoverPicture.IsClipRound = False
+    TabDownPicture.IsClipRound = False
+    TabPushedPicture.IsClipRound = False
+    DrawPictureParam.IsStretch = True
+    DrawPictureParam.DrawRectSetting.Top = 34.000000000000000000
+    DrawPictureParam.DrawRectSetting.Enabled = True
+    DrawPictureParam.DrawRectSetting.SizeType = dpstPixel
+    DrawTabPictureParam.IsStretch = True
+    DrawTabPictureParam.DrawRectSetting.Top = 34.000000000000000000
+    DrawTabPictureParam.DrawRectSetting.Enabled = True
+    DrawTabPictureParam.DrawRectSetting.SizeType = dpstPixel
+    TabBackColor.BorderEadges = [beBottom]
+    TabBackColor.Color = claWhite
+    TabBackColor.BorderColor.UseThemeColor = ctThemeColor1
+    TabBackColor.BorderColor.Color = xFF00ABFF
+    TabBackColor.DrawRectSetting.Left = 10.000000000000000000
+    TabBackColor.DrawRectSetting.Right = 10.000000000000000000
+    TabBackColor.DrawRectSetting.Enabled = True
+    TabBackColor.DrawRectSetting.SizeType = dpstPixel
+    TabBackColor.DrawEffectSetting.MouseDownEffect.FillColorChangeType = cctNone
+    TabBackColor.DrawEffectSetting.MouseOverEffect.FillColorChangeType = cctNone
+    TabBackColor.DrawEffectSetting.PushedEffect.BorderWidth = 5.000000000000000000
+    TabBackColor.DrawEffectSetting.PushedEffect.FillColorChangeType = cctNone
+    TabBackColor.DrawEffectSetting.PushedEffect.EffectTypes = [drpetBorderWidthChange]
+    TabBackColor.DrawEffectSetting.DisabledEffect.FillColorChangeType = cctNone
+    TabBackColor.DrawEffectSetting.FocusedEffect.FillColorChangeType = cctNone
+    DrawTabBackColorParam.BorderEadges = [beBottom]
+    DrawTabBackColorParam.Color = claWhite
+    DrawTabBackColorParam.BorderColor.UseThemeColor = ctThemeColor1
+    DrawTabBackColorParam.BorderColor.Color = xFF00ABFF
+    DrawTabBackColorParam.DrawRectSetting.Left = 10.000000000000000000
+    DrawTabBackColorParam.DrawRectSetting.Right = 10.000000000000000000
+    DrawTabBackColorParam.DrawRectSetting.Enabled = True
+    DrawTabBackColorParam.DrawRectSetting.SizeType = dpstPixel
+    DrawTabBackColorParam.DrawEffectSetting.MouseDownEffect.FillColorChangeType = cctNone
+    DrawTabBackColorParam.DrawEffectSetting.MouseOverEffect.FillColorChangeType = cctNone
+    DrawTabBackColorParam.DrawEffectSetting.PushedEffect.BorderWidth = 5.000000000000000000
+    DrawTabBackColorParam.DrawEffectSetting.PushedEffect.FillColorChangeType = cctNone
+    DrawTabBackColorParam.DrawEffectSetting.PushedEffect.EffectTypes = [drpetBorderWidthChange]
+    DrawTabBackColorParam.DrawEffectSetting.DisabledEffect.FillColorChangeType = cctNone
+    DrawTabBackColorParam.DrawEffectSetting.FocusedEffect.FillColorChangeType = cctNone
+    DrawTabBackColor2Param.Color = claWhite
+    DrawTabBackColor2Param.DrawEffectSetting.MouseDownEffect.FillColorChangeType = cctNone
+    DrawTabBackColor2Param.DrawEffectSetting.MouseOverEffect.FillColorChangeType = cctNone
+    DrawTabBackColor2Param.DrawEffectSetting.PushedEffect.FillColorChangeType = cctNone
+    DrawTabBackColor2Param.DrawEffectSetting.DisabledEffect.FillColorChangeType = cctNone
+    DrawTabBackColor2Param.DrawEffectSetting.FocusedEffect.FillColorChangeType = cctNone
+    BackGndPicture.IsClipRound = False
+    TabHeaderPicture.IsClipRound = False
+    DrawTabHeaderPictureParam.IsStretch = True
+    DrawTabHeaderPictureParam.DrawRectSetting.Top = 38.000000000000000000
+    DrawTabHeaderPictureParam.DrawRectSetting.Enabled = True
+    DrawTabHeaderPictureParam.DrawRectSetting.SizeType = dpstPixel
+    TabHeaderPictureParam.IsStretch = True
+    TabHeaderPictureParam.DrawRectSetting.Top = 38.000000000000000000
+    TabHeaderPictureParam.DrawRectSetting.Enabled = True
+    TabHeaderPictureParam.DrawRectSetting.SizeType = dpstPixel
+    DrawTabHeaderColorParam.BorderEadges = [beBottom]
+    DrawTabHeaderColorParam.Color = claWhite
+    DrawTabHeaderColorParam.BorderColor.UseThemeColor = ctNavigationBarColor
+    DrawTabHeaderColorParam.BorderColor.Color = xFF004C8C
+    DrawTabHeaderColorParam.BorderWidth = 1.000000000000000000
+    DrawTabHeaderColorParam.DrawEffectSetting.MouseDownEffect.FillColorChangeType = cctNone
+    DrawTabHeaderColorParam.DrawEffectSetting.MouseOverEffect.FillColorChangeType = cctNone
+    DrawTabHeaderColorParam.DrawEffectSetting.PushedEffect.FillColorChangeType = cctNone
+    DrawTabHeaderColorParam.DrawEffectSetting.DisabledEffect.FillColorChangeType = cctNone
+    DrawTabHeaderColorParam.DrawEffectSetting.FocusedEffect.FillColorChangeType = cctNone
+    Left = 296
+    Top = 397
+  end
+end

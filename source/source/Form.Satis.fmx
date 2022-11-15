@@ -1,0 +1,16 @@
+object F_Satis: TF_Satis
+  Left = 0
+  Top = 0
+  ClientHeight = 600
+  ClientWidth = 352
+  Position = ScreenCenter
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnShow = FormShow
+  DesignerMasterStyle = 0
+  object MobilePermissions1: TMobilePermissions
+    Left = 176
+    Top = 296
+  end
+end
