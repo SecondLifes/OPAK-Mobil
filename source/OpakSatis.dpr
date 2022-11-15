@@ -7,7 +7,8 @@ uses
   DBOpak in 'source\DBOpak.pas' {DB: TDataModule},
   Frame.Base in 'source\Frame.Base.pas' {FBase: TFrame},
   Frame.Login in 'source\Frame.Login.pas' {Frame_login: TFrame},
-  Frame.Menu in 'source\Frame.Menu.pas' {FMenu: TFrame};
+  Frame.Menu in 'source\Frame.Menu.pas' {FMenu: TFrame},
+  Form.Cariler in 'source\Form.Cariler.pas' {FCariler: TFrame};
 
 {$R *.res}
 

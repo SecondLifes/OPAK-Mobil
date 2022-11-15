@@ -1,0 +1,9 @@
+inherited FCariler: TFCariler
+  inherited rect_back: TSkinFMXCalloutRect
+    inherited pnlToolBar: TSkinFMXPanel
+      inherited lbl_Info: TSkinFMXLabel
+        SelfOwnMaterial.DrawCaptionParam.DrawFont.StyleExt = {00070000000000000004000000}
+      end
+    end
+  end
+end
