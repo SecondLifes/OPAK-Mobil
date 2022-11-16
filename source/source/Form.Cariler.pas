@@ -24,11 +24,13 @@ type
     lbl_Load: TSkinFMXLabel;
     imgLoad: TSkinFMXImage;
     lbl_bakiye: TSkinFMXLabel;
-    SkinFMXMultiColorLabel1: TSkinFMXMultiColorLabel;
     SkinFMXMultiColorLabel2: TSkinFMXMultiColorLabel;
     SkinFMXImage1: TSkinFMXImage;
+    lbl_TEL: TSkinFMXLabel;
+    lbl_unvan: TSkinFMXLabel;
     procedure list_urunClickItem(AItem: TSkinItem);
     procedure edt_searchChangeTracking(Sender: TObject);
+    procedure lbl_TELClick(Sender: TObject);
   private
     { Private declarations }
     procedure DoFiltre(const AFiltre:string);
@@ -41,7 +43,7 @@ var
   FCariler: TFCariler;
 
 implementation
-  uses Genel;
+  uses Genel,Form.Satis;
 {$R *.fmx}
 
 procedure TFCariler.AfterConstruction;
@@ -66,12 +68,10 @@ var
 begin
   s:=Trim(AFiltre);
 
-
-
-
+  if s.IsEmpty then exit;
   Self.list_urun.Properties.Items.BeginUpdate;
   try
-
+   CariList.LoadDB(s);
 
   finally
     Self.list_urun.VertScrollBar.Prop.Position:=0;
@@ -83,8 +83,14 @@ end;
 
 procedure TFCariler.edt_searchChangeTracking(Sender: TObject);
 begin
+  DoFiltre(edt_Search.Text);
+end;
 
- // DoFiltre(edtSearch.Text);
+procedure TFCariler.lbl_TELClick(Sender: TObject);
+begin
+
+ F_Satis.MakeCallPhone(TSkinFMXLabel(Sender).Text);
+
 end;
 
 procedure TFCariler.list_urunClickItem(AItem: TSkinItem);

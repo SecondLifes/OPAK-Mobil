@@ -267,12 +267,20 @@ end;
 
 
 procedure TCariListe.LoadDB(const AFiltre: string; AClearFiltre: Boolean);
+var
+ s:string;
 begin
   prop.Items.BeginUpdate;
-prop.Items.Clear();
-
+  prop.Items.Clear();
+  s:='select ID,KOD,ADI,CARIADI,CARISOYADI,CEPTEL1,IL,ILCE from TBLCARISB';
+  if not AFiltre.IsEmpty then
+  begin
+    s:=Concat('DECLARE @flt VARCHAR(MAX) ='+QuotedStr('%'+AFiltre.Trim+'%')+'; ',sLineBreak,s,sLineBreak,
+    'where KOD LIKE @flt or ADI LIKE @flt or CEPTEL1 LIKE @flt or CARIADI LIKE @flt or CARISOYADI LIKE @flt');
+  end;
+  s:=Concat(s,sLineBreak,'order by IL,ILCE,ADI');
   try
-   cn._DoEof('select ID,KOD,ADI,CEPTEL1,IL,ILCE from TBLCARISB order by IL,ILCE',
+   cn._DoEof(s,
  procedure (dt:TDataSet)
  begin
      with Self.AddNewItem do
