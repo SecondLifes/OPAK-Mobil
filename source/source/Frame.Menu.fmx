@@ -806,6 +806,7 @@ inherited FMenu: TFMenu
           SelfOwnMaterial.BackColor.Color = xFF00ABFF
           SelfOwnMaterial.BackColor.IsFill = True
           SelfOwnMaterial.BackColor.FillColor.UseThemeColor = ctThemeColor1
+          SelfOwnMaterial.BackColor.FillColor.Color = xFF00ABFF
           SelfOwnMaterial.BackColor.IsRound = True
           SelfOwnMaterial.BackColor.RoundWidth = 10.000000000000000000
           SelfOwnMaterial.BackColor.RoundHeight = 10.000000000000000000
@@ -859,8 +860,10 @@ inherited FMenu: TFMenu
             SelfOwnMaterial.BackColor.DrawEffectSetting.DisabledEffect.FillColorChangeType = cctNone
             SelfOwnMaterial.BackColor.DrawEffectSetting.FocusedEffect.FillColorChangeType = cctNone
             SelfOwnMaterial.DrawCaptionParam.FontStyle = [fsBold]
+            SelfOwnMaterial.DrawCaptionParam.FontColor = claWhite
             SelfOwnMaterial.DrawCaptionParam.DrawFont.Color = claWhite
             SelfOwnMaterial.DrawCaptionParam.DrawFont.FontColor.UseThemeColor = ctNavigationBarFontColor
+            SelfOwnMaterial.DrawCaptionParam.DrawFont.FontColor.Color = claWhite
             SelfOwnMaterial.DrawCaptionParam.DrawFont.StyleExt = {00070000000000000004000000}
             SelfOwnMaterial.DrawCaptionParam.IsWordWrap = True
             SelfOwnMaterial.DrawCaptionParam.FontTrimming = fttNone
@@ -948,8 +951,10 @@ inherited FMenu: TFMenu
     BackColor.DrawEffectSetting.DisabledEffect.FillColorChangeType = cctNone
     BackColor.DrawEffectSetting.FocusedEffect.FillColorChangeType = cctNone
     DrawCaptionParam.FontStyle = [fsBold]
+    DrawCaptionParam.FontColor = claWhite
     DrawCaptionParam.DrawFont.Color = claWhite
     DrawCaptionParam.DrawFont.FontColor.UseThemeColor = ctNavigationBarFontColor
+    DrawCaptionParam.DrawFont.FontColor.Color = claWhite
     DrawCaptionParam.DrawFont.StyleExt = {00070000000000000004000000}
     DrawCaptionParam.IsWordWrap = True
     DrawCaptionParam.FontTrimming = fttNone

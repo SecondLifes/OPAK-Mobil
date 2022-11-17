@@ -9,7 +9,9 @@ uses
   Frame.Login in 'source\Frame.Login.pas' {Frame_login: TFrame},
   Frame.Menu in 'source\Frame.Menu.pas' {FMenu: TFrame},
   Form.Cariler in 'source\Form.Cariler.pas' {FCariler: TFrame},
-  Genel in 'source\Genel.pas';
+  Genel in 'source\Genel.pas',
+  Frame.Cari in 'source\Frame.Cari.pas' {FForm_Cari: TFrame},
+  OMR.Cari in 'source\OMR.Cari.pas';
 
 {$R *.res}
 

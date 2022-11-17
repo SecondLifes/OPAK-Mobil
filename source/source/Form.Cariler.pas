@@ -13,10 +13,12 @@ uses
   uSkinFireMonkeyButton, uSkinItemDesignerPanelType,
   uSkinFireMonkeyItemDesignerPanel, uSkinImageType, uSkinFireMonkeyImage,
   uSkinPullLoadPanelType, uSkinFireMonkeyPullLoadPanel,
-  uSkinMultiColorLabelType, uSkinFireMonkeyMultiColorLabel;
+  uSkinMultiColorLabelType, uSkinFireMonkeyMultiColorLabel,
+  uUIFunction,
+  FMX.VirtualKeyboard;
 
 type
-  TFCariler = class(TFBase)
+  TFCariler = class(TFBase,IFrameVirtualKeyboardEvent)
     edt_search: TSkinFMXEdit;
     list_urun: TSkinFMXListBox;
     DesignerPanel_pnl: TSkinFMXItemDesignerPanel;
@@ -24,16 +26,24 @@ type
     lbl_Load: TSkinFMXLabel;
     imgLoad: TSkinFMXImage;
     lbl_bakiye: TSkinFMXLabel;
-    SkinFMXMultiColorLabel2: TSkinFMXMultiColorLabel;
     SkinFMXImage1: TSkinFMXImage;
     lbl_TEL: TSkinFMXLabel;
     lbl_unvan: TSkinFMXLabel;
+    lbl_ili: TSkinFMXLabel;
+    SkinFMXPanel1: TSkinFMXPanel;
+    Timer1: TTimer;
+    pnlVirtualKeyboard: TSkinFMXPanel;
+    ClearEditButton1: TClearEditButton;
     procedure list_urunClickItem(AItem: TSkinItem);
     procedure edt_searchChangeTracking(Sender: TObject);
     procedure lbl_TELClick(Sender: TObject);
+    procedure Timer1Timer(Sender: TObject);
+    procedure ClearEditButton1Click(Sender: TObject);
   private
     { Private declarations }
     procedure DoFiltre(const AFiltre:string);
+     procedure DoVirtualKeyboardShow(KeyboardVisible: Boolean; const Bounds: TRect);
+     procedure DoVirtualKeyboardHide(KeyboardVisible: Boolean; const Bounds: TRect);
   public
   procedure AfterConstruction; override;
     { Public declarations }
@@ -43,19 +53,25 @@ var
   FCariler: TFCariler;
 
 implementation
-  uses Genel,Form.Satis;
+  uses Genel,Form.Satis,Frame.Cari,WaitingFrame;
 {$R *.fmx}
 
 procedure TFCariler.AfterConstruction;
 begin
   inherited AfterConstruction;
-
+  Self.pnlVirtualKeyboard.Height:=0;
   CariList:=TCariListe.create(list_urun.Prop);
   CariList.Clear(true);
 
  // HideVirtualKeyboard;
 
 
+
+end;
+
+procedure TFCariler.ClearEditButton1Click(Sender: TObject);
+begin
+  DoFiltre('');
 
 end;
 
@@ -68,7 +84,7 @@ var
 begin
   s:=Trim(AFiltre);
 
-  if s.IsEmpty then exit;
+  //if s.IsEmpty then exit;
   Self.list_urun.Properties.Items.BeginUpdate;
   try
    CariList.LoadDB(s);
@@ -81,22 +97,53 @@ begin
 
 end;
 
+procedure TFCariler.DoVirtualKeyboardHide(KeyboardVisible: Boolean;
+  const Bounds: TRect);
+begin
+ Self.pnlVirtualKeyboard.Height:=0;
+end;
+
+procedure TFCariler.DoVirtualKeyboardShow(KeyboardVisible: Boolean;
+  const Bounds: TRect);
+begin
+   //{$IFDEF ANDROID}
+      if Bounds.Height-GetGlobalVirtualKeyboardFixer.VirtualKeyboardHideHeight>Self.pnlVirtualKeyboard.Height then
+      begin
+      Self.pnlVirtualKeyboard.Height:=RectHeight(Bounds)-GetGlobalVirtualKeyboardFixer.VirtualKeyboardHideHeight;
+      end;
+ // {$ENDIF};
+end;
+
 procedure TFCariler.edt_searchChangeTracking(Sender: TObject);
 begin
-  DoFiltre(edt_Search.Text);
+Timer1.Enabled:=False;
+Timer1.Enabled:=True;
+
 end;
 
 procedure TFCariler.lbl_TELClick(Sender: TObject);
 begin
 
- F_Satis.MakeCallPhone(TSkinFMXLabel(Sender).Text);
+ //F_Satis.MakeCallPhone(TSkinFMXLabel(Sender).Text);
 
 end;
 
 procedure TFCariler.list_urunClickItem(AItem: TSkinItem);
 begin
-  inherited;
-ShowMessage('Deneme')
+ WaitingFrame.ShowWaitingFrame('Yükleniyor...');
+  if self.Tag = AItem.Tag  then Exit;
+  
+  self.Tag:=AItem.Tag;
+  FormCari(AItem.Tag);
+  WaitingFrame.HideWaitingFrame;
+  Self.Tag:=0;
+
+end;
+
+procedure TFCariler.Timer1Timer(Sender: TObject);
+begin
+    DoFiltre(edt_Search.Text);
+    Timer1.Enabled:=false;
 end;
 
 end.

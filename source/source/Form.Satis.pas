@@ -42,22 +42,7 @@ end;
 
 procedure TF_Satis.FormShow(Sender: TObject);
 begin
-  with MobilePermissions1 do
-  begin
-      Dangerous.AccessCoarseLocation := True;
-      Dangerous.Camera               := True;
-      Dangerous.ReadExternalStorage  := True;
-      Dangerous.WriteExternalStorage := True;
-      Dangerous.CallPhone:=True;
 
-      Signature.RequestInstallPackages:=true;
-
-      Standard.AccessLocationExtra:=True;
-      Standard.AccessNetworkState:=True;
-      Standard.Internet:=True;
-
-  end;
-  MobilePermissions1.Apply;
 
 
 

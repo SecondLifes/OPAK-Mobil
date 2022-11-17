@@ -12,7 +12,8 @@
 <%queries-child-elements%>
     </queries>
     <application
-        android:persistent="%persistent%"
+        android:usesCleartextTraffic="true"
+		android:persistent="%persistent%"
         android:restoreAnyVersion="%restoreAnyVersion%"
         android:label="%label%"
         android:debuggable="%debuggable%"

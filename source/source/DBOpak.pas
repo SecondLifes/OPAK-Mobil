@@ -129,6 +129,12 @@ begin
   try
     json.LoadFromFile(FolderApp + 'setting.json');
     json.ToRtti(Config, True);
+   (*
+    FServerIP:='192.168.1.99\SQL2014';
+    FServerUser:='sa';
+    FServerPass:='123456';
+    FSirket:='MÝKOTEK';
+    *)
   finally
     json.Free;
   end;

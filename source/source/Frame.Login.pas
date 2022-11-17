@@ -51,7 +51,8 @@ var
   Frame_login: TFrame_login;
 
 implementation
-Uses qjson,Help.DB,Help.uni,Help.Str, uUIFunction,WaitingFrame,HintFrame,System.Rtti ,Frame.Menu
+Uses qjson,Help.DB,Help.uni,Help.Str, uUIFunction,WaitingFrame,HintFrame,System.Rtti ,
+Frame.Menu,FMX.DialogService,Form.Satis
    //,RESTRequest4D
   //,Apk.Installer
  ;
@@ -110,6 +111,8 @@ begin
             end ) then ECode:=-2;
 
             DB.cn_DB.PerformConnect(False);
+
+
             Config.Hatirla:=Frame_login.sw_hatirla.Prop.Checked;
             Config.Sirket:=Frame_login.edt_db.Text;
             Config.UserID:=ECode;
@@ -123,9 +126,9 @@ begin
               Config.UserPass:='';
             end;
             Config.Save;
-
+             ECode:=0;
           end;
-          ECode:=0;
+
 
         except
 
@@ -182,10 +185,36 @@ begin
     sw_hatirla.Prop.Checked := True;
   end;
 
+
+
+  (*
+    edt_ip.Text :='192.168.1.99\SQL2014';
+    edt_sql_user.Text:='sa';
+    edt_sql_pass.Text:='123456';
+    edt_db.Text:='MÝKOTEK';
+   *)
 end;
 
 procedure TFrame_login.btn_loginClick(Sender: TObject);
 begin
+
+    with F_Satis.MobilePermissions1 do
+  begin
+      Dangerous.AccessCoarseLocation := True;
+      Dangerous.Camera               := True;
+      Dangerous.ReadExternalStorage  := True;
+      Dangerous.WriteExternalStorage := True;
+      Dangerous.CallPhone:=True;
+
+      Signature.RequestInstallPackages:=true;
+
+      Standard.AccessLocationExtra:=True;
+      Standard.AccessNetworkState:=True;
+      Standard.Internet:=True;
+
+  end;
+  F_Satis.MobilePermissions1.Apply;
+
     if edt_ip.Text.IsEmpty or edt_sql_user.Text.IsEmpty or edt_sql_pass.Text.IsEmpty then
   begin
     DoMessage(Self, 'Eksik Bilgi', 'Lütfen Gerekli Bütün alanlarý doldurunuz.', TMsgDlgType.mtError);

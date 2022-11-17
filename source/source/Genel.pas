@@ -5,7 +5,7 @@ interface
   System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants,
   FMX.Types, Generics.Collections, uSkinItems, uSkinFireMonkeyPullLoadPanel,
   uSkinCustomListType, uSkinVirtualListType, uSkinListBoxType,
-  uDrawPicture,
+  uDrawPicture, System.UIConsts,
   uSkinFireMonkeyListBox, System.Rtti, Data.DB, MemDS, DBAccess, Uni;
 
 
@@ -58,9 +58,11 @@ type
 
  TCari = class(TItemBase)
   private
-    FBakiye:Extended;
+    FBorc,FAlacak:Extended;
+    FIL,FILCE:string;
     function GetValue(const Index: Integer): TValue; override;
     procedure SetValue(const Index: Integer; const Value: TValue); override;
+    procedure UpdateItemValue; override;
   public
 
     property CariID  :TValue Index 0 read GetValue write SetValue;
@@ -68,7 +70,10 @@ type
     property CariTel :TValue Index 2 read GetValue write SetValue;
     property CariILI :TValue Index 3 read GetValue write SetValue;
     property CariIlce:TValue Index 4 read GetValue write SetValue;
-    property CariBakiye:TValue Index 5 read GetValue write SetValue;
+    property CariBorc:TValue Index 5 read GetValue write SetValue;
+    property CariAlacak:TValue Index 6 read GetValue write SetValue;
+    property CariBakiye:TValue Index 7 read GetValue;
+
   end;
 
 
@@ -90,7 +95,7 @@ type
  //  ISepet:IGetOrSetValue;
 
  implementation
- uses DBOpak,Help.DB,Help.uni,uGraphicCommon,uUIFunction,UIConsts,StrUtils,FMX.DialogService,sdk,DateUtils;
+ uses DBOpak,sdk,Help.DB,Help.uni,uGraphicCommon,uUIFunction,StrUtils,FMX.DialogService,DateUtils;
 
 
   function cn: TUniConnection;
@@ -244,9 +249,11 @@ begin
       0:Result:=Self.Tag;
       1:Result:=Self.Caption;
       2:Result:=Self.Detail;
-      3:Result:=Self.Detail1;
-      4:Result:=Self.Detail2;
-      5:Result:=FBakiye;
+      3:Result:=FIL;
+      4:Result:=FILCE;
+      5:Result:=FBorc;
+      6:Result:=FAlacak;
+      7:Result:=FBorc-FAlacak;
     end;
 end;
 
@@ -256,11 +263,25 @@ begin
      0:Self.Tag:=Value.AsInteger;
      1:Self.Caption:=Value.AsString;
      2:Self.Detail:=Value.AsString;
-     3:Self.Detail1:=Value.AsString;
-     4:Self.Detail2:=Value.AsString;
-     5:begin FBakiye:=Value.AsExtended; Self.Detail6:=Cur2Str(FBakiye); end;
+     3:FIL:=Value.AsString;
+     4:FILCE:=Value.AsString;
+     5:FBorc:=Value.AsExtended;
+     6:FAlacak:=Value.AsExtended;
 
     end;
+end;
+
+procedure TCari.UpdateItemValue;
+var
+TempStr:string;
+begin
+ TempStr:='';
+ if not FIL.IsEmpty and not FILCE.IsEmpty then TempStr:='/';
+Self.Detail1:=FIL+TempStr+FILCE;
+Self.Detail6:=Cur2Str(CariBakiye.AsExtended);
+     if CariBakiye.AsExtended > 0 then Color:=claTomato
+else if CariBakiye.AsExtended < 0 then Color:=claYellowgreen;
+
 end;
 
 { TCariListe }
@@ -268,30 +289,41 @@ end;
 
 procedure TCariListe.LoadDB(const AFiltre: string; AClearFiltre: Boolean);
 var
- s:string;
+ s,TempStr:string;
 begin
   prop.Items.BeginUpdate;
   prop.Items.Clear();
-  s:='select ID,KOD,ADI,CARIADI,CARISOYADI,CEPTEL1,IL,ILCE from TBLCARISB';
+  s:='SELECT C.ID, C.KOD,C.ADI,C.CARIADI,C.CARISOYADI,C.CEPTEL1,C.IL,C.ILCE,'+
+  'SUM(HR.BORC) AS BORC,SUM(HR.ALACAK) AS ALACAK FROM dbo.TBLCARIHAR HR INNER JOIN TBLCARISB C ON (HR.CARIID = C.ID)'+sLineBreak+
+  'WHERE TIPI IN(''Alýcý'',''Satýcý'',''Alýcý ve Satýcý'',''Perakende'')';
   if not AFiltre.IsEmpty then
   begin
     s:=Concat('DECLARE @flt VARCHAR(MAX) ='+QuotedStr('%'+AFiltre.Trim+'%')+'; ',sLineBreak,s,sLineBreak,
-    'where KOD LIKE @flt or ADI LIKE @flt or CEPTEL1 LIKE @flt or CARIADI LIKE @flt or CARISOYADI LIKE @flt');
+    'and KOD LIKE @flt or ADI LIKE @flt or CEPTEL1 LIKE @flt or CARIADI LIKE @flt or CARISOYADI LIKE @flt');
   end;
-  s:=Concat(s,sLineBreak,'order by IL,ILCE,ADI');
+
+  //Alýcý,Satýcý,Alýcý ve Satýcý,Perakende,Toptan,Muhtelif,Masraf
+  s:=Concat(s,sLineBreak,'GROUP BY C.ID,C.KOD,C.ADI,C.CARIADI,C.CARISOYADI,C.CEPTEL1,C.IL,C.ILCE ORDER BY IL,ILCE,ADI');
   try
    cn._DoEof(s,
  procedure (dt:TDataSet)
  begin
      with Self.AddNewItem do
        begin
+
          CariID:=dt._I['ID'];
-         CariAdi:=dt._S['ADI'];
+         TempStr:=tr_TR(dt._S['CARIADI'].Trim,TR_Case.TR_ilk)+' '+tr_TR(dt._S['CARISOYADI'].Trim,TR_Case.TR_ilk);
+         if not TempStr.Trim.IsEmpty then TempStr:='-('+TempStr+')';
+         CariAdi:=dt._S['ADI'].Trim+TempStr;
          CariTel:=dt._S['CEPTEL1'];
-         CariILI:=dt._S['IL'];;
-         CariIlce:=dt._S['ILCE'];
-         //CariBakiye:=dt._S['GrupRengi'];
-         //CariILI:=SkinThemeColor1;
+         CariILI:=dt._S['IL'].Trim;;
+         CariIlce:=dt._S['ILCE'].Trim;
+         CariBorc:=dt._D['BORC'];
+         CariAlacak:=dt._D['ALACAK'];
+         UpdateItemValue;
+
+
+
        end;
  end
 
