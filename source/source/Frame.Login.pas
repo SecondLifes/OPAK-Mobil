@@ -39,6 +39,8 @@ type
     ClearEditButton5: TClearEditButton;
     edt_db: TSkinFMXEdit;
     ClearEditButton3: TClearEditButton;
+    edt_donem: TSkinFMXEdit;
+    ClearEditButton6: TClearEditButton;
     procedure btn_loginClick(Sender: TObject);
   private
   procedure AfterConstruction;  override;
@@ -101,6 +103,8 @@ begin
                        +' and S.SIRKET='+QuotedStr(Frame_login.edt_db.Text),-2);
           if ECode<>-2 then
           begin
+
+
             if not cn._DoOpen('SELECT SERVER,DBNAME,DBUSER,DBPASSWORD FROM TBLSIRKET where AKTIF=''E'' and DBNAME='+QuotedStr(Frame_login.edt_db.Text),
             procedure (dt:TDataset)
             begin
@@ -108,25 +112,30 @@ begin
              DB.cn_DB.Database:=dt.FieldByName('DBNAME').AsString;
              DB.cn_DB.Username:=dt.FieldByName('DBUSER').AsString;
              DB.cn_DB.Password:=dt.FieldByName('DBPASSWORD').AsString;
-            end ) then ECode:=-2;
+            end ) then ECode:=-2
+            else begin
+                if cn._sqlResultsCount('TBLSIRKETDONEMHAR','where SIRKET='+QuotedStr(DB.cn_DB.Database)+' and DONEM = '+Frame_login.edt_Donem.text)>0 then
+                begin
+                DB.cn_DB.PerformConnect(False);
 
-            DB.cn_DB.PerformConnect(False);
 
-
-            Config.Hatirla:=Frame_login.sw_hatirla.Prop.Checked;
-            Config.Sirket:=Frame_login.edt_db.Text;
-            Config.UserID:=ECode;
-            if Config.Hatirla then
-            begin
-              Config.UserName:=Frame_login.edt_username.Text;
-              Config.UserPass:=Frame_login.edt_pass.Text;
-            end else
-            begin
-              Config.UserName:='';
-              Config.UserPass:='';
+                Config.Hatirla:=Frame_login.sw_hatirla.Prop.Checked;
+                Config.Sirket:=Frame_login.edt_db.Text;
+                Config.UserID:=ECode;
+                if Config.Hatirla then
+                begin
+                  Config.UserName:=Frame_login.edt_username.Text;
+                  Config.UserPass:=Frame_login.edt_pass.Text;
+                  Config.Donem:=Frame_login.edt_Donem.Text;
+                end else
+                begin
+                  Config.UserName:='';
+                  Config.UserPass:='';
+                end;
+                Config.Save;
+                 ECode:=0;
+                end else ECode:=-3;
             end;
-            Config.Save;
-             ECode:=0;
           end;
 
 
@@ -156,6 +165,7 @@ begin
            //else Frame_login.pages.Prop.ActivePageIndex:=0;
 
             case ECode of
+             -3:begin HintFrame.ShowHintFrame(Frame_login, 'Þirket Donemi Bulunamadý.'); HideWaitingFrame; end;
              -2:begin HintFrame.ShowHintFrame(Frame_login, 'Kullanýcý Adý veya Þifreniz Yanlýþtýr.'); HideWaitingFrame; end;
              -1:begin HintFrame.ShowHintFrame(Frame_login, 'Server Baðlantýnýzý Kontrol Ediniz..'); HideWaitingFrame; end;
               18456:begin HintFrame.ShowHintFrame(Frame_login, 'Lütfen SQL Kullanýcý adý ve þifrenizi kontrol ediniz.'); HideWaitingFrame; end;
@@ -178,6 +188,7 @@ begin
   edt_sql_user.Text := Config.ServerUser;
   edt_sql_pass.Text := Config.ServerPass;
   edt_db.Text := Config.Sirket;
+  edt_Donem.Text:=Config.Donem;
   if Config.Hatirla then
   begin
     edt_username.Text:=Config.UserName;

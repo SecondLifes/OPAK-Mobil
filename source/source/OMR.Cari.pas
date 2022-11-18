@@ -1,9 +1,11 @@
 unit OMR.Cari;
 
 interface
- uses System.SysUtils;
+ uses System.SysUtils,Data.DB;
+
 
  Type
+
   TCari = class
   strict private
     FCariID: Integer;
@@ -31,6 +33,8 @@ interface
     procedure LoadDB(const ACariID:Cardinal=0);
     function SaveDB:Boolean;
 
+    procedure IletisimSil(const AId:Integer);
+  //select ID,GOREVI,YETKILI,TELEFON,CEPTEL from TBLCARITELEFONSB where CARIID=1491
     property CariID:Integer read FCariID;
     property CariKodu:string read FCariKodu;
 
@@ -59,7 +63,7 @@ interface
   end;
 
 implementation
- uses DBOpak,Data.DB,Help.uni,Help.DB,Help.Str,FMX.DialogService;
+ uses DBOpak,Help.uni,Help.DB,Help.Str,FMX.DialogService;
 { TCari }
 
 function TCari.Bakiye: Extended;
@@ -82,11 +86,24 @@ begin
 end;
 
 
+procedure TCari.IletisimSil(const AId: Integer);
+begin
+ DB.cn_db.ExecSql('DELETE FROM TBLCARITELEFONSB where ID='+IntToStr(AId));
+end;
+
 procedure TCari.LoadDB(const ACariID: Cardinal);
+var
+ SQL:string;
 begin
   FCariID:=CariID;
-  DB.cn_db._DoEof('select ID,KOD,ADI,CARIADI,CARISOYADI,KIMLIKNO,IL,ILCE,'+//CADDE,BINA,KAPINO,'+
-  'ADRES,VERGI_DAIRESI,VERGINO from TBLCARISB where ID='+inttostr(ACariID),
+  SQL:='SELECT C.ID, C.KOD,C.ADI,C.CARIADI,C.CARISOYADI,C.CEPTEL1,C.IL,C.ILCE,C.ADRES,C.VERGI_DAIRESI,C.VERGINO,C.KIMLIKNO, '+
+'  SUM(HR.BORC) AS BORC,SUM(HR.ALACAK) AS ALACAK FROM dbo.TBLCARIHAR HR INNER JOIN TBLCARISB C ON (HR.CARIID = C.ID) '+
+'  WHERE C.ID='+inttostr(ACariID)+' AND HR.KAYITTIPI = 0 AND HR.ISLEMTIPI IN (0,1) AND HR.DONEM='+Config.Donem+
+//'  --TIPI IN(''Alýcý'',''Satýcý'',''Alýcý ve Satýcý'',''Perakende'') and '+
+'  GROUP BY C.ID,C.KOD,C.ADI,C.CARIADI,C.CARISOYADI,C.CEPTEL1,C.IL,C.ILCE,C.ADRES,C.VERGI_DAIRESI,C.VERGINO,C.KIMLIKNO ORDER BY IL,ILCE,ADI';
+
+
+  DB.cn_db._DoEof(SQL,
   procedure (dt:TDataSet)
   begin
     FCariID:=dt._I['ID'];
@@ -103,6 +120,8 @@ begin
     //FKapiNo:=dt._S['KAPINO'];
     FVergiDairesi:=dt._S['VERGI_DAIRESI'];
     FVergiNo:=dt._S['VERGINO'];
+    FBorc:=dt._D['BORC'];
+    FAlacak:=dt._D['ALACAK'];
   end
   );
 
@@ -135,5 +154,7 @@ begin
  end;
 
 end;
+
+
 
 end.

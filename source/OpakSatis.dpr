@@ -11,7 +11,8 @@ uses
   Form.Cariler in 'source\Form.Cariler.pas' {FCariler: TFrame},
   Genel in 'source\Genel.pas',
   Frame.Cari in 'source\Frame.Cari.pas' {FForm_Cari: TFrame},
-  OMR.Cari in 'source\OMR.Cari.pas';
+  OMR.Cari in 'source\OMR.Cari.pas',
+  Frame.iletisim in 'source\Frame.iletisim.pas' {F_iletisim: TFrame};
 
 {$R *.res}
 

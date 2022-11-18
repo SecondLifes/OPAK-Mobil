@@ -5,7 +5,7 @@
         <FrameworkType>FMX</FrameworkType>
         <Base>True</Base>
         <Config Condition="'$(Config)'==''">Debug</Config>
-        <Platform Condition="'$(Platform)'==''">Android64</Platform>
+        <Platform Condition="'$(Platform)'==''">Win32</Platform>
         <TargetedPlatforms>32785</TargetedPlatforms>
         <AppType>Application</AppType>
         <MainSource>OpakSatis.dpr</MainSource>
@@ -245,6 +245,11 @@
             <DesignClass>TFrame</DesignClass>
         </DCCReference>
         <DCCReference Include="source\OMR.Cari.pas"/>
+        <DCCReference Include="source\Frame.iletisim.pas">
+            <Form>F_iletisim</Form>
+            <FormType>fmx</FormType>
+            <DesignClass>TFrame</DesignClass>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
@@ -437,7 +442,7 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="Setup\Win32\OpakSatis.exe" Configuration="Debug" Class="ProjectOutput">
+                <DeployFile LocalName="..\setup\Win32\Debug\OpakSatis.exe" Configuration="Debug" Class="ProjectOutput">
                     <Platform Name="Win32">
                         <RemoteName>OpakSatis.exe</RemoteName>
                         <Overwrite>true</Overwrite>

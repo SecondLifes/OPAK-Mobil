@@ -56,7 +56,7 @@ type
 
  {$ENDREGION}
 
- TCari = class(TItemBase)
+ TCariItem = class(TItemBase)
   private
     FBorc,FAlacak:Extended;
     FIL,FILCE:string;
@@ -77,12 +77,32 @@ type
   end;
 
 
-   TCariListe = Class(TBaseLoader<TCari>)
+   TCariListe = Class(TBaseLoader<TCariItem>)
    public
      procedure LoadDB(const AFiltre: string = ''; AClearFiltre: Boolean = False); override;
      //procedure ClearDrum;
    End;
 
+  TIletisim=class (TItemBase)
+    private
+      function GetValue(const Index: Integer): TValue; override;
+      procedure SetValue(const Index: Integer; const Value: TValue); override;
+    public
+     procedure SaveDB;
+     property ID  :TValue Index 0 read GetValue write SetValue;
+     property Gorevi  :TValue Index 1 read GetValue write SetValue;
+     property Adi  :TValue Index 2 read GetValue write SetValue;
+     property Tel  :TValue Index 3 read GetValue write SetValue;
+     property Cep  :TValue Index 4 read GetValue write SetValue;
+  end;
+
+   TIletisimListe = Class(TBaseLoader<TIletisim>)
+   private
+    FCariId:Integer;
+   public
+     procedure LoadDB(const AFiltre: string = ''; AClearFiltre: Boolean = False); override;
+
+   End;
 
   TPropHelp = class helper for TVirtualListProperties
     procedure FilterTag1(const ATag:Integer);
@@ -91,6 +111,7 @@ type
 
     var
     CariList:TCariListe;
+    iletisimListe:TIletisimListe;
   //intrface
  //  ISepet:IGetOrSetValue;
 
@@ -243,7 +264,7 @@ function TBaseLoader<T>.GetIdx(const AIndex: Integer): T;
     property CariIlce:TValue Index 4 read GetValue write SetValue;
     property CariBakiye:TValue Index 5 read GetValue write SetValue;
     *)
-function TCari.GetValue(const Index: Integer): TValue;
+function TCariItem.GetValue(const Index: Integer): TValue;
 begin
     case Index of
       0:Result:=Self.Tag;
@@ -257,7 +278,7 @@ begin
     end;
 end;
 
-procedure TCari.SetValue(const Index: Integer; const Value: TValue);
+procedure TCariItem.SetValue(const Index: Integer; const Value: TValue);
 begin
     case Index of
      0:Self.Tag:=Value.AsInteger;
@@ -271,7 +292,7 @@ begin
     end;
 end;
 
-procedure TCari.UpdateItemValue;
+procedure TCariItem.UpdateItemValue;
 var
 TempStr:string;
 begin
@@ -293,17 +314,19 @@ var
 begin
   prop.Items.BeginUpdate;
   prop.Items.Clear();
-  s:='SELECT C.ID, C.KOD,C.ADI,C.CARIADI,C.CARISOYADI,C.CEPTEL1,C.IL,C.ILCE,'+
-  'SUM(HR.BORC) AS BORC,SUM(HR.ALACAK) AS ALACAK FROM dbo.TBLCARIHAR HR INNER JOIN TBLCARISB C ON (HR.CARIID = C.ID)'+sLineBreak+
-  'WHERE TIPI IN(''Alýcý'',''Satýcý'',''Alýcý ve Satýcý'',''Perakende'')';
+  s:='SELECT C.ID, C.KOD,C.ADI,C.CARIADI,C.CARISOYADI,C.CEPTEL1,C.IL,C.ILCE,'+sLineBreak+
+'ISNULL(SUM(HR.BORC), 0) AS BORC, ISNULL(SUM(HR.ALACAK), 0) AS ALACAK'+sLineBreak+
+'FROM  dbo.TBLCARISB C INNER JOIN dbo.TBLCARIHAR HR ON (C.ID = HR.CARIID)'+sLineBreak+
+'WHERE HR.KAYITTIPI = 0 AND HR.ISLEMTIPI IN (0,1) AND DONEM = '+Config.Donem;
+ //'WHERE TIPI IN(''Alýcý'',''Satýcý'',''Alýcý ve Satýcý'',''Perakende'')';
   if not AFiltre.IsEmpty then
   begin
     s:=Concat('DECLARE @flt VARCHAR(MAX) ='+QuotedStr('%'+AFiltre.Trim+'%')+'; ',sLineBreak,s,sLineBreak,
-    'and KOD LIKE @flt or ADI LIKE @flt or CEPTEL1 LIKE @flt or CARIADI LIKE @flt or CARISOYADI LIKE @flt');
+    'and (KOD LIKE @flt or ADI LIKE @flt or CEPTEL1 LIKE @flt or CARIADI LIKE @flt or CARISOYADI LIKE @flt)');
   end;
 
   //Alýcý,Satýcý,Alýcý ve Satýcý,Perakende,Toptan,Muhtelif,Masraf
-  s:=Concat(s,sLineBreak,'GROUP BY C.ID,C.KOD,C.ADI,C.CARIADI,C.CARISOYADI,C.CEPTEL1,C.IL,C.ILCE ORDER BY IL,ILCE,ADI');
+  s:=Concat(s,sLineBreak,'GROUP BY C.ID,C.KOD,C.ADI,C.CARIADI,C.CARISOYADI,C.CEPTEL1,C.IL,C.ILCE');
   try
    cn._DoEof(s,
  procedure (dt:TDataSet)
@@ -331,6 +354,77 @@ begin
   finally
     prop.Items.EndUpdate();
  end;
+
+end;
+
+{ TIletisim }
+
+function TIletisim.GetValue(const Index: Integer): TValue;
+begin
+   case Index of
+    0:Result:=Tag;
+    1:Result:=Caption;
+    2:Result:=Detail;
+    3:Result:=Detail1;
+    4:Result:=Detail2;
+   end;
+end;
+
+procedure TIletisim.SaveDB;
+var
+ s:string;
+begin
+ghbnfdg
+ if Tag>0 then
+     s:='UPDATE dbo.TBLCARITELEFONSB SET TELEFON =%s,YETKILI=%s,GOREVI=%s,CEPTEL=%s where ID='+IntToStr(Tag)
+  else
+    s:='INSERT INTO dbo.TBLCARITELEFONSB(CARIID,TELEFON,YETKILI,GOREVI,CEPTEL) VALUES ('+IntToStr(iletisimListe.FCariId)+',%s,%s,%s,%s);';
+    DB.cn_db.ExecSQL(Format(s,[QuotedStr(Tel.ToString),QuotedStr(Adi.ToString),QuotedStr(Gorevi.ToString),QuotedStr(Cep.ToString)]));
+end;
+
+procedure TIletisim.SetValue(const Index: Integer; const Value: TValue);
+begin
+   case Index of
+    0:Tag:=Value.AsInteger;
+    1:Caption:=Value.AsString;
+    2:Detail:=Value.AsString;
+    3:Detail1:=Value.AsString;
+    4:Detail2:=Value.AsString;
+   end;
+end;
+
+{ TIletisimListe }
+
+procedure TIletisimListe.LoadDB(const AFiltre: string; AClearFiltre: Boolean);
+var
+ s,TempStr:string;
+begin
+  prop.Items.BeginUpdate;
+  prop.Items.Clear();
+
+  FCariId:=StrToInt(AFiltre);
+  try
+     DB.cn_db._DoEof('select ID,GOREVI,YETKILI,TELEFON,CEPTEL from TBLCARITELEFONSB where CARIID='+FCariID.ToString,
+  procedure (dt:TDataSet)
+
+  begin
+       with Self.AddNewItem do
+       begin
+
+         ID:=dt._I['ID'];
+         Gorevi:=dt._S['GOREVI'].Trim+TempStr;
+         Adi:=dt._S['YETKILI'];
+         Tel:=dt._S['TELEFON'].Trim;;
+         Cep:=dt._S['CEPTEL'].Trim;
+
+       end;
+
+  end
+  );
+  finally
+    prop.Items.EndUpdate();
+  end;
+
 
 end;
 

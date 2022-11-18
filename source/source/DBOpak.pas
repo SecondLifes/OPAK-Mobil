@@ -6,7 +6,7 @@ uses
   System.SysUtils, System.Classes, uGraphicCommon, uUrlPicture,
   uDownloadPictureManager, UniProvider, SQLServerUniProvider, Data.DB, DBAccess,
   Uni, uDrawPicture, uSkinImageList,
-  FMX.Platform, System.UITypes, FMX.Controls,FMX.Types,MemData;
+  FMX.Platform, System.UITypes, FMX.Controls,FMX.Types,MemData,FMX.PhoneDialer;
 
 type
   TConfig = class
@@ -19,6 +19,7 @@ type
     FUserPass: string;
     FUserID: Integer;
     FHatirla: Boolean;
+    FDonem: string;
 
     public
      procedure Save;
@@ -31,6 +32,7 @@ type
      property ServerUser:string read FServerUser write FServerUser;
      property ServerPass:string read FServerPass write FServerPass;
      property Sirket:string read FSirket write FSirket;
+     property Donem:string read FDonem write FDonem;
      property UserName:string read FUserName write FUserName;
      property UserPass:string read FUserPass write FUserPass;
 
@@ -47,10 +49,13 @@ type
     img_Color1: TSkinImageList;
     procedure cn_dbConnectionLost(Sender: TObject; Component: TComponent;
       ConnLostCause: TConnLostCause; var RetryMode: TRetryMode);
+    procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }
   public
+    FPhoneDialerService: IFMXPhoneDialerService;
     { Public declarations }
+    procedure MakeCallPhone(s: string);
   end;
 
 
@@ -68,7 +73,7 @@ var
   FolderApp:string;
 
 implementation
-  uses System.IOUtils,FMX.Forms,FMX.DialogService,
+  uses sdk,System.IOUtils,FMX.Forms,FMX.DialogService,
   qjson,HintFrame,WaitingFrame,Help.DB,Help.uni, uUIFunction,MessageBoxFrame;
 
 {%CLASSGROUP 'FMX.Controls.TControl'}
@@ -180,6 +185,24 @@ procedure Init;
   //qjson.JSONFormatSettings := TFormatSettings.Create('en-US');
 
  end;
+
+procedure TDB.DataModuleCreate(Sender: TObject);
+begin
+ TPlatformServices.Current.SupportsPlatformService(IFMXPhoneDialerService, FPhoneDialerService);
+end;
+
+procedure TDB.MakeCallPhone(s: string);
+begin
+  if FPhoneDialerService <> nil then
+  begin
+    s:=Str2CharSet(s,['0'..'9']);
+    if s <> '' then
+    begin
+     FPhoneDialerService.Call(s)
+    end
+  end
+  else TDialogService.ShowMessage('PhoneDialer service not supported'+sLineBreak+s);
+end;
 
 initialization
   init;
