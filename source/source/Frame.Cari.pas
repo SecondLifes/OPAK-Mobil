@@ -16,7 +16,8 @@ uses
   uSkinFireMonkeyMemo, uSkinMaterial, uSkinEditType, uSkinComboEditType,
   uSkinMemoType,uTimerTaskEvent, uDrawCanvas, uSkinItems, uSkinCustomListType,
   uSkinVirtualListType, uSkinListBoxType, uSkinFireMonkeyListBox,
-  uSkinItemDesignerPanelType, uSkinFireMonkeyItemDesignerPanel
+  uSkinItemDesignerPanelType, uSkinFireMonkeyItemDesignerPanel, System.Sensors,
+  System.Sensors.Components, FMX.WebBrowser
   ;
 
 type
@@ -78,6 +79,9 @@ type
     SkinFMXButton2: TSkinFMXButton;
     SkinFMXButton3: TSkinFMXButton;
     msg_user: TSkinFMXLabel;
+    LocationSensor1: TLocationSensor;
+    btn_konum: TSkinFMXButton;
+    WebBrowser1: TWebBrowser;
     procedure btnReturnClick(Sender: TObject);
     procedure btn_kayetClick(Sender: TObject);
     procedure lbl_iletisim_telClick(Sender: TObject);
@@ -86,6 +90,9 @@ type
     procedure btn_new_iletisimClick(Sender: TObject);
     procedure SkinFMXButton2Click(Sender: TObject);
     procedure SkinFMXButton3Click(Sender: TObject);
+    procedure LocationSensor1LocationChanged(Sender: TObject; const OldLocation,
+      NewLocation: TLocationCoord2D);
+    procedure btn_konumClick(Sender: TObject);
   private
 
     procedure LoadCari(const ACariID:Cardinal);
@@ -97,6 +104,8 @@ type
     { Private declarations }
   public
       FCari:TCari;
+      FGeocoder: TGeocoder;
+      procedure OnGeocodeReverseEvent(const Address: TCivicAddress);
       procedure AfterConstruction; override;
       //constructor Create(AOwner: TComponent); override;
       destructor Destroy; override;
@@ -151,6 +160,17 @@ end;
 procedure TFForm_Cari.btn_kayetClick(Sender: TObject);
 begin
    SaveCari;
+
+end;
+
+procedure TFForm_Cari.btn_konumClick(Sender: TObject);
+begin
+{$IFDEF ANDROID}
+  LocationSensor1.Active := True;
+  btn_konum.Enabled:=false;
+{$ELSE}
+  LocationSensor1.Active := False
+{$ENDIF}
 
 end;
 
@@ -247,6 +267,42 @@ begin
  lbl_bakiye.SelfOwnMaterialToDefault.DrawCaptionParam.DrawFont.FontColor.Color:=DB.SkinTheme.SkinThemeColor;
 end;
 
+procedure TFForm_Cari.LocationSensor1LocationChanged(Sender: TObject;
+  const OldLocation, NewLocation: TLocationCoord2D);
+const
+  GoogleMapsURL: String = 'https://maps.google.com/maps?q=%s,%s';
+begin
+  var Enlem := NewLocation.Latitude.ToString(ffGeneral, 8, 5, TFormatSettings.Create('en-US'));
+  var Boylam := NewLocation.Longitude.ToString(ffGeneral, 8, 5, TFormatSettings.Create('en-US'));
+
+  { convert the location to latitude and longitude }
+  FCari.Enlem:=Enlem;
+  FCari.Boylam:=Boylam;
+
+  { and track the location via Google Maps }
+  WebBrowser1.Navigate(Format(GoogleMapsURL, [Enlem, Boylam]));
+  LocationSensor1.Active:=False;
+  btn_konum.Enabled:=True;
+
+  exit;
+    // Setup an instance of TGeocoder
+  try
+    if not Assigned(FGeocoder) then
+    begin
+      if Assigned(TGeocoder.Current) then
+        FGeocoder := TGeocoder.Current.Create;
+      if Assigned(FGeocoder) then
+        FGeocoder.OnGeocodeReverse := OnGeocodeReverseEvent;
+    end;
+  except
+    ListBoxGroupHeader1.Text := 'Geocoder service error.';
+  end;
+
+  // Translate location to address
+  if Assigned(FGeocoder) and not FGeocoder.Geocoding then
+    FGeocoder.GeocodeReverse(NewLocation);
+end;
+
 procedure TFForm_Cari.MesajLoad;
 var
  s:string;
@@ -297,10 +353,26 @@ begin
   FCari.Aciklama.EndUpdate;
 end;
 
+procedure TFForm_Cari.OnGeocodeReverseEvent(const Address: TCivicAddress);
+begin
+  (*
+  Address.AdminArea;
+  Address.CountryCode;
+  Address.CountryName;
+  Address.FeatureName;
+  Address.Locality;
+  Address.PostalCode;
+  Address.SubAdminArea;
+  Address.SubLocality;
+  Address.SubThoroughfare;
+  Address.Thoroughfare;
+  *)
+end;
+
 procedure TFForm_Cari.pcMainChanging(Sender: TObject; NewIndex: Integer;
   var AllowChange: Boolean);
 begin
-btn_kayet.Visible:=NewIndex=0;
+btn_kayet.Visible:=(NewIndex in [0,2]);
 btn_new_iletisim.Visible:=NewIndex=1;
 end;
 

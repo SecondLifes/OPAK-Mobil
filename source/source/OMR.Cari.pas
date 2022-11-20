@@ -24,6 +24,8 @@ interface
     FAlacak: Extended;
   private
     FAciklama: TStrings;
+    FEnlem: string;
+    FBoylam: string;
 
 
   public
@@ -58,6 +60,8 @@ interface
     property Alacak:Extended read FAlacak write FAlacak;
 
     property Aciklama:TStrings read FAciklama write FAciklama;
+    property Enlem:string read FEnlem write FEnlem;
+    property Boylam:string read FBoylam write FBoylam;
   end;
 
 implementation
