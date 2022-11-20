@@ -59,9 +59,11 @@ implementation
 procedure TFCariler.AfterConstruction;
 begin
   inherited AfterConstruction;
+  Self.Tag:=-1;
   Self.pnlVirtualKeyboard.Height:=0;
   CariList:=TCariListe.create(list_urun.Prop);
-  CariList.Clear(true);
+  CariList.ClearNew(true);
+
 
  // HideVirtualKeyboard;
 
@@ -131,10 +133,11 @@ end;
 procedure TFCariler.list_urunClickItem(AItem: TSkinItem);
 begin
  WaitingFrame.ShowWaitingFrame('Yükleniyor...');
-  if self.Tag = AItem.Tag  then Exit;
-  
-  self.Tag:=AItem.Tag;
-  FormCari(AItem.Tag);
+
+  if self.Tag = TCariItem(AItem).CariID.AsInteger  then Exit;
+
+  self.Tag:=TCariItem(AItem).CariID.AsInteger;
+  FormCari(TCariItem(AItem).CariID.AsInteger);
   WaitingFrame.HideWaitingFrame;
   Self.Tag:=0;
 

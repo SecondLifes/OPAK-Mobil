@@ -16,9 +16,6 @@ Coordinates=10,124,49,33
 [ts09Konum]
 Coordinates=272,78,70,33
 
-[nniTalkCount]
-Coordinates=172,78,80,33
-
 [ts03Talk]
 Coordinates=99,78,55,33
 
@@ -36,4 +33,7 @@ Coordinates=215,10,63,33
 
 []
 Coordinates=10,10,64,51
+
+[Msg_Count]
+Coordinates=172,78,80,33
 

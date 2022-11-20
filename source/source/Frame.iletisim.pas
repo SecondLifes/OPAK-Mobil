@@ -48,7 +48,8 @@ var
   begin
 
      ShowFrame(TFrame(F_iletisim),TF_iletisim,Application.MainForm,nil,nil,nil,Application);
-     F_iletisim.FID:=0;
+
+
 
      if AItem<>nil then
      begin
@@ -58,6 +59,15 @@ var
        F_iletisim.edt_Adi.Text:=AItem.Adi.AsString;
        F_iletisim.edt_tel.Text:=AItem.Tel.AsString;
        F_iletisim.edt_cep.Text:=AItem.Cep.AsString;
+     end
+     else
+     begin
+       F_iletisim.FItem:=nil;
+       F_iletisim.FID:=0;
+       F_iletisim.edt_gorev.Text:='';
+       F_iletisim.edt_Adi.Text:='';
+       F_iletisim.edt_tel.Text:='';
+       F_iletisim.edt_cep.Text:='';
      end;
   end;
 
@@ -76,41 +86,16 @@ end;
 
 procedure TF_iletisim.btn_kayetClick(Sender: TObject);
 begin
+iletisimListe.prop.BeginUpdate;
    if FID<1 then
-   FItem:=iletisimListe.AddNewItem;
+   FItem:=iletisimListe.prop.Items.Add as TIletisim;//iletisimListe.AddNewItem;
 
-     FItem.Gorevi:=F_iletisim.edt_gorev.Text;
-     FItem.Adi:=F_iletisim.edt_Adi.Text;
-     FItem.Tel:=F_iletisim.edt_tel.Text;
-     FItem.Cep:=F_iletisim.edt_cep.Text;
-
-   if FID>0 then
-   begin
-     FItem.Caption:=F_iletisim.edt_gorev.Text;
-     FItem.Detail:=F_iletisim.edt_Adi.Text;
-     FItem.Detail1:=F_iletisim.edt_tel.Text;
-     FItem.Detail2:=F_iletisim.edt_cep.Text;
-
-     DB.cn_db.ExecSQL(
-     'UPDATE dbo.TBLCARITELEFONSB SET TELEFON = '+QuotedStr(F_iletisim.edt_tel.Text)+
-     ',YETKILI = '+QuotedStr(F_iletisim.edt_Adi.Text)+
-     ',GOREVI = '+QuotedStr(F_iletisim.edt_gorev.Text)+',CEPTEL = '+
-     QuotedStr(F_iletisim.edt_cep.Text)+' where ID='+IntToStr(FID)
-     );
-   end
-   else
-   begin
-
-     DB.cn_db.ExecSQL(
-    format('INSERT INTO dbo.TBLCARITELEFONSB(CARIID,TELEFON,YETKILI,GOREVI,CEPTEL) VALUES (%d,%s,%s,%s,%s);',
-    [0,F_iletisim.edt_tel.Text.QuotedString,
-    F_iletisim.edt_Adi.Text.QuotedString,
-    F_iletisim.edt_gorev.Text.QuotedString,
-    F_iletisim.edt_cep.Text.QuotedString])
-     );
-
-   end;
-
+    FItem.Gorevi:=F_iletisim.edt_gorev.Text;
+    FItem.Adi:=F_iletisim.edt_Adi.Text;
+    FItem.Tel:=F_iletisim.edt_tel.Text;
+    FItem.Cep:=F_iletisim.edt_cep.Text;
+    FItem.SaveDB;
+  iletisimListe.prop.EndUpdate;
   btnReturnClick(nil);
 
 end;

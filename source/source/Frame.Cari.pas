@@ -23,7 +23,7 @@ type
   TFForm_Cari = class(TFBase)
     imglistTabIcon: TSkinImageList;
     pcMain: TSkinFMXPageControl;
-    nniTalkCount: TSkinFMXNotifyNumberIcon;
+    Msg_Count: TSkinFMXNotifyNumberIcon;
     ts02Iletisim: TSkinFMXTabSheet;
     ts03Talk: TSkinFMXTabSheet;
     ts04ShopCart: TSkinFMXTabSheet;
@@ -70,22 +70,35 @@ type
     btnDel: TSkinFMXButton;
     btn_new_iletisim: TSkinFMXButton;
     btn_edit: TSkinFMXButton;
+    list_mesajlar: TSkinFMXListBox;
+    list_msg_designer: TSkinFMXItemDesignerPanel;
+    msg_tarih: TSkinFMXLabel;
+    msg_conted: TSkinFMXLabel;
+    list_msg_menu: TSkinFMXItemDesignerPanel;
+    SkinFMXButton2: TSkinFMXButton;
+    SkinFMXButton3: TSkinFMXButton;
+    msg_user: TSkinFMXLabel;
     procedure btnReturnClick(Sender: TObject);
     procedure btn_kayetClick(Sender: TObject);
     procedure lbl_iletisim_telClick(Sender: TObject);
     procedure pcMainChanging(Sender: TObject; NewIndex: Integer;
       var AllowChange: Boolean);
     procedure btn_new_iletisimClick(Sender: TObject);
+    procedure SkinFMXButton2Click(Sender: TObject);
+    procedure SkinFMXButton3Click(Sender: TObject);
   private
 
     procedure LoadCari(const ACariID:Cardinal);
     procedure SaveCari;
     procedure BackFrame;
     procedure Clear;
+    procedure MesajLoad;
+    procedure MesajSave;
     { Private declarations }
   public
       FCari:TCari;
       procedure AfterConstruction; override;
+      //constructor Create(AOwner: TComponent); override;
       destructor Destroy; override;
 
 
@@ -99,13 +112,14 @@ type
  procedure FormCari(const ACariID:Integer);
 
 implementation
-uses uUIFunction,HintFrame,WaitingFrame,Frame.iletisim,Genel;
+uses uUIFunction,HintFrame,WaitingFrame,MessageBoxFrame,Frame.iletisim,Genel;
 
 {$R *.fmx}
 
   procedure FormCari(const ACariID:Integer);
   begin
     ShowFrame(TFrame(FForm_Cari),TFForm_Cari,Application.MainForm,nil,nil,nil,Application);
+
     FForm_Cari.LoadCari(ACariID);
   end;
 
@@ -116,8 +130,8 @@ procedure TFForm_Cari.AfterConstruction;
 begin
   inherited AfterConstruction;
   pcMain.Prop.ActivePageIndex:=0;
-  iletisimListe:=TIletisimListe.create(list_iletisim.Prop);
-  iletisimListe.Clear(true);
+  iletisimListe:=TIletisimListe.Create(list_iletisim.Prop);
+  iletisimListe.ClearNew(false);
   FCari:=TCari.Create(0);
 end;
 
@@ -141,9 +155,10 @@ begin
 end;
 
 procedure TFForm_Cari.btn_new_iletisimClick(Sender: TObject);
+var
+  FItem:TIletisim;
 begin
- ViewIletisim(nil);
-
+   ViewIletisim(nil);
 end;
 
 procedure TFForm_Cari.Clear;
@@ -151,6 +166,8 @@ begin
   FCari.Clear;
 
 end;
+
+
 
 destructor TFForm_Cari.Destroy;
 begin
@@ -204,6 +221,7 @@ procedure TFForm_Cari.LoadCari(const ACariID: Cardinal);
 var
  itm:TRealSkinItem;
 begin
+ pcMain.Prop.ActivePageIndex:=0;
  FCari.LoadDB(ACariID);
  lbl_cariid.Text:=FCari.CariID.ToString;
  lbl_cari_kod.Text:=FCari.CariKodu;
@@ -221,11 +239,62 @@ begin
  lbl_bakiye.Text:=Cur2Str(FCari.Bakiye);
 
  iletisimListe.LoadDB(ACariID.ToString,True);
+ MesajLoad;
  exit;
  if FCari.Bakiye>0 then
  lbl_bakiye.SelfOwnMaterialToDefault.DrawCaptionParam.DrawFont.FontColor.Color:=DB.SkinTheme.SkinThemeColor2
  else
  lbl_bakiye.SelfOwnMaterialToDefault.DrawCaptionParam.DrawFont.FontColor.Color:=DB.SkinTheme.SkinThemeColor;
+end;
+
+procedure TFForm_Cari.MesajLoad;
+var
+ s:string;
+ arg:TArray<string>;
+ itm:TRealSkinItem;
+begin
+ if not FCari.Aciklama.text.IsEmpty then
+  begin
+    list_mesajlar.Prop.BeginUpdate;
+    list_mesajlar.Prop.Items.Clear();
+     for s in FCari.Aciklama do
+      begin
+        arg:=s.Split(['|']);
+         itm:=list_mesajlar.Prop.Items.Add;
+
+             if Length(arg)>1 then
+             begin
+               itm.Caption:=arg[0];
+               itm.Detail:=arg[1];
+               itm.Detail1:=arg[2];
+             end else
+             begin
+               itm.Caption:=DateToStr(Now);
+               itm.Detail:=Config.UserName;
+               itm.Detail1:=s;
+             end;
+
+      end;
+     Msg_Count.Prop.Number:=list_mesajlar.Prop.Items.Count;
+     list_mesajlar.Prop.EndUpdate;
+  end;
+
+end;
+
+procedure TFForm_Cari.MesajSave;
+ var
+  i:Integer;
+  itm:TRealSkinItem;
+begin
+  FCari.Aciklama.BeginUpdate;
+  FCari.Aciklama.Clear;
+  for i := 0 to list_mesajlar.Prop.Items.Count -1 do
+    begin
+     itm:=list_mesajlar.Prop.Items[i];
+     FCari.Aciklama.Add(itm.Caption+'|'+itm.Detail+'|'+itm.Detail1);
+
+    end;
+  FCari.Aciklama.EndUpdate;
 end;
 
 procedure TFForm_Cari.pcMainChanging(Sender: TObject; NewIndex: Integer;
@@ -237,6 +306,7 @@ end;
 
 procedure TFForm_Cari.SaveCari;
 begin
+ WaitingFrame.ShowWaitingFrame(Self,'Cari Kayýt...');
  FCari.Unvani:=edt_Unvani.Text;
  FCari.Adi:=edt_Adi.Text;
  FCari.SoyAdi:=edt_soyad.Text;
@@ -246,7 +316,8 @@ begin
  FCari.IL:=edt_sehir.Text;
  FCari.ILCE:=edt_ilce.Text;
  FCari.Adres:=edt_adres.Lines.Text;
- WaitingFrame.ShowWaitingFrame(Self,'Cari Kayýt...');
+ MesajSave;
+
  try
  if FCari.SaveDB then
     HintFrame.ShowHintFrame(Self,'Kayýt Baþarýlý...')
@@ -255,6 +326,44 @@ begin
  finally
    HideWaitingFrame;
  end;
+end;
+
+procedure TFForm_Cari.SkinFMXButton2Click(Sender: TObject);
+begin
+  list_mesajlar.Prop.Items.BeginUpdate;
+  if list_mesajlar.Prop.InteractiveItem<>nil then
+     list_mesajlar.Prop.InteractiveItem.Destroy;
+  Msg_Count.Prop.Number:=list_mesajlar.Prop.Items.Count;
+  list_mesajlar.Prop.Items.EndUpdate();
+end;
+
+procedure TFForm_Cari.SkinFMXButton3Click(Sender: TObject);
+var
+ itm:TSkinItem;
+begin
+
+   itm :=list_mesajlar.Prop.InteractiveItem;
+   if itm=nil then exit;
+   list_mesajlar.Prop.StopItemPanDrag;
+  DoMessage(Self,DateToStr(Now),Config.UserName,TMsgDlgType.mtInformation,'Ýptal,Kaydet',
+  procedure (Aobj:TObject;ADrum:Boolean;AStr1,AStr2:string)
+  begin
+   if ADrum then
+    begin
+     itm.Caption:=DateToStr(Now);
+     itm.Detail:=Config.UserName;
+     itm.Detail1:=AStr1;
+    end;
+  end,1
+  );
+
+          GlobalMessageBoxFrame.pnlInput1.Caption:='Mesaj';
+          GlobalMessageBoxFrame.edtInput1.Text:=list_mesajlar.Prop.InteractiveItem.Detail1;
+          GlobalMessageBoxFrame.edtInput1.TextPrompt:='';
+          GlobalMessageBoxFrame.edtInput1.FilterChar:='';
+          GlobalMessageBoxFrame.edtInput1.KeyboardType:=TVirtualKeyboardType.Default;
+          GlobalMessageBoxFrame.btnDec1.Visible:=False;
+          GlobalMessageBoxFrame.btnInc1.Visible:=False;
 end;
 
 end.

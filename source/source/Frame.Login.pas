@@ -133,6 +133,7 @@ begin
                   Config.UserPass:='';
                 end;
                 Config.Save;
+                Config.UserName:=Frame_login.edt_username.Text;
                  ECode:=0;
                 end else ECode:=-3;
             end;

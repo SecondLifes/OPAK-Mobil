@@ -1,7 +1,7 @@
 unit OMR.Cari;
 
 interface
- uses System.SysUtils,Data.DB;
+ uses System.SysUtils,Data.DB,System.Classes;
 
 
  Type
@@ -23,12 +23,13 @@ interface
     FBorc: Extended;
     FAlacak: Extended;
   private
+    FAciklama: TStrings;
 
 
   public
     function Bakiye:Extended;
     constructor Create(const ACariID:Cardinal=0);
-    //destructor Destroy; override;
+    destructor Destroy; override;
     procedure Clear;
     procedure LoadDB(const ACariID:Cardinal=0);
     function SaveDB:Boolean;
@@ -56,10 +57,7 @@ interface
     property Borc:Extended read FBorc write FBorc;
     property Alacak:Extended read FAlacak write FAlacak;
 
-
-
-
-
+    property Aciklama:TStrings read FAciklama write FAciklama;
   end;
 
 implementation
@@ -81,10 +79,18 @@ end;
 constructor TCari.Create(const ACariID: Cardinal);
 begin
   FCariID:=0;
+  FAciklama:=TStringList.Create;
   if FCariID>0 then LoadDB(ACariID);
+
 
 end;
 
+
+destructor TCari.Destroy;
+begin
+  FAciklama.Free;
+  inherited Destroy;
+end;
 
 procedure TCari.IletisimSil(const AId: Integer);
 begin
@@ -96,11 +102,11 @@ var
  SQL:string;
 begin
   FCariID:=CariID;
-  SQL:='SELECT C.ID, C.KOD,C.ADI,C.CARIADI,C.CARISOYADI,C.CEPTEL1,C.IL,C.ILCE,C.ADRES,C.VERGI_DAIRESI,C.VERGINO,C.KIMLIKNO, '+
+  SQL:='SELECT C.ID, C.KOD,C.ADI,C.CARIADI,C.CARISOYADI,C.CEPTEL1,C.IL,C.ILCE,C.ADRES,C.VERGI_DAIRESI,C.VERGINO,C.KIMLIKNO,C.ACIKLAMA, '+
 '  SUM(HR.BORC) AS BORC,SUM(HR.ALACAK) AS ALACAK FROM dbo.TBLCARIHAR HR INNER JOIN TBLCARISB C ON (HR.CARIID = C.ID) '+
 '  WHERE C.ID='+inttostr(ACariID)+' AND HR.KAYITTIPI = 0 AND HR.ISLEMTIPI IN (0,1) AND HR.DONEM='+Config.Donem+
 //'  --TIPI IN(''Alýcý'',''Satýcý'',''Alýcý ve Satýcý'',''Perakende'') and '+
-'  GROUP BY C.ID,C.KOD,C.ADI,C.CARIADI,C.CARISOYADI,C.CEPTEL1,C.IL,C.ILCE,C.ADRES,C.VERGI_DAIRESI,C.VERGINO,C.KIMLIKNO ORDER BY IL,ILCE,ADI';
+'  GROUP BY C.ID,C.KOD,C.ADI,C.CARIADI,C.CARISOYADI,C.CEPTEL1,C.IL,C.ILCE,C.ADRES,C.VERGI_DAIRESI,C.VERGINO,C.KIMLIKNO,C.ACIKLAMA ORDER BY IL,ILCE,ADI';
 
 
   DB.cn_db._DoEof(SQL,
@@ -122,6 +128,7 @@ begin
     FVergiNo:=dt._S['VERGINO'];
     FBorc:=dt._D['BORC'];
     FAlacak:=dt._D['ALACAK'];
+    FAciklama.Text:=dt._S['ACIKLAMA'];
   end
   );
 
@@ -143,6 +150,7 @@ begin
      ',ADRES='+QuotedStr(FAdres)+
      ',VERGI_DAIRESI='+QuotedStr(VergiDairesi)+
      ',VERGINO='+QuotedStr(FVergiNo)+
+     ',ACIKLAMA='+QuotedStr(FAciklama.Text)+
      'WHERE ID = '+IntToStr(FCariID);
      
  try

@@ -39,8 +39,8 @@ type
        FrameValue:IGetOrSetValue;
        prop: TVirtualListProperties;
 
-      constructor Create(AProp: TVirtualListProperties;const AFrameValue:IGetOrSetValue=nil);
-      procedure Clear(const ALoadDB:Boolean=False); virtual;
+      constructor Create(const AProp: TVirtualListProperties;const AFrameValue:IGetOrSetValue=nil);
+      procedure ClearNew(const ALoadDB:Boolean=False); virtual;
       function GetProp<C:class>:C;
       procedure DoUpdateItem(AItems: TItemBase); virtual;
       procedure LoadDB(const AFiltre: string = ''; AClearFiltre: Boolean = False); virtual;
@@ -55,6 +55,27 @@ type
     end;
 
  {$ENDREGION}
+
+   TIletisim=class (TItemBase)
+    private
+      function GetValue(const Index: Integer): TValue; override;
+      procedure SetValue(const Index: Integer; const Value: TValue); override;
+    public
+     procedure SaveDB;
+     property ID  :TValue Index 0 read GetValue write SetValue;
+     property Gorevi  :TValue Index 1 read GetValue write SetValue;
+     property Adi  :TValue Index 2 read GetValue write SetValue;
+     property Tel  :TValue Index 3 read GetValue write SetValue;
+     property Cep  :TValue Index 4 read GetValue write SetValue;
+  end;
+
+   TIletisimListe = Class(TBaseLoader<TIletisim>)
+   private
+    FCariId:Integer;
+   public
+     procedure LoadDB(const AFiltre: string = ''; AClearFiltre: Boolean = False); override;
+
+   End;
 
  TCariItem = class(TItemBase)
   private
@@ -83,26 +104,7 @@ type
      //procedure ClearDrum;
    End;
 
-  TIletisim=class (TItemBase)
-    private
-      function GetValue(const Index: Integer): TValue; override;
-      procedure SetValue(const Index: Integer; const Value: TValue); override;
-    public
-     procedure SaveDB;
-     property ID  :TValue Index 0 read GetValue write SetValue;
-     property Gorevi  :TValue Index 1 read GetValue write SetValue;
-     property Adi  :TValue Index 2 read GetValue write SetValue;
-     property Tel  :TValue Index 3 read GetValue write SetValue;
-     property Cep  :TValue Index 4 read GetValue write SetValue;
-  end;
 
-   TIletisimListe = Class(TBaseLoader<TIletisim>)
-   private
-    FCariId:Integer;
-   public
-     procedure LoadDB(const AFiltre: string = ''; AClearFiltre: Boolean = False); override;
-
-   End;
 
   TPropHelp = class helper for TVirtualListProperties
     procedure FilterTag1(const ATag:Integer);
@@ -178,20 +180,22 @@ end;
 
    end;
 
-   procedure TBaseLoader<T>.Clear(const ALoadDB: Boolean);
+   procedure TBaseLoader<T>.ClearNew(const ALoadDB: Boolean);
    begin
 
      prop.Items.BeginUpdate;
-     prop.Items.Clear();
-     if ALoadDB then LoadDB();
-     prop.Items.EndUpdate();
-
+     try
+      prop.Items.Clear();
+    // if ALoadDB then LoadDB();
+     finally
+      prop.Items.EndUpdate();
+     end;
 
    end;
 
 
 
-constructor TBaseLoader<T>.Create(AProp: TVirtualListProperties;const AFrameValue:IGetOrSetValue=nil);
+constructor TBaseLoader<T>.Create(const AProp: TVirtualListProperties;const AFrameValue:IGetOrSetValue=nil);
    begin
     //TSkinVirtualList(prop).Parent
 
@@ -371,15 +375,22 @@ begin
 end;
 
 procedure TIletisim.SaveDB;
-var
- s:string;
+//var s:string;
 begin
-ghbnfdg
+
  if Tag>0 then
-     s:='UPDATE dbo.TBLCARITELEFONSB SET TELEFON =%s,YETKILI=%s,GOREVI=%s,CEPTEL=%s where ID='+IntToStr(Tag)
+       DB.cn_db.ExecSQL(Format('UPDATE dbo.TBLCARITELEFONSB SET TELEFON =%s,YETKILI=%s,GOREVI=%s,CEPTEL=%s where ID='+IntToStr(Tag),
+     [IntToStr(iletisimListe.FCariId),QuotedStr(Tel.ToString),QuotedStr(Adi.ToString),QuotedStr(Gorevi.ToString),QuotedStr(Cep.ToString)]))
   else
-    s:='INSERT INTO dbo.TBLCARITELEFONSB(CARIID,TELEFON,YETKILI,GOREVI,CEPTEL) VALUES ('+IntToStr(iletisimListe.FCariId)+',%s,%s,%s,%s);';
-    DB.cn_db.ExecSQL(Format(s,[QuotedStr(Tel.ToString),QuotedStr(Adi.ToString),QuotedStr(Gorevi.ToString),QuotedStr(Cep.ToString)]));
+    begin
+    Tag:=DB.cn_db._sqlResults(
+     Format('INSERT INTO dbo.TBLCARITELEFONSB(CARIID,TELEFON,YETKILI,GOREVI,CEPTEL) VALUES ('+IntToStr(iletisimListe.FCariId)+',%s,%s,%s,%s); select SCOPE_IDENTITY() AS ID;',
+     [IntToStr(iletisimListe.FCariId),QuotedStr(Tel.ToString),QuotedStr(Adi.ToString),QuotedStr(Gorevi.ToString),QuotedStr(Cep.ToString)]),0);
+    end;
+
+
+
+
 end;
 
 procedure TIletisim.SetValue(const Index: Integer; const Value: TValue);
@@ -402,7 +413,9 @@ begin
   prop.Items.BeginUpdate;
   prop.Items.Clear();
 
-  FCariId:=StrToInt(AFiltre);
+  FCariId:=StrToIntDef(AFiltre,-1);
+  if FCariId = -1 then exit;
+  
   try
      DB.cn_db._DoEof('select ID,GOREVI,YETKILI,TELEFON,CEPTEL from TBLCARITELEFONSB where CARIID='+FCariID.ToString,
   procedure (dt:TDataSet)

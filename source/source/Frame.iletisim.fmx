@@ -11,7 +11,7 @@ inherited F_iletisim: TF_iletisim
         Margins.Left = 15.000000000000000000
         Margins.Top = 5.000000000000000000
         Margins.Right = 15.000000000000000000
-        Size.Width = 318.000000000000000000
+        Size.Width = 320.000000000000000000
         Size.Height = 28.000000000000000000
         Size.PlatformDefault = False
         StyledSettings = []
@@ -58,7 +58,7 @@ inherited F_iletisim: TF_iletisim
         Margins.Left = 15.000000000000000000
         Margins.Top = 5.000000000000000000
         Margins.Right = 15.000000000000000000
-        Size.Width = 318.000000000000000000
+        Size.Width = 320.000000000000000000
         Size.Height = 28.000000000000000000
         Size.PlatformDefault = False
         StyledSettings = []
@@ -105,7 +105,7 @@ inherited F_iletisim: TF_iletisim
         Margins.Left = 15.000000000000000000
         Margins.Top = 5.000000000000000000
         Margins.Right = 15.000000000000000000
-        Size.Width = 318.000000000000000000
+        Size.Width = 320.000000000000000000
         Size.Height = 28.000000000000000000
         Size.PlatformDefault = False
         StyledSettings = []
@@ -152,7 +152,7 @@ inherited F_iletisim: TF_iletisim
         Margins.Left = 15.000000000000000000
         Margins.Top = 5.000000000000000000
         Margins.Right = 15.000000000000000000
-        Size.Width = 318.000000000000000000
+        Size.Width = 320.000000000000000000
         Size.Height = 28.000000000000000000
         Size.PlatformDefault = False
         StyledSettings = []
@@ -427,7 +427,7 @@ inherited F_iletisim: TF_iletisim
         MouseDownFocus = False
         Align = Right
         ClipChildren = True
-        Position.X = 298.000000000000000000
+        Position.X = 300.000000000000000000
         Size.Width = 50.000000000000000000
         Size.Height = 50.000000000000000000
         Size.PlatformDefault = False
