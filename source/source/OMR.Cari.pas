@@ -59,6 +59,7 @@ interface
     property Borc:Extended read FBorc write FBorc;
     property Alacak:Extended read FAlacak write FAlacak;
 
+
     property Aciklama:TStrings read FAciklama write FAciklama;
     property Enlem:string read FEnlem write FEnlem;
     property Boylam:string read FBoylam write FBoylam;
@@ -106,11 +107,11 @@ var
  SQL:string;
 begin
   FCariID:=CariID;
-  SQL:='SELECT C.ID, C.KOD,C.ADI,C.CARIADI,C.CARISOYADI,C.CEPTEL1,C.IL,C.ILCE,C.ADRES,C.VERGI_DAIRESI,C.VERGINO,C.KIMLIKNO,C.ACIKLAMA, '+
+  SQL:='SELECT C.ID, C.KOD,C.ADI,C.CARIADI,C.CARISOYADI,C.CEPTEL1,C.IL,C.ILCE,C.ADRES,C.VERGI_DAIRESI,C.VERGINO,C.KIMLIKNO,C.ACIKLAMA,C.ACIKLAMA10,ACIKLAMA10 '+
 '  SUM(HR.BORC) AS BORC,SUM(HR.ALACAK) AS ALACAK FROM dbo.TBLCARIHAR HR INNER JOIN TBLCARISB C ON (HR.CARIID = C.ID) '+
 '  WHERE C.ID='+inttostr(ACariID)+' AND HR.KAYITTIPI = 0 AND HR.ISLEMTIPI IN (0,1) AND HR.DONEM='+Config.Donem+
 //'  --TIPI IN(''Alýcý'',''Satýcý'',''Alýcý ve Satýcý'',''Perakende'') and '+
-'  GROUP BY C.ID,C.KOD,C.ADI,C.CARIADI,C.CARISOYADI,C.CEPTEL1,C.IL,C.ILCE,C.ADRES,C.VERGI_DAIRESI,C.VERGINO,C.KIMLIKNO,C.ACIKLAMA ORDER BY IL,ILCE,ADI';
+'  GROUP BY C.ID,C.KOD,C.ADI,C.CARIADI,C.CARISOYADI,C.CEPTEL1,C.IL,C.ILCE,C.ADRES,C.VERGI_DAIRESI,C.VERGINO,C.KIMLIKNO,C.ACIKLAMA,C.ACIKLAMA10 ORDER BY IL,ILCE,ADI';
 
 
   DB.cn_db._DoEof(SQL,

@@ -34,17 +34,20 @@ type
     Timer1: TTimer;
     pnlVirtualKeyboard: TSkinFMXPanel;
     ClearEditButton1: TClearEditButton;
+    btnReturn: TSkinFMXButton;
     procedure list_urunClickItem(AItem: TSkinItem);
     procedure edt_searchChangeTracking(Sender: TObject);
     procedure lbl_TELClick(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
     procedure ClearEditButton1Click(Sender: TObject);
+    procedure btnReturnClick(Sender: TObject);
   private
     { Private declarations }
     procedure DoFiltre(const AFiltre:string);
      procedure DoVirtualKeyboardShow(KeyboardVisible: Boolean; const Bounds: TRect);
      procedure DoVirtualKeyboardHide(KeyboardVisible: Boolean; const Bounds: TRect);
   public
+    procedure BackFrame;
   procedure AfterConstruction; override;
     { Public declarations }
   end;
@@ -59,15 +62,56 @@ implementation
 procedure TFCariler.AfterConstruction;
 begin
   inherited AfterConstruction;
+  if Self.Tag=-1 then exit;
+  
   Self.Tag:=-1;
+
+    TThread.CreateAnonymousThread(
+    procedure()
+    begin
+      TThread.Synchronize(TThread.CurrentThread,
+        procedure()
+        begin
+           WaitingFrame.ShowWaitingFrame(F_Satis,'Lütfen Bekleyiniz.');
+          //TThread.Sleep(3000);
+
+        end);
+
+    end).Start;
+
+
   Self.pnlVirtualKeyboard.Height:=0;
   CariList:=TCariListe.create(list_urun.Prop);
   CariList.ClearNew(true);
+
+      TThread.CreateAnonymousThread(
+    procedure()
+    begin
+      TThread.Synchronize(TThread.CurrentThread,
+        procedure()
+        begin
+            WaitingFrame.HideWaitingFrame;
+
+        end);
+
+    end).Start;
 
 
  // HideVirtualKeyboard;
 
 
+
+end;
+
+procedure TFCariler.BackFrame;
+begin
+    HideFrame(Self,hfcttBeforeReturnFrame);
+    ReturnFrame();
+end;
+
+procedure TFCariler.btnReturnClick(Sender: TObject);
+begin
+  BackFrame;
 
 end;
 
@@ -132,14 +176,15 @@ end;
 
 procedure TFCariler.list_urunClickItem(AItem: TSkinItem);
 begin
- WaitingFrame.ShowWaitingFrame('Yükleniyor...');
+
+
 
   if self.Tag = TCariItem(AItem).CariID.AsInteger  then Exit;
 
-  self.Tag:=TCariItem(AItem).CariID.AsInteger;
-  FormCari(TCariItem(AItem).CariID.AsInteger);
-  WaitingFrame.HideWaitingFrame;
-  Self.Tag:=0;
+   self.Tag:=TCariItem(AItem).CariID.AsInteger;
+   FormCari(TCariItem(AItem).CariID.AsInteger);
+
+
 
 end;
 

@@ -17,7 +17,7 @@ uses
   uSkinMemoType,uTimerTaskEvent, uDrawCanvas, uSkinItems, uSkinCustomListType,
   uSkinVirtualListType, uSkinListBoxType, uSkinFireMonkeyListBox,
   uSkinItemDesignerPanelType, uSkinFireMonkeyItemDesignerPanel, System.Sensors,
-  System.Sensors.Components, FMX.WebBrowser
+  System.Sensors.Components, FMX.WebBrowser, Data.DB, MemDS, DBAccess, Uni
   ;
 
 type
@@ -82,6 +82,14 @@ type
     LocationSensor1: TLocationSensor;
     btn_konum: TSkinFMXButton;
     WebBrowser1: TWebBrowser;
+    list_shop: TSkinFMXListBox;
+    list_shop_designer: TSkinFMXItemDesignerPanel;
+    shop_Kod: TSkinFMXLabel;
+    shop_tarih: TSkinFMXLabel;
+    Shop_urun: TSkinFMXLabel;
+    SkinFMXPanel2: TSkinFMXPanel;
+    shop_adet_fyt: TSkinFMXLabel;
+    shop_fiyat: TSkinFMXLabel;
     procedure btnReturnClick(Sender: TObject);
     procedure btn_kayetClick(Sender: TObject);
     procedure lbl_iletisim_telClick(Sender: TObject);
@@ -97,14 +105,16 @@ type
 
     procedure LoadCari(const ACariID:Cardinal);
     procedure SaveCari;
-    procedure BackFrame;
+
     procedure Clear;
     procedure MesajLoad;
     procedure MesajSave;
+    procedure ShopListLoad;
     { Private declarations }
   public
       FCari:TCari;
       FGeocoder: TGeocoder;
+      procedure BackFrame;
       procedure OnGeocodeReverseEvent(const Address: TCivicAddress);
       procedure AfterConstruction; override;
       //constructor Create(AOwner: TComponent); override;
@@ -121,13 +131,25 @@ type
  procedure FormCari(const ACariID:Integer);
 
 implementation
-uses uUIFunction,HintFrame,WaitingFrame,MessageBoxFrame,Frame.iletisim,Genel;
+uses Form.Cariler,uUIFunction,HintFrame,WaitingFrame,MessageBoxFrame,Frame.iletisim,Genel,Help.uni,Help.DB;
 
 {$R *.fmx}
 
   procedure FormCari(const ACariID:Integer);
   begin
+    TThread.CreateAnonymousThread(
+    procedure()
+    begin
+      TThread.Synchronize(TThread.CurrentThread,
+        procedure()
+        begin
+           WaitingFrame.ShowWaitingFrame('Yükleniyor...');
+         end);
+
+    end).Start;
     ShowFrame(TFrame(FForm_Cari),TFForm_Cari,Application.MainForm,nil,nil,nil,Application);
+
+
 
     FForm_Cari.LoadCari(ACariID);
   end;
@@ -146,9 +168,8 @@ end;
 
 procedure TFForm_Cari.BackFrame;
 begin
-
      HideFrame(Self,hfcttBeforeReturnFrame);
-     //ReturnFrame();
+     ReturnFrame();///FCariler
      Clear;
 end;
 
@@ -241,6 +262,7 @@ procedure TFForm_Cari.LoadCari(const ACariID: Cardinal);
 var
  itm:TRealSkinItem;
 begin
+
  pcMain.Prop.ActivePageIndex:=0;
  FCari.LoadDB(ACariID);
  lbl_cariid.Text:=FCari.CariID.ToString;
@@ -260,6 +282,21 @@ begin
 
  iletisimListe.LoadDB(ACariID.ToString,True);
  MesajLoad;
+ ShopListLoad;
+
+
+     TThread.CreateAnonymousThread(
+    procedure()
+    begin
+      TThread.Synchronize(TThread.CurrentThread,
+        procedure()
+        begin
+           WaitingFrame.HideWaitingFrame;
+            FCariler.Tag:=0;
+         end);
+
+    end).Start;
+
  exit;
  if FCari.Bakiye>0 then
  lbl_bakiye.SelfOwnMaterialToDefault.DrawCaptionParam.DrawFont.FontColor.Color:=DB.SkinTheme.SkinThemeColor2
@@ -295,7 +332,7 @@ begin
         FGeocoder.OnGeocodeReverse := OnGeocodeReverseEvent;
     end;
   except
-    ListBoxGroupHeader1.Text := 'Geocoder service error.';
+   // ListBoxGroupHeader1.Text := 'Geocoder service error.';
   end;
 
   // Translate location to address
@@ -398,6 +435,27 @@ begin
  finally
    HideWaitingFrame;
  end;
+end;
+
+procedure TFForm_Cari.ShopListLoad;
+var
+ itm:TSkinItem;
+begin
+ list_shop.Prop.BeginUpdate;
+ list_shop.Prop.Items.Clear();
+ DB.cn_db._DoEof('SELECT TARIH,VADE_TARIH,MIKTAR,KDVDAHILFIYAT,NETTOPLAM,STOKKOD ,STOKADI '+
+ 'FROM VW_CARIDETAYHAR where STOKHARID is not null and CARIID = '+IntToStr(FCari.CariID)+' order by TARIH',
+ procedure (dt:TDataSet)
+ begin
+     itm:=list_shop.Prop.Items.Add;
+     itm.Caption:=dt._S['STOKKOD'];
+     itm.Detail:=dt._S['STOKADI'];
+     itm.Detail1:=dt._S['VADE_TARIH'];
+     itm.Detail2:=dt._S['MIKTAR']+'x'+Cur2Str(dt._D['KDVDAHILFIYAT']);
+     itm.Detail3:=Cur2Str(dt._D['NETTOPLAM']);
+ end
+ );
+ list_shop.Prop.EndUpdate;
 end;
 
 procedure TFForm_Cari.SkinFMXButton2Click(Sender: TObject);

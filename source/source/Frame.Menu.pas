@@ -3,10 +3,10 @@ unit Frame.Menu;
 interface
 
 uses
-  System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants, 
+  System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants,
   FMX.Types, FMX.Graphics, FMX.Controls, FMX.Forms, FMX.Dialogs, FMX.StdCtrls,
   Frame.Base, uSkinLabelType, uSkinFireMonkeyLabel, uSkinPanelType,
-  uSkinFireMonkeyPanel, uSkinFireMonkeyControl, uSkinCalloutRectType,DBOpak,
+  uSkinFireMonkeyPanel, uSkinFireMonkeyControl, uSkinCalloutRectType, DBOpak,
   uDrawCanvas, uSkinItems, uSkinScrollControlType, uSkinCustomListType,
   uSkinVirtualListType, uSkinListViewType, uSkinFireMonkeyListView,
   uSkinItemDesignerPanelType, uSkinFireMonkeyItemDesignerPanel, uSkinImageType,
@@ -34,22 +34,25 @@ var
   FMenu: TFMenu;
 
 implementation
- uses Form.Cariler,
-  FMX.DialogService,uUIFunction,WaitingFrame,System.Rtti,
-  System.IOUtils,HintFrame,Help.DB,Help.uni
+
+uses
+  Form.Cariler, FMX.DialogService, uUIFunction, WaitingFrame, System.Rtti,
+  System.IOUtils, HintFrame, Help.DB, Help.uni
   {$IFDEF ANDROID}
-  ,Androidapi.Helpers, Androidapi.JNI.GraphicsContentViewText, Androidapi.JNI.Net,AndroidApi.Jni.JavaTypes
+    , Androidapi.Helpers, Androidapi.JNI.GraphicsContentViewText,
+    Androidapi.JNI.Net, AndroidApi.Jni.JavaTypes
   {$ENDIF}
-  ;
+;
 {$R *.fmx}
 
 procedure TFMenu.list_masalarClickItem(AItem: TSkinItem);
 begin
 
- case  AItem.Tag1 of
-  1:ShowFrame(TFrame(FCariler),TFCariler,Application.MainForm,nil,nil,nil,Application);
- end;
+   case AItem.tag1 of
+    1:ShowFrame(TFrame(FCariler), TFCariler, Application.MainForm, nil, nil, nil, Application);
+  end;
 
 end;
 
 end.
+
