@@ -37,7 +37,7 @@ implementation
 
 uses
   Form.Cariler, FMX.DialogService, uUIFunction, WaitingFrame, System.Rtti,
-  System.IOUtils, HintFrame, Help.DB, Help.uni
+  System.IOUtils, HintFrame, Help.DB, Help.uni ,Apk.Installer
   {$IFDEF ANDROID}
     , Androidapi.Helpers, Androidapi.JNI.GraphicsContentViewText,
     Androidapi.JNI.Net, AndroidApi.Jni.JavaTypes
@@ -50,6 +50,20 @@ begin
 
    case AItem.tag1 of
     1:ShowFrame(TFrame(FCariler), TFCariler, Application.MainForm, nil, nil, nil, Application);
+    2:begin
+         APKInstaller(cAppURL,
+        procedure (const EventID:byte; var v:TValue)
+        begin
+           case EventID of
+            0 :ShowWaitingFrame('Ýndiriliyor...');
+            1: if not v.AsBoolean then
+                  DoMessage(Self,'Ýndirme iþlemi baþarýsýz'+sLineBreak+
+                  'Lütfen Baðlantýnýzý kontrol edin','DAS TEKNOLOJÝ', TMsgDlgType.mtError);
+            99:HideWaitingFrame;
+           end;
+        end
+        );
+      end;
   end;
 
 end;

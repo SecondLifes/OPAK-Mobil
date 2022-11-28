@@ -5,10 +5,28 @@ interface
 uses
   System.SysUtils, System.Classes, uGraphicCommon, uUrlPicture,
   uDownloadPictureManager, UniProvider, SQLServerUniProvider, Data.DB, DBAccess,
-  Uni, uDrawPicture, uSkinImageList,
+  Uni, uDrawPicture, uSkinImageList,System.Rtti,
   FMX.Platform, System.UITypes, FMX.Controls,FMX.Types,MemData,FMX.PhoneDialer;
 
+ const
+  cFirma='Mikotek';
+  cAppURL='http://88.247.42.50:8080/bin/OpakSatis.apk';
+  cAppName='MSS';
+  cAppVersiyon='1.0.3';
+
 type
+
+   TYetki = record
+     CariGor:Byte;
+     YetkiliEkle:Boolean;
+     YetkiliSil:Boolean;
+     YetkiliDuzenle:Boolean;
+     NotEkle:Boolean;
+     NotSil:Boolean;
+     NotDuzenle:Boolean;
+   procedure LoadStr(const s:string);
+  end;
+
   TConfig = class
   strict private
     FServerIP: string;
@@ -20,11 +38,14 @@ type
     FUserID: Integer;
     FHatirla: Boolean;
     FDonem: string;
+    FYetki: TYetki;
+
 
     public
      procedure Save;
      procedure Load;
      property UserID:Integer read FUserID write FUserID;
+     property Yetki:TYetki read FYetki;
 
     published
      property Hatirla:Boolean read FHatirla write FHatirla;
@@ -35,6 +56,7 @@ type
      property Donem:string read FDonem write FDonem;
      property UserName:string read FUserName write FUserName;
      property UserPass:string read FUserPass write FUserPass;
+
 
   end;
 
@@ -47,15 +69,20 @@ type
     img_white: TSkinImageList;
     img_Color: TSkinImageList;
     img_Color1: TSkinImageList;
+    update: TUniSQL;
     procedure cn_dbConnectionLost(Sender: TObject; Component: TComponent;
       ConnLostCause: TConnLostCause; var RetryMode: TRetryMode);
     procedure DataModuleCreate(Sender: TObject);
   private
+
+    function VGet(const Index: Integer): Variant;
+    procedure VSet(const Index: Integer; const Value: Variant);
     { Private declarations }
   public
     FPhoneDialerService: IFMXPhoneDialerService;
     { Public declarations }
     procedure MakeCallPhone(s: string);
+    //property AppURL:Variant Index 0 read VGet write VSet;
   end;
 
 
@@ -134,12 +161,8 @@ begin
   try
     json.LoadFromFile(FolderApp + 'setting.json');
     json.ToRtti(Config, True);
-   (*
-    FServerIP:='192.168.1.99\SQL2014';
-    FServerUser:='sa';
-    FServerPass:='123456';
-    FSirket:='MÝKOTEK';
-    *)
+
+
   finally
     json.Free;
   end;
@@ -165,6 +188,8 @@ begin
   end;
 
 end;
+
+
 
 procedure Init;
  begin
@@ -202,6 +227,50 @@ begin
     end
   end
   else TDialogService.ShowMessage('PhoneDialer service not supported'+sLineBreak+s);
+end;
+
+function TDB.VGet(const Index: Integer): Variant;
+begin
+  case Index of
+   0:Result:='http://88.247.42.50:8080/bin/OpakSatis.apk';
+   1:Result:='Mikotek';
+  end;
+end;
+
+procedure TDB.VSet(const Index: Integer; const Value: Variant);
+begin
+
+end;
+
+{ TYetki }
+
+procedure TYetki.LoadStr(const s: string);
+ procedure StrToBool1(c:Char; var BEkle,BDuzenle,BSil:Boolean);
+ var
+  TempInt:Integer;
+ begin
+   TempInt:=StrToIntDef(c,0);
+   BEkle    :=TempInt>0;
+   BDuzenle :=TempInt>1;
+   BSil :=TempInt>2;
+ end;
+begin
+  if s.Length<>3 then
+  begin
+    Self.CariGor:=0;
+    Self.YetkiliEkle:=False;
+    Self.YetkiliSil:=False;
+    Self.NotEkle:=False;
+    Self.NotSil:=False;
+  end
+  else
+  begin
+   Self.CariGor:=StrToIntDef(s.Chars[0],0);
+   StrToBool1(s.Chars[1],YetkiliEkle,YetkiliDuzenle,YetkiliSil);
+   StrToBool1(s.Chars[2],NotEkle,NotDuzenle,NotSil);
+
+  end;
+  //EMessage:='000';
 end;
 
 initialization

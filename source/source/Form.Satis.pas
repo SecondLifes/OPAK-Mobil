@@ -10,7 +10,6 @@ uses
 
 type
   TF_Satis = class(TForm)
-    MobilePermissions1: TMobilePermissions;
     procedure FormShow(Sender: TObject);
     procedure FormKeyUp(Sender: TObject; var Key: Word; var KeyChar: Char;
       Shift: TShiftState);
@@ -69,10 +68,6 @@ end;
 
 procedure TF_Satis.FormShow(Sender: TObject);
 begin
-
-
-
-
   ShowFrame(TFrame(Frame_login), TFrame_login, Self, nil, nil, nil, Application, True, True, ufsefNone);
 end;
 

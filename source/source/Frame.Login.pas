@@ -11,7 +11,11 @@ uses
   uSkinFireMonkeyCheckBox, FMX.Edit, FMX.Controls.Presentation,
   uSkinFireMonkeyEdit, FMX.Layouts, uSkinMaterial, uSkinEditType,
   uSkinPageControlType, uSkinFireMonkeyPageControl, uSkinButtonType,
-  uSkinFireMonkeyButton, Data.DB, DBAccess, Uni;
+  uSkinFireMonkeyButton, Data.DB, DBAccess, Uni,
+  MobilePermissions.Model.Signature, MobilePermissions.Model.Dangerous,
+  MobilePermissions.Model.Standard, MobilePermissions.Component,
+  uSkinScrollBoxContentType, uSkinFireMonkeyScrollBoxContent,
+  uSkinScrollControlType, uSkinScrollBoxType, uSkinFireMonkeyScrollBox;
 
 type
   TFrame_login = class(TFBase)
@@ -41,7 +45,14 @@ type
     ClearEditButton3: TClearEditButton;
     edt_donem: TSkinFMXEdit;
     ClearEditButton6: TClearEditButton;
+    btn_guncelle: TSkinFMXButton;
+    MobilePermissions1: TMobilePermissions;
+    SkinFMXScrollBox1: TSkinFMXScrollBox;
+    SkinFMXScrollBoxContent1: TSkinFMXScrollBoxContent;
     procedure btn_loginClick(Sender: TObject);
+    procedure pagesChanging(Sender: TObject; NewIndex: Integer;
+      var AllowChange: Boolean);
+    procedure btn_guncelleClick(Sender: TObject);
   private
   procedure AfterConstruction;  override;
     { Private declarations }
@@ -54,7 +65,7 @@ var
 
 implementation
 Uses qjson,Help.DB,Help.uni,Help.Str, uUIFunction,WaitingFrame,HintFrame,System.Rtti ,
-Frame.Menu,FMX.DialogService,Form.Satis
+Frame.Menu,FMX.DialogService,Form.Satis,Apk.Installer
    //,RESTRequest4D
   //,Apk.Installer
  ;
@@ -98,27 +109,37 @@ begin
         try
           //DB.cn_DB.ConnectString := cn.ConnectString;
           cn.PerformConnect(False);
-          ECode:=cn._sqlResults('SELECT U.ID FROM dbo.TBLKULLANICISUBESB S LEFT OUTER JOIN dbo.TBLKULLANICISIRKETSB U ON (S.KULLANICIID = U.ID) '+
+          ECode:=-2;
+          EMessage:='';
+          cn._DoOpen('SELECT U.ID,U.mobilyetki FROM dbo.TBLKULLANICISUBESB S LEFT OUTER JOIN dbo.TBLKULLANICISIRKETSB U ON (S.KULLANICIID = U.ID) '+
                        'where U.KULLANICI_ADI='+QuotedStr(Frame_login.edt_username.Text)+' and U.SIFRE='+QuotedStr(Frame_login.edt_pass.Text)
-                       +' and S.SIRKET='+QuotedStr(Frame_login.edt_db.Text),-2);
+                       +' and S.SIRKET='+QuotedStr(Frame_login.edt_db.Text),
+                       procedure (dt:TDataset)
+                       begin
+                        ECode:=dt.recordcount;
+                        EMessage:=dt._S['mobilyetki'];
+                       end);
           if ECode<>-2 then
           begin
 
+            DB.cn_DB.Port:=cn.Port;
 
             if not cn._DoOpen('SELECT SERVER,DBNAME,DBUSER,DBPASSWORD FROM TBLSIRKET where AKTIF=''E'' and DBNAME='+QuotedStr(Frame_login.edt_db.Text),
             procedure (dt:TDataset)
             begin
-             DB.cn_DB.Server:=dt.FieldByName('SERVER').AsString;
+
+             //DB.cn_DB.Server:=dt.FieldByName('SERVER').AsString;
+             DB.cn_DB.Server:=cn.Server;
              DB.cn_DB.Database:=dt.FieldByName('DBNAME').AsString;
              DB.cn_DB.Username:=dt.FieldByName('DBUSER').AsString;
              DB.cn_DB.Password:=dt.FieldByName('DBPASSWORD').AsString;
+
             end ) then ECode:=-2
             else begin
                 if cn._sqlResultsCount('TBLSIRKETDONEMHAR','where SIRKET='+QuotedStr(DB.cn_DB.Database)+' and DONEM = '+Frame_login.edt_Donem.text)>0 then
                 begin
                 DB.cn_DB.PerformConnect(False);
-
-
+                Config.Yetki.LoadStr(EMessage);
                 Config.Hatirla:=Frame_login.sw_hatirla.Prop.Checked;
                 Config.Sirket:=Frame_login.edt_db.Text;
                 Config.UserID:=ECode;
@@ -137,6 +158,9 @@ begin
                  ECode:=0;
                 end else ECode:=-3;
             end;
+
+
+
           end;
 
 
@@ -197,35 +221,53 @@ begin
     sw_hatirla.Prop.Checked := True;
   end;
 
+  edt_ip.Text :='88.247.42.50,317';
+  edt_sql_user.Text:='sa';
+  edt_sql_pass.Text:='123456';
+  edt_db.Text:='MÝKOTEK';
+
+      with MobilePermissions1 do
+      begin
+          Dangerous.AccessCoarseLocation := True;
+          Dangerous.Camera               := True;
+          Dangerous.ReadExternalStorage  := True;
+          Dangerous.WriteExternalStorage := True;
+          Dangerous.CallPhone:=True;
+          Dangerous.AccessFineLocation:=True;
+
+          Signature.RequestInstallPackages:=true;
 
 
-  (*
-    edt_ip.Text :='192.168.1.99\SQL2014';
-    edt_sql_user.Text:='sa';
-    edt_sql_pass.Text:='123456';
-    edt_db.Text:='MÝKOTEK';
-   *)
+          Standard.AccessLocationExtra:=True;
+          Standard.AccessNetworkState:=True;
+
+          Standard.Internet:=True;
+         MobilePermissions1.Apply;
+      end;
+
+end;
+
+procedure TFrame_login.btn_guncelleClick(Sender: TObject);
+begin
+
+         APKInstaller(cAppURL,
+        procedure (const EventID:byte; var v:TValue)
+        begin
+           case EventID of
+            0 :ShowWaitingFrame('Ýndiriliyor...');
+            1: if not v.AsBoolean then
+                  DoMessage(Self,'Ýndirme iþlemi baþarýsýz'+sLineBreak+
+                  'Lütfen Baðlantýnýzý kontrol edin','DAS TEKNOLOJÝ', TMsgDlgType.mtError);
+            99:HideWaitingFrame;
+           end;
+        end
+        );
 end;
 
 procedure TFrame_login.btn_loginClick(Sender: TObject);
 begin
 
-    with F_Satis.MobilePermissions1 do
-  begin
-      Dangerous.AccessCoarseLocation := True;
-      Dangerous.Camera               := True;
-      Dangerous.ReadExternalStorage  := True;
-      Dangerous.WriteExternalStorage := True;
-      Dangerous.CallPhone:=True;
 
-      Signature.RequestInstallPackages:=true;
-
-      Standard.AccessLocationExtra:=True;
-      Standard.AccessNetworkState:=True;
-      Standard.Internet:=True;
-
-  end;
-  F_Satis.MobilePermissions1.Apply;
 
     if edt_ip.Text.IsEmpty or edt_sql_user.Text.IsEmpty or edt_sql_pass.Text.IsEmpty then
   begin
@@ -243,6 +285,12 @@ begin
 
   DoServerTest;
 
+end;
+
+procedure TFrame_login.pagesChanging(Sender: TObject; NewIndex: Integer;
+  var AllowChange: Boolean);
+begin
+  AllowChange:=False;
 end;
 
 end.

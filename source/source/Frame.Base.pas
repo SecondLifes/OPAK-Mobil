@@ -17,11 +17,22 @@ type
   private
     { Private declarations }
   public
+      procedure AfterConstruction; override;
+
     { Public declarations }
   end;
 
 implementation
 
 {$R *.fmx}
+
+{ TFBase }
+
+procedure TFBase.AfterConstruction;
+begin
+  inherited AfterConstruction;
+  lbl_Info.Caption:=Format('M Ý K O T E K (%s v.%s)',[cAppName,cAppVersiyon]);
+
+end;
 
 end.

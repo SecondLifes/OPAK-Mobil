@@ -5,14 +5,15 @@
     android:versionCode="%versionCode%"
     android:versionName="%versionName%"
     android:installLocation="%installLocation%">
-    <uses-sdk android:minSdkVersion="%minSdkVersion%" android:targetSdkVersion="%targetSdkVersion%" />
+    <uses-sdk android:minSdkVersion="19" android:targetSdkVersion="%targetSdkVersion%" />
+	<!-- %minSdkVersion% %targetSdkVersion%-->
 <%uses-permission%>
     <uses-feature android:glEsVersion="0x00020000" android:required="true"/>
     <queries>
 <%queries-child-elements%>
     </queries>
     <application
-        android:usesCleartextTraffic="true"
+	    android:usesCleartextTraffic="true"
 		android:persistent="%persistent%"
         android:restoreAnyVersion="%restoreAnyVersion%"
         android:label="%label%"

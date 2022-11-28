@@ -1,4 +1,4 @@
-unit Frame.Cari;
+ï»¿unit Frame.Cari;
 
 interface
 
@@ -18,10 +18,11 @@ uses
   uSkinVirtualListType, uSkinListBoxType, uSkinFireMonkeyListBox,
   uSkinItemDesignerPanelType, uSkinFireMonkeyItemDesignerPanel, System.Sensors,
   System.Sensors.Components, FMX.WebBrowser, Data.DB, MemDS, DBAccess, Uni
-  ;
+  ,uTimerTask, uSkinScrollBoxContentType, uSkinFireMonkeyScrollBoxContent,uUIFunction,FMX.VirtualKeyboard,
+  FMX.ListBox, uSkinFireMonkeyComboBox;
 
 type
-  TFForm_Cari = class(TFBase)
+  TFForm_Cari = class(TFBase)//IFrameVirtualKeyboardEvent
     imglistTabIcon: TSkinImageList;
     pcMain: TSkinFMXPageControl;
     Msg_Count: TSkinFMXNotifyNumberIcon;
@@ -67,17 +68,17 @@ type
     lbl_iletisim_tel: TSkinFMXLabel;
     lbl_iletisim_cep: TSkinFMXLabel;
     idpItemPanDrag: TSkinFMXItemDesignerPanel;
-    btnCall: TSkinFMXButton;
-    btnDel: TSkinFMXButton;
+    btn_YetkilCall: TSkinFMXButton;
+    btn_YetkiliDel: TSkinFMXButton;
     btn_new_iletisim: TSkinFMXButton;
-    btn_edit: TSkinFMXButton;
+    btn_yetkiliEdit: TSkinFMXButton;
     list_mesajlar: TSkinFMXListBox;
     list_msg_designer: TSkinFMXItemDesignerPanel;
     msg_tarih: TSkinFMXLabel;
     msg_conted: TSkinFMXLabel;
     list_msg_menu: TSkinFMXItemDesignerPanel;
-    SkinFMXButton2: TSkinFMXButton;
-    SkinFMXButton3: TSkinFMXButton;
+    btn_not_sil: TSkinFMXButton;
+    btn_not_edit: TSkinFMXButton;
     msg_user: TSkinFMXLabel;
     LocationSensor1: TLocationSensor;
     btn_konum: TSkinFMXButton;
@@ -90,17 +91,41 @@ type
     SkinFMXPanel2: TSkinFMXPanel;
     shop_adet_fyt: TSkinFMXLabel;
     shop_fiyat: TSkinFMXLabel;
+    TimerTaskEvent1: TTimerTaskEvent;
+    tmr: TTimer;
+    edt_tel: TSkinFMXEdit;
+    ClearEditButton6: TClearEditButton;
+    Contend: TSkinFMXScrollBoxContent;
+    SkinFMXPanel1_Material: TSkinPanelDefaultMaterial;
+    pnl_1: TSkinFMXPanel;
+    pnl_2: TSkinFMXPanel;
+    pnl_3: TSkinFMXPanel;
+    pnl_4: TSkinFMXPanel;
+    pnl_5: TSkinFMXPanel;
+    pnl_6: TSkinFMXPanel;
+    pnl_7: TSkinFMXPanel;
+    pnl_8: TSkinFMXPanel;
+    pnl_9: TSkinFMXPanel;
+    pnl_10: TSkinFMXPanel;
+    pnl_VirtualKeyboard: TSkinFMXPanel;
+    btn_new_not: TSkinFMXButton;
+    pnl_11: TSkinFMXPanel;
+    edt_mail: TSkinFMXEdit;
+    ClearEditButton7: TClearEditButton;
+    pnl_12: TSkinFMXPanel;
+    com_cari_tipi: TSkinFMXComboBox;
     procedure btnReturnClick(Sender: TObject);
     procedure btn_kayetClick(Sender: TObject);
     procedure lbl_iletisim_telClick(Sender: TObject);
     procedure pcMainChanging(Sender: TObject; NewIndex: Integer;
       var AllowChange: Boolean);
     procedure btn_new_iletisimClick(Sender: TObject);
-    procedure SkinFMXButton2Click(Sender: TObject);
-    procedure SkinFMXButton3Click(Sender: TObject);
+    procedure btn_not_silClick(Sender: TObject);
+    procedure btn_not_editClick(Sender: TObject);
     procedure LocationSensor1LocationChanged(Sender: TObject; const OldLocation,
       NewLocation: TLocationCoord2D);
     procedure btn_konumClick(Sender: TObject);
+    procedure tmrTimer(Sender: TObject);
   private
 
     procedure LoadCari(const ACariID:Cardinal);
@@ -109,9 +134,13 @@ type
     procedure Clear;
     procedure MesajLoad;
     procedure MesajSave;
+    procedure ClearALL;
     procedure ShopListLoad;
     { Private declarations }
+    procedure DoVirtualKeyboardShow(KeyboardVisible: Boolean; const Bounds: TRect);
+    procedure DoVirtualKeyboardHide(KeyboardVisible: Boolean; const Bounds: TRect);
   public
+
       FCari:TCari;
       FGeocoder: TGeocoder;
       procedure BackFrame;
@@ -131,36 +160,43 @@ type
  procedure FormCari(const ACariID:Integer);
 
 implementation
-uses Form.Cariler,uUIFunction,HintFrame,WaitingFrame,MessageBoxFrame,Frame.iletisim,Genel,Help.uni,Help.DB;
+uses Form.Satis,Form.Cariler,HintFrame,WaitingFrame,MessageBoxFrame,
+Frame.iletisim,Genel,Help.uni,Help.DB,System.Threading,FMX.DialogService;
 
 {$R *.fmx}
 
   procedure FormCari(const ACariID:Integer);
   begin
-    TThread.CreateAnonymousThread(
-    procedure()
-    begin
-      TThread.Synchronize(TThread.CurrentThread,
-        procedure()
-        begin
-           WaitingFrame.ShowWaitingFrame('Yükleniyor...');
-         end);
-
-    end).Start;
     ShowFrame(TFrame(FForm_Cari),TFForm_Cari,Application.MainForm,nil,nil,nil,Application);
+    WaitingFrame.ShowWaitingFrame( 'YÃ¼kleniyor...');
+    FForm_Cari.tmr.Tag:=ACariID;
+    FForm_Cari.tmr.Enabled:=True;
 
 
-
-    FForm_Cari.LoadCari(ACariID);
   end;
 
 
 { TF_Cari }
 
 procedure TFForm_Cari.AfterConstruction;
+
+
 begin
   inherited AfterConstruction;
+   Self.pnl_VirtualKeyboard.Height:=0;
+
+  btn_new_iletisim.Visible:=DBOpak.Config.Yetki.YetkiliEkle;
+  btn_yetkiliEdit.Visible:=DBOpak.Config.Yetki.YetkiliDuzenle;
+  btn_YetkiliDel.Visible:=DBOpak.Config.Yetki.YetkiliSil;
+
+  btn_not_edit.Visible:=DBOpak.Config.Yetki.NotDuzenle;
+  btn_not_sil.Visible:=DBOpak.Config.Yetki.NotSil;
+
+  btn_new_iletisim.Visible:=False;
+  btn_new_not.Visible:=False;
+
   pcMain.Prop.ActivePageIndex:=0;
+
   iletisimListe:=TIletisimListe.Create(list_iletisim.Prop);
   iletisimListe.ClearNew(false);
   FCari:=TCari.Create(0);
@@ -210,10 +246,47 @@ end;
 
 
 
+procedure TFForm_Cari.ClearALL;
+begin
+ list_shop.Prop.BeginUpdate;
+  list_shop.Prop.Items.Clear();
+ list_shop.Prop.EndUpdate;
+ list_mesajlar.Prop.BeginUpdate;
+    list_mesajlar.Prop.Items.Clear();
+ list_mesajlar.Prop.EndUpdate;
+end;
+
 destructor TFForm_Cari.Destroy;
 begin
   FCari.Free;
   inherited Destroy;
+end;
+
+procedure TFForm_Cari.DoVirtualKeyboardHide(KeyboardVisible: Boolean;
+  const Bounds: TRect);
+begin
+Contend.Height:=Contend.Height-Self.pnl_VirtualKeyboard.Height;
+ Self.pnl_VirtualKeyboard.Height:=0;
+end;
+
+procedure TFForm_Cari.DoVirtualKeyboardShow(KeyboardVisible: Boolean; const Bounds: TRect);
+var
+  AFixTop:Double;
+begin
+  (*
+  if Bounds.Height-GetGlobalVirtualKeyboardFixer.VirtualKeyboardHideHeight>Self.pnl_VirtualKeyboard.Height then
+  begin
+    Self.pnl_VirtualKeyboard.Height:=RectHeight(Bounds)-GetGlobalVirtualKeyboardFixer.VirtualKeyboardHideHeight;
+    AFixTop:=Self.pnlLogin.Top+Self.edtPass.Top+Self.edtPass.Height-Self.pnl_VirtualKeyboard.Top;
+    Self.sbClient.VertScrollBar.Properties.Position:=AFixTop;
+  end;
+*)
+
+ //{$IFDEF ANDROID}
+   if Bounds.Height-GetGlobalVirtualKeyboardFixer.VirtualKeyboardHideHeight>Self.pnl_VirtualKeyboard.Height then
+      Self.pnl_VirtualKeyboard.Height:=RectHeight(Bounds)-GetGlobalVirtualKeyboardFixer.VirtualKeyboardHideHeight;
+    Contend.Height:=Contend.Height+ Self.pnl_VirtualKeyboard.Height;
+ // {$ENDIF};
 end;
 
 procedure TFForm_Cari.lbl_iletisim_telClick(Sender: TObject);
@@ -235,10 +308,10 @@ begin
     1:DB.MakeCallPhone(tel);
     2,3:DB.MakeCallPhone(cep);
     4:begin
-              DoMessage(Self,'Ýletiþim Bilgisi silinsin mi ?',
+              DoMessage(Self,'Ä°letiÅŸim Bilgisi silinsin mi ?',
               itm.Caption+sLineBreak+itm.Detail+sLineBreak+tel+sLineBreak+cep,
                                   TMsgDlgType.mtInformation,
-                                  'Hayýr'+','+'Evet',
+                                  'HayÄ±r'+','+'Evet',
                                   procedure ( obj: TObject; AIsOk:boolean; edt1,edt2:string)
                                   begin
                                    if AISok then
@@ -262,15 +335,19 @@ procedure TFForm_Cari.LoadCari(const ACariID: Cardinal);
 var
  itm:TRealSkinItem;
 begin
-
+ ClearALL;
  pcMain.Prop.ActivePageIndex:=0;
  FCari.LoadDB(ACariID);
+
  lbl_cariid.Text:=FCari.CariID.ToString;
  lbl_cari_kod.Text:=FCari.CariKodu;
+ com_cari_tipi.Text:=FCari.CariTipi;
  edt_Unvani.Text:=FCari.Unvani;
  edt_Adi.Text:=FCari.Adi;
  edt_soyad.Text:=FCari.SoyAdi;
+ edt_tel.Text:= FCari.Telefon;
  edt_tc.Text:=FCari.TCNo;
+ edt_mail.Text:=FCari.EMail;
  edt_vergiDaire.Text:=FCari.VergiDairesi;
  edt_vergino.Text:=FCari.VergiNo;
  edt_sehir.Text:=FCari.IL;
@@ -291,7 +368,7 @@ begin
       TThread.Synchronize(TThread.CurrentThread,
         procedure()
         begin
-           WaitingFrame.HideWaitingFrame;
+
             FCariler.Tag:=0;
          end);
 
@@ -346,32 +423,33 @@ var
  arg:TArray<string>;
  itm:TRealSkinItem;
 begin
- if not FCari.Aciklama.text.IsEmpty then
-  begin
-    list_mesajlar.Prop.BeginUpdate;
-    list_mesajlar.Prop.Items.Clear();
-     for s in FCari.Aciklama do
+     list_mesajlar.Prop.BeginUpdate;
+     list_mesajlar.Prop.Items.Clear();
+     if not FCari.Aciklama.text.IsEmpty then
       begin
-        arg:=s.Split(['|']);
-         itm:=list_mesajlar.Prop.Items.Add;
 
-             if Length(arg)>1 then
-             begin
-               itm.Caption:=arg[0];
-               itm.Detail:=arg[1];
-               itm.Detail1:=arg[2];
-             end else
-             begin
-               itm.Caption:=DateToStr(Now);
-               itm.Detail:=Config.UserName;
-               itm.Detail1:=s;
-             end;
+         for s in FCari.Aciklama do
+          begin
+            arg:=s.Split(['|']);
+             itm:=list_mesajlar.Prop.Items.Add;
+
+                 if Length(arg)>1 then
+                 begin
+                   itm.Caption:=arg[0];
+                   itm.Detail:=arg[1];
+                   itm.Detail1:=arg[2];
+                 end else
+                 begin
+                   itm.Caption:=DateToStr(Now);
+                   itm.Detail:='Eski KayÄ±t';
+                   itm.Detail1:=s;
+                 end;
+
+          end;
 
       end;
      Msg_Count.Prop.Number:=list_mesajlar.Prop.Items.Count;
-     list_mesajlar.Prop.EndUpdate;
-  end;
-
+   list_mesajlar.Prop.EndUpdate;
 end;
 
 procedure TFForm_Cari.MesajSave;
@@ -410,15 +488,23 @@ procedure TFForm_Cari.pcMainChanging(Sender: TObject; NewIndex: Integer;
   var AllowChange: Boolean);
 begin
 btn_kayet.Visible:=(NewIndex in [0,2]);
-btn_new_iletisim.Visible:=NewIndex=1;
+
+btn_new_iletisim.Visible:=((NewIndex=1) and (Config.Yetki.YetkiliEkle));
+btn_new_not.Visible:=((NewIndex=2) and (Config.Yetki.NotEkle));
+
 end;
 
 procedure TFForm_Cari.SaveCari;
+var
+ i:Integer;
 begin
- WaitingFrame.ShowWaitingFrame(Self,'Cari Kayýt...');
+ WaitingFrame.ShowWaitingFrame(Self,'Cari KayÄ±t...');
+ FCari.CariTipi:=com_cari_tipi.Text;
  FCari.Unvani:=edt_Unvani.Text;
  FCari.Adi:=edt_Adi.Text;
  FCari.SoyAdi:=edt_soyad.Text;
+ FCari.Telefon:=edt_tel.Text;
+ FCari.EMail:=edt_mail.Text;
  FCari.TCNo:=edt_tc.Text;
  FCari.VergiDairesi:=edt_vergiDaire.Text;
  FCari.VergiNo:=edt_vergino.Text;
@@ -428,10 +514,16 @@ begin
  MesajSave;
 
  try
+  i:=FCari.CariID;
  if FCari.SaveDB then
-    HintFrame.ShowHintFrame(Self,'Kayýt Baþarýlý...')
+    HintFrame.ShowHintFrame(Self,'KayÄ±t BaÅŸarÄ±lÄ±...')
   else
     HintFrame.ShowHintFrame(Self,'Hata...');
+    if i<1 then
+    begin
+      lbl_cariid.Text:=FCari.CariID.ToString;
+      lbl_cari_kod.Text:=FCari.CariKodu;
+    end;
  finally
    HideWaitingFrame;
  end;
@@ -455,10 +547,11 @@ begin
      itm.Detail3:=Cur2Str(dt._D['NETTOPLAM']);
  end
  );
+
  list_shop.Prop.EndUpdate;
 end;
 
-procedure TFForm_Cari.SkinFMXButton2Click(Sender: TObject);
+procedure TFForm_Cari.btn_not_silClick(Sender: TObject);
 begin
   list_mesajlar.Prop.Items.BeginUpdate;
   if list_mesajlar.Prop.InteractiveItem<>nil then
@@ -467,19 +560,33 @@ begin
   list_mesajlar.Prop.Items.EndUpdate();
 end;
 
-procedure TFForm_Cari.SkinFMXButton3Click(Sender: TObject);
+procedure TFForm_Cari.btn_not_editClick(Sender: TObject);
 var
  itm:TSkinItem;
+ i:Integer;
+ TempStr:string;
 begin
+   i:=TFmxObject(Sender).Tag;
+   if i>1 then
+     begin
+         itm :=list_mesajlar.Prop.InteractiveItem;
+         if itm=nil then exit;
+         list_mesajlar.Prop.StopItemPanDrag;
+         TempStr:=itm.Detail1;
+     end;
 
-   itm :=list_mesajlar.Prop.InteractiveItem;
-   if itm=nil then exit;
-   list_mesajlar.Prop.StopItemPanDrag;
-  DoMessage(Self,DateToStr(Now),Config.UserName,TMsgDlgType.mtInformation,'Ýptal,Kaydet',
+  DoMessage(Self,DateToStr(Now),Config.UserName,TMsgDlgType.mtInformation,'Ä°ptal,Kaydet',
   procedure (Aobj:TObject;ADrum:Boolean;AStr1,AStr2:string)
   begin
    if ADrum then
     begin
+     if i=1 then
+      begin
+       itm:=list_mesajlar.Prop.Items.Add;
+       Msg_Count.Prop.Number:=list_mesajlar.Prop.Items.Count;
+      end;
+
+
      itm.Caption:=DateToStr(Now);
      itm.Detail:=Config.UserName;
      itm.Detail1:=AStr1;
@@ -488,12 +595,21 @@ begin
   );
 
           GlobalMessageBoxFrame.pnlInput1.Caption:='Mesaj';
-          GlobalMessageBoxFrame.edtInput1.Text:=list_mesajlar.Prop.InteractiveItem.Detail1;
+          GlobalMessageBoxFrame.edtInput1.Text:=TempStr;
           GlobalMessageBoxFrame.edtInput1.TextPrompt:='';
           GlobalMessageBoxFrame.edtInput1.FilterChar:='';
           GlobalMessageBoxFrame.edtInput1.KeyboardType:=TVirtualKeyboardType.Default;
           GlobalMessageBoxFrame.btnDec1.Visible:=False;
           GlobalMessageBoxFrame.btnInc1.Visible:=False;
+end;
+
+procedure TFForm_Cari.tmrTimer(Sender: TObject);
+begin
+  inherited;
+    FForm_Cari.LoadCari(tmr.Tag);
+    WaitingFrame.HideWaitingFrame;
+    tmr.Tag:=0;
+    tmr.Enabled:=False;
 end;
 
 end.

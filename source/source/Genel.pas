@@ -320,8 +320,15 @@ begin
   prop.Items.Clear();
   s:='SELECT C.ID, C.KOD,C.ADI,C.CARIADI,C.CARISOYADI,C.CEPTEL1,C.IL,C.ILCE,'+sLineBreak+
 'ISNULL(SUM(HR.BORC), 0) AS BORC, ISNULL(SUM(HR.ALACAK), 0) AS ALACAK'+sLineBreak+
-'FROM  dbo.TBLCARISB C INNER JOIN dbo.TBLCARIHAR HR ON (C.ID = HR.CARIID)'+sLineBreak+
-'WHERE HR.KAYITTIPI = 0 AND HR.ISLEMTIPI IN (0,1) AND DONEM = '+Config.Donem;
+'FROM  dbo.TBLCARISB C LEFT JOIN dbo.TBLCARIHAR HR ON (C.ID = HR.CARIID)'+sLineBreak+
+'WHERE COALESCE(HR.KAYITTIPI, 0) = 0 AND COALESCE(HR.ISLEMTIPI, 0) IN (0,1) AND COALESCE(DONEM, '+Config.Donem+') = '+Config.Donem;
+
+ case DBOpak.Config.Yetki.CariGor of
+   0:s:=s+' and TIPI IN(''Alýcý'',''Perakende'')';
+   1:s:=s+' and TIPI IN(''Alýcý'',''Alýcý ve Satýcý'',''Perakende'')';
+   2:s:=s+' and TIPI IN(''Alýcý'',''Satýcý'',''Alýcý ve Satýcý'',''Perakende'')';
+ end;
+
  //'WHERE TIPI IN(''Alýcý'',''Satýcý'',''Alýcý ve Satýcý'',''Perakende'')';
   if not AFiltre.IsEmpty then
   begin

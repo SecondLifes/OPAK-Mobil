@@ -1,172 +1,6 @@
 inherited FCariler: TFCariler
   inherited rect_back: TSkinFMXCalloutRect
-    SelfOwnMaterial.DrawPathParam.PathActions = <
-      item
-        Y = 11.000000000000000000
-        SizeType = dpstPixel
-        ActionType = patMoveTo
-      end
-      item
-        Y = 11.000000000000000000
-        Y1 = 11.000000000000000000
-        Y2 = 11.000000000000000000
-        SizeType = dpstPixel
-        ActionType = patCurveTo
-      end
-      item
-        X = 162.500000000000000000
-        Y = 11.000000000000000000
-        SizeType = dpstPixel
-        ActionType = patLineTo
-      end
-      item
-        X = 174.000000000000000000
-        SizeType = dpstPixel
-        ActionType = patLineTo
-      end
-      item
-        X = 185.500000000000000000
-        Y = 11.000000000000000000
-        SizeType = dpstPixel
-        ActionType = patLineTo
-      end
-      item
-        X = 348.000000000000000000
-        Y = 11.000000000000000000
-        SizeType = dpstPixel
-        ActionType = patLineTo
-      end
-      item
-        X = 348.000000000000000000
-        Y = 11.000000000000000000
-        X1 = 348.000000000000000000
-        Y1 = 11.000000000000000000
-        X2 = 348.000000000000000000
-        Y2 = 11.000000000000000000
-        SizeType = dpstPixel
-        ActionType = patCurveTo
-      end
-      item
-        X = 348.000000000000000000
-        Y = 600.000000000000000000
-        SizeType = dpstPixel
-        ActionType = patLineTo
-      end
-      item
-        X = 348.000000000000000000
-        Y = 600.000000000000000000
-        X1 = 348.000000000000000000
-        Y1 = 600.000000000000000000
-        X2 = 348.000000000000000000
-        Y2 = 600.000000000000000000
-        SizeType = dpstPixel
-        ActionType = patCurveTo
-      end
-      item
-        Y = 600.000000000000000000
-        SizeType = dpstPixel
-        ActionType = patLineTo
-      end
-      item
-        Y = 600.000000000000000000
-        Y1 = 600.000000000000000000
-        Y2 = 600.000000000000000000
-        SizeType = dpstPixel
-        ActionType = patCurveTo
-      end
-      item
-        Y = 11.000000000000000000
-        SizeType = dpstPixel
-        ActionType = patLineTo
-      end
-      item
-        SizeType = dpstPixel
-        ActionType = patDrawPath
-      end>
     inherited rect_orta: TSkinFMXCalloutRect
-      SelfOwnMaterial.DrawPathParam.PathActions = <
-        item
-          Y = 11.000000000000000000
-          SizeType = dpstPixel
-          ActionType = patMoveTo
-        end
-        item
-          Y = 11.000000000000000000
-          Y1 = 11.000000000000000000
-          Y2 = 11.000000000000000000
-          SizeType = dpstPixel
-          ActionType = patCurveTo
-        end
-        item
-          X = 162.500000000000000000
-          Y = 11.000000000000000000
-          SizeType = dpstPixel
-          ActionType = patLineTo
-        end
-        item
-          X = 174.000000000000000000
-          SizeType = dpstPixel
-          ActionType = patLineTo
-        end
-        item
-          X = 185.500000000000000000
-          Y = 11.000000000000000000
-          SizeType = dpstPixel
-          ActionType = patLineTo
-        end
-        item
-          X = 348.000000000000000000
-          Y = 11.000000000000000000
-          SizeType = dpstPixel
-          ActionType = patLineTo
-        end
-        item
-          X = 348.000000000000000000
-          Y = 11.000000000000000000
-          X1 = 348.000000000000000000
-          Y1 = 11.000000000000000000
-          X2 = 348.000000000000000000
-          Y2 = 11.000000000000000000
-          SizeType = dpstPixel
-          ActionType = patCurveTo
-        end
-        item
-          X = 348.000000000000000000
-          Y = 550.000000000000000000
-          SizeType = dpstPixel
-          ActionType = patLineTo
-        end
-        item
-          X = 348.000000000000000000
-          Y = 550.000000000000000000
-          X1 = 348.000000000000000000
-          Y1 = 550.000000000000000000
-          X2 = 348.000000000000000000
-          Y2 = 550.000000000000000000
-          SizeType = dpstPixel
-          ActionType = patCurveTo
-        end
-        item
-          Y = 550.000000000000000000
-          SizeType = dpstPixel
-          ActionType = patLineTo
-        end
-        item
-          Y = 550.000000000000000000
-          Y1 = 550.000000000000000000
-          Y2 = 550.000000000000000000
-          SizeType = dpstPixel
-          ActionType = patCurveTo
-        end
-        item
-          Y = 11.000000000000000000
-          SizeType = dpstPixel
-          ActionType = patLineTo
-        end
-        item
-          SizeType = dpstPixel
-          ActionType = patDrawPath
-        end>
       object edt_search: TSkinFMXEdit
         Touch.InteractiveGestures = [LongTap, DoubleTap]
         Align = Top
@@ -223,12 +57,10 @@ inherited FCariler: TFCariler
         IsUseDefaultStyle = False
         EditProperties.HelpIcon.IsClipRound = False
         EditProperties.HelpIcon.ImageIndex = 37
-        EditProperties.HelpIcon.SkinImageList = DB.img_Color
         EditProperties.IsDrawHelpWhenFocused = True
         EditProperties.IsAlwaysDrawHelp = False
         Properties.HelpIcon.IsClipRound = False
         Properties.HelpIcon.ImageIndex = 37
-        Properties.HelpIcon.SkinImageList = DB.img_Color
         Properties.IsDrawHelpWhenFocused = True
         Properties.IsAlwaysDrawHelp = False
         IsInScrollBox = False
@@ -601,7 +433,7 @@ inherited FCariler: TFCariler
           4900730043006C006900700052006F0075006E00640000002F6626546A52C188
           10620657625F00000000000007000000001200040000004900740065006D0054
           0079007000650000000000000019000000000C000500000043006F006C006F00
-          72000000FFFFFFFF00040000000010001E000000430061007000740069006F00
+          72000000FFFFFFFF30040000000010001E000000430061007000740069006F00
           6E00000045006D007200610068002000420041005E01500049004E0041005200
           000004000000000E0020000000440065007400610069006C0000003000280035
           0035003500290020003500350037002D00350035003900350000000400000000
@@ -656,7 +488,7 @@ inherited FCariler: TFCariler
           0043006C006900700052006F0075006E00640000002F6626546A52C188106206
           57625F00000000000007000000001200040000004900740065006D0054007900
           7000650000000000000019000000000C000500000043006F006C006F00720000
-          0032CD9AFF000400000000100024000000430061007000740069006F006E0000
+          0032CD9AFFB10400000000100024000000430061007000740069006F006E0000
           0041006200640075006C006B006500720069006D00200042004F005900440041
           004B00000004000000000E001C000000440065007400610069006C0000003000
           3500330036002D003400370038002D0035003500390035000000040000000010
@@ -711,7 +543,7 @@ inherited FCariler: TFCariler
           6900700052006F0075006E00640000002F6626546A52C18810620657625F0000
           0000000007000000001200040000004900740065006D00540079007000650000
           000000000019000000000C000500000043006F006C006F00720000000000FFFF
-          72040000000010001A000000430061007000740069006F006E00000042006900
+          4C040000000010001A000000430061007000740069006F006E00000042006900
           6C0061006C002000590049004C004D0041005A00000004000000000E001C0000
           00440065007400610069006C00000030003500330036002D003900360035002D
           0034003100350032000000040000000010000C00000044006500740061006900
@@ -965,7 +797,7 @@ inherited FCariler: TFCariler
             Properties.AutoSize = False
             Properties.Picture.IsClipRound = False
             Properties.Picture.ImageIndex = 7
-            Properties.Picture.SkinImageList = DB.img_Color
+            Properties.Picture.SkinImageList = DB.img_white
             Properties.Animated = False
             Properties.AnimateSpeed = 10.000000000000000000
             Properties.GIFDelayExp = 12
@@ -1299,6 +1131,89 @@ inherited FCariler: TFCariler
         Properties.IsPushed = False
         Properties.Icon.IsClipRound = False
         Properties.Icon.ImageIndex = 6
+        Properties.PushedIcon.IsClipRound = False
+        Properties.PushedIcon.ImageIndex = 0
+        Properties.ButtonIndex = -1
+        Properties.PushedGroupIndex = 0
+      end
+      object btn_new_cari: TSkinFMXButton
+        Tag = 11
+        ParentMouseEvent = False
+        DirectUIVisible = False
+        ComponentTypeUseKind = ctukName
+        MaterialUseKind = mukSelfOwn
+        KeepSelfOwnMaterial = True
+        ComponentTypeName = 'NormalPushed'
+        SelfOwnMaterial.BackColor.Color = claWhite
+        SelfOwnMaterial.BackColor.DrawRectSetting.Width = 100.000000000000000000
+        SelfOwnMaterial.BackColor.DrawRectSetting.Height = 100.000000000000000000
+        SelfOwnMaterial.BackColor.DrawEffectSetting.MouseDownEffect.CommonEffectTypes = [dpcetAlphaChange]
+        SelfOwnMaterial.BackColor.DrawEffectSetting.MouseDownEffect.BorderWidth = 1.000000000000000000
+        SelfOwnMaterial.BackColor.DrawEffectSetting.MouseDownEffect.FillColorChangeType = cctDarkness
+        SelfOwnMaterial.BackColor.DrawEffectSetting.MouseDownEffect.EffectTypes = [drpetFillColorChange]
+        SelfOwnMaterial.BackColor.DrawEffectSetting.MouseOverEffect.BorderWidth = 1.000000000000000000
+        SelfOwnMaterial.BackColor.DrawEffectSetting.MouseOverEffect.FillColorChangeType = cctNone
+        SelfOwnMaterial.BackColor.DrawEffectSetting.PushedEffect.BorderWidth = 1.000000000000000000
+        SelfOwnMaterial.BackColor.DrawEffectSetting.PushedEffect.FillColorChangeType = cctNone
+        SelfOwnMaterial.BackColor.DrawEffectSetting.DisabledEffect.FillColorChangeType = cctNone
+        SelfOwnMaterial.BackColor.DrawEffectSetting.FocusedEffect.FillColorChangeType = cctNone
+        SelfOwnMaterial.IsTransparent = False
+        SelfOwnMaterial.IsAutoCenterIconAndCaption = False
+        SelfOwnMaterial.DrawDetailParam.FontTrimming = fttNone
+        SelfOwnMaterial.DrawDetailParam.FontHorzAlign = fhaLeft
+        SelfOwnMaterial.DrawDetailParam.FontVertAlign = fvaBottom
+        SelfOwnMaterial.DrawDetail1Param.FontTrimming = fttNone
+        SelfOwnMaterial.DrawDetail1Param.FontHorzAlign = fhaLeft
+        SelfOwnMaterial.DrawDetail1Param.FontVertAlign = fvaTop
+        SelfOwnMaterial.DrawHelpTextParam.FontColor = claGray
+        SelfOwnMaterial.DrawHelpTextParam.DrawFont.Color = claGray
+        SelfOwnMaterial.DrawHelpTextParam.DrawFont.FontColor.Color = claGray
+        SelfOwnMaterial.DrawHelpTextParam.FontTrimming = fttNone
+        SelfOwnMaterial.DrawHelpTextParam.FontHorzAlign = fhaLeft
+        SelfOwnMaterial.DrawHelpTextParam.FontVertAlign = fvaTop
+        SelfOwnMaterial.DrawIconParam.IsAutoFit = True
+        SelfOwnMaterial.DrawIconParam.PictureVertAlign = pvaCenter
+        SelfOwnMaterial.DrawIconParam.DrawRectSetting.Width = 100.000000000000000000
+        SelfOwnMaterial.DrawIconParam.DrawRectSetting.Height = 100.000000000000000000
+        SelfOwnMaterial.DrawIconParam.DrawEffectSetting.MouseDownEffect.CommonEffectTypes = [dpcetOffsetChange]
+        SelfOwnMaterial.DrawCaptionParam.FontSize = 16.000000000000000000
+        SelfOwnMaterial.DrawCaptionParam.FontColor = claWhite
+        SelfOwnMaterial.DrawCaptionParam.DrawFont.Size = 16.000000000000000000
+        SelfOwnMaterial.DrawCaptionParam.DrawFont.Color = claWhite
+        SelfOwnMaterial.DrawCaptionParam.DrawFont.FontColor.Color = claWhite
+        SelfOwnMaterial.DrawCaptionParam.FontTrimming = fttNone
+        SelfOwnMaterial.DrawCaptionParam.FontHorzAlign = fhaCenter
+        SelfOwnMaterial.DrawCaptionParam.FontVertAlign = fvaCenter
+        SelfOwnMaterial.DrawCaptionParam.DrawRectSetting.Left = 20.000000000000000000
+        SelfOwnMaterial.DrawCaptionParam.DrawRectSetting.Enabled = True
+        SelfOwnMaterial.DrawCaptionParam.DrawRectSetting.SizeType = dpstPixel
+        SelfOwnMaterial.NormalPicture.IsClipRound = False
+        SelfOwnMaterial.NormalPicture.ImageIndex = 0
+        SelfOwnMaterial.HoverPicture.IsClipRound = False
+        SelfOwnMaterial.DownPicture.IsClipRound = False
+        SelfOwnMaterial.DisabledPicture.IsClipRound = False
+        SelfOwnMaterial.FocusedPicture.IsClipRound = False
+        SelfOwnMaterial.PushedPicture.IsClipRound = False
+        SelfOwnMaterial.PushedPicture.ImageIndex = 0
+        SelfOwnMaterial.DrawPictureParam.IsStretch = True
+        SelfOwnMaterial.DrawPictureParam.PictureHorzAlign = phaCenter
+        SelfOwnMaterial.DrawPictureParam.PictureVertAlign = pvaCenter
+        SelfOwnMaterial.DrawPictureParam.DrawRectSetting.Width = 100.000000000000000000
+        SelfOwnMaterial.DrawPictureParam.DrawRectSetting.Height = 100.000000000000000000
+        MouseDownFocus = False
+        Align = Right
+        ClipChildren = True
+        Position.X = 298.000000000000000000
+        Size.Width = 50.000000000000000000
+        Size.Height = 50.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 4
+        OnClick = btn_new_cariClick
+        Properties.AutoSize = False
+        Properties.IsAutoPush = False
+        Properties.IsPushed = False
+        Properties.Icon.IsClipRound = False
+        Properties.Icon.ImageIndex = 5
         Properties.Icon.SkinImageList = DB.img_white
         Properties.PushedIcon.IsClipRound = False
         Properties.PushedIcon.ImageIndex = 0

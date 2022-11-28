@@ -10,8 +10,4 @@ object F_Satis: TF_Satis
   OnKeyUp = FormKeyUp
   OnShow = FormShow
   DesignerMasterStyle = 0
-  object MobilePermissions1: TMobilePermissions
-    Left = 176
-    Top = 296
-  end
 end

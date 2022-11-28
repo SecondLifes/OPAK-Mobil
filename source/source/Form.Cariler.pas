@@ -35,12 +35,14 @@ type
     pnlVirtualKeyboard: TSkinFMXPanel;
     ClearEditButton1: TClearEditButton;
     btnReturn: TSkinFMXButton;
+    btn_new_cari: TSkinFMXButton;
     procedure list_urunClickItem(AItem: TSkinItem);
     procedure edt_searchChangeTracking(Sender: TObject);
     procedure lbl_TELClick(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
     procedure ClearEditButton1Click(Sender: TObject);
     procedure btnReturnClick(Sender: TObject);
+    procedure btn_new_cariClick(Sender: TObject);
   private
     { Private declarations }
     procedure DoFiltre(const AFiltre:string);
@@ -62,9 +64,8 @@ implementation
 procedure TFCariler.AfterConstruction;
 begin
   inherited AfterConstruction;
-  if Self.Tag=-1 then exit;
-  
-  Self.Tag:=-1;
+  if Self.Tag=-3 then exit;
+     Self.Tag:=-3;
 
     TThread.CreateAnonymousThread(
     procedure()
@@ -112,6 +113,13 @@ end;
 procedure TFCariler.btnReturnClick(Sender: TObject);
 begin
   BackFrame;
+
+end;
+
+procedure TFCariler.btn_new_cariClick(Sender: TObject);
+begin
+   self.Tag:=0;
+   FormCari(0);
 
 end;
 
@@ -177,9 +185,7 @@ end;
 procedure TFCariler.list_urunClickItem(AItem: TSkinItem);
 begin
 
-
-
-  if self.Tag = TCariItem(AItem).CariID.AsInteger  then Exit;
+    if self.Tag = TCariItem(AItem).CariID.AsInteger  then Exit;
 
    self.Tag:=TCariItem(AItem).CariID.AsInteger;
    FormCari(TCariItem(AItem).CariID.AsInteger);

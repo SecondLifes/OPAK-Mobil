@@ -1,5 +1,5 @@
 object FBase: TFBase
-  Size.Width = 350.000000000000000000
+  Size.Width = 348.000000000000000000
   Size.Height = 600.000000000000000000
   Size.PlatformDefault = False
   object rect_back: TSkinFMXCalloutRect
@@ -37,50 +37,50 @@ object FBase: TFBase
         ActionType = patCurveTo
       end
       item
-        X = 163.500000000000000000
+        X = 162.500000000000000000
         Y = 11.000000000000000000
         SizeType = dpstPixel
         ActionType = patLineTo
       end
       item
-        X = 175.000000000000000000
+        X = 174.000000000000000000
         SizeType = dpstPixel
         ActionType = patLineTo
       end
       item
-        X = 186.500000000000000000
+        X = 185.500000000000000000
         Y = 11.000000000000000000
         SizeType = dpstPixel
         ActionType = patLineTo
       end
       item
-        X = 350.000000000000000000
+        X = 348.000000000000000000
         Y = 11.000000000000000000
         SizeType = dpstPixel
         ActionType = patLineTo
       end
       item
-        X = 350.000000000000000000
+        X = 348.000000000000000000
         Y = 11.000000000000000000
-        X1 = 350.000000000000000000
+        X1 = 348.000000000000000000
         Y1 = 11.000000000000000000
-        X2 = 350.000000000000000000
+        X2 = 348.000000000000000000
         Y2 = 11.000000000000000000
         SizeType = dpstPixel
         ActionType = patCurveTo
       end
       item
-        X = 350.000000000000000000
+        X = 348.000000000000000000
         Y = 600.000000000000000000
         SizeType = dpstPixel
         ActionType = patLineTo
       end
       item
-        X = 350.000000000000000000
+        X = 348.000000000000000000
         Y = 600.000000000000000000
-        X1 = 350.000000000000000000
+        X1 = 348.000000000000000000
         Y1 = 600.000000000000000000
-        X2 = 350.000000000000000000
+        X2 = 348.000000000000000000
         Y2 = 600.000000000000000000
         SizeType = dpstPixel
         ActionType = patCurveTo
@@ -108,7 +108,7 @@ object FBase: TFBase
       end>
     MouseDownFocus = False
     Align = Client
-    Size.Width = 350.000000000000000000
+    Size.Width = 348.000000000000000000
     Size.Height = 600.000000000000000000
     Size.PlatformDefault = False
     TabOrder = 0
@@ -149,50 +149,50 @@ object FBase: TFBase
           ActionType = patCurveTo
         end
         item
-          X = 163.500000000000000000
+          X = 162.500000000000000000
           Y = 11.000000000000000000
           SizeType = dpstPixel
           ActionType = patLineTo
         end
         item
-          X = 175.000000000000000000
+          X = 174.000000000000000000
           SizeType = dpstPixel
           ActionType = patLineTo
         end
         item
-          X = 186.500000000000000000
+          X = 185.500000000000000000
           Y = 11.000000000000000000
           SizeType = dpstPixel
           ActionType = patLineTo
         end
         item
-          X = 350.000000000000000000
+          X = 348.000000000000000000
           Y = 11.000000000000000000
           SizeType = dpstPixel
           ActionType = patLineTo
         end
         item
-          X = 350.000000000000000000
+          X = 348.000000000000000000
           Y = 11.000000000000000000
-          X1 = 350.000000000000000000
+          X1 = 348.000000000000000000
           Y1 = 11.000000000000000000
-          X2 = 350.000000000000000000
+          X2 = 348.000000000000000000
           Y2 = 11.000000000000000000
           SizeType = dpstPixel
           ActionType = patCurveTo
         end
         item
-          X = 350.000000000000000000
+          X = 348.000000000000000000
           Y = 550.000000000000000000
           SizeType = dpstPixel
           ActionType = patLineTo
         end
         item
-          X = 350.000000000000000000
+          X = 348.000000000000000000
           Y = 550.000000000000000000
-          X1 = 350.000000000000000000
+          X1 = 348.000000000000000000
           Y1 = 550.000000000000000000
-          X2 = 350.000000000000000000
+          X2 = 348.000000000000000000
           Y2 = 550.000000000000000000
           SizeType = dpstPixel
           ActionType = patCurveTo
@@ -220,7 +220,7 @@ object FBase: TFBase
         end>
       MouseDownFocus = False
       Align = Client
-      Size.Width = 350.000000000000000000
+      Size.Width = 348.000000000000000000
       Size.Height = 550.000000000000000000
       Size.PlatformDefault = False
       TabOrder = 0
@@ -246,7 +246,7 @@ object FBase: TFBase
       SelfOwnMaterial.DrawCaptionParam.FontVertAlign = fvaTop
       MouseDownFocus = False
       Align = Top
-      Size.Width = 350.000000000000000000
+      Size.Width = 348.000000000000000000
       Size.Height = 50.000000000000000000
       Size.PlatformDefault = False
       TabOrder = 2
@@ -280,7 +280,7 @@ object FBase: TFBase
         ClipChildren = True
         HitTest = False
         Position.Y = 20.000000000000000000
-        Size.Width = 350.000000000000000000
+        Size.Width = 348.000000000000000000
         Size.Height = 22.000000000000000000
         Size.PlatformDefault = False
         TabOrder = 1
