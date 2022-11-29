@@ -132,12 +132,12 @@ var
  SQL:string;
  arg:TArray<string>;
 begin
-  FCariID:=CariID;
+  FCariID:=ACariID;
   if FCariID = 0 then
-  begin
-  Clear;
-  Exit;
-  end;
+    begin
+      Clear;
+      Exit;
+    end;
 
   SQL:='SELECT C.ID, C.KOD,C.ADI,C.CARIADI,C.CARISOYADI,C.CEPTEL1,C.IL,C.ILCE,C.ADRES,C.VERGI_DAIRESI,C.VERGINO,C.KIMLIKNO,C.EMAIL,C.ACIKLAMA,C.ACIKLAMA10,TIPI, '+
 '  SUM(HR.BORC) AS BORC,SUM(HR.ALACAK) AS ALACAK FROM dbo.TBLCARIHAR HR RIGHT JOIN TBLCARISB C ON (HR.CARIID = C.ID) '+
@@ -200,7 +200,7 @@ begin
   if FCariID<1 then Exit;
 
   if (not FEnlem.IsEmpty) and (not FBoylam.IsEmpty) then
-  AKonum:=FEnlem+','+FBoylam else AKonum:='';
+  AKonum:=',ACIKLAMA10='+QuotedStr(FEnlem+','+FBoylam) else AKonum:='';
 
   s:='UPDATE dbo.TBLCARISB SET '+
      ' ADI='+QuotedStr(FUnvani)+
@@ -216,13 +216,12 @@ begin
      ',EMAIL='+QuotedStr(FEMail)+
      ',VERGI_DAIRESI='+QuotedStr(VergiDairesi)+
      ',VERGINO='+QuotedStr(FVergiNo)+
-     ',ACIKLAMA10='+QuotedStr(AKonum)+
      ',ACIKLAMA='+QuotedStr(FAciklama.Text)+
-      AKonum+
+       AKonum+
      ' WHERE ID = '+IntToStr(FCariID);
 
  try
-
+     TDialogService.ShowMessage(AKonum);
      DB.cn_db.ExecSQL(s);
      Result:=True;
  except

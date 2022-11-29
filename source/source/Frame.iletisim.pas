@@ -8,22 +8,29 @@ uses
   Frame.Base, uSkinLabelType, uSkinFireMonkeyLabel, uSkinPanelType,
   uSkinFireMonkeyPanel, uSkinFireMonkeyControl, uSkinCalloutRectType,
   uSkinButtonType, uSkinFireMonkeyButton, FMX.Edit, FMX.Controls.Presentation,
-  uSkinFireMonkeyEdit, uSkinMaterial, uSkinMemoType, uSkinEditType,uSkinItems,DBOpak,Genel;
+  uSkinFireMonkeyEdit, uSkinMaterial, uSkinMemoType, uSkinEditType,uSkinItems,DBOpak,Genel,
+  FMX.ListBox, uSkinFireMonkeyComboBox, FMX.Layouts;
 
 type
   TF_iletisim = class(TFBase)
     btnReturn: TSkinFMXButton;
     btn_kayet: TSkinFMXButton;
-    edt_gorev: TSkinFMXEdit;
-    ClearEditButton2: TClearEditButton;
     D_Edit: TSkinEditDefaultMaterial;
-    edt_tel: TSkinFMXEdit;
-    ClearEditButton1: TClearEditButton;
-    edt_Adi: TSkinFMXEdit;
-    ClearEditButton3: TClearEditButton;
-    edt_cep: TSkinFMXEdit;
-    ClearEditButton4: TClearEditButton;
     btn_login: TSkinFMXButton;
+    SkinFMXPanel1_Material: TSkinPanelDefaultMaterial;
+    pnl_3: TSkinFMXPanel;
+    edt_cep: TSkinFMXEdit;
+    ClearEditButton5: TClearEditButton;
+    pnl_1: TSkinFMXPanel;
+    edt_tel: TSkinFMXEdit;
+    ClearEditButton6: TClearEditButton;
+    pnl_2: TSkinFMXPanel;
+    edt_Adi: TSkinFMXEdit;
+    ClearEditButton7: TClearEditButton;
+    pnl_4: TSkinFMXPanel;
+    edt_gorev: TSkinFMXEdit;
+    ClearEditButton8: TClearEditButton;
+    Layout1: TLayout;
     procedure btn_kayetClick(Sender: TObject);
     procedure btnReturnClick(Sender: TObject);
   private

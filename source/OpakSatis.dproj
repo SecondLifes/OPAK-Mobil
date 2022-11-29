@@ -5,7 +5,7 @@
         <FrameworkType>FMX</FrameworkType>
         <Base>True</Base>
         <Config Condition="'$(Config)'==''">Debug</Config>
-        <Platform Condition="'$(Platform)'==''">Win32</Platform>
+        <Platform Condition="'$(Platform)'==''">Android</Platform>
         <TargetedPlatforms>32785</TargetedPlatforms>
         <AppType>Application</AppType>
         <MainSource>OpakSatis.dpr</MainSource>
@@ -114,7 +114,7 @@
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Android)'!=''">
         <DCC_UsePackage>fmx;DbxCommonDriver;bindengine;IndyIPCommon;emsclient;IndyProtocols;dbxcds;FireDACSqliteDriver;DbxClientDriver;soapmidas;dbexpress;inet;FireDACDBXDriver;CustomIPTransport;IndySystem;FireDACCommon;bindcompdbx;rtl;DBXSqliteDriver;DataSnapFireDAC;FireDAC;xmlrtl;dsnap;DataSnapNativeClient;FireDACCommonDriver;IndyIPClient;bindcompfmx;TMSScripter;fmxFireDAC;DataSnapCommon;fmxase;dbrtl;DBXInterBaseDriver;bindcomp;IndyCore;RESTBackendComponents;MobilePermissions;RESTComponents;IndyIPServer;dsnapxml;DataSnapClient;DataSnapProviderClient;emsclientfiredac;FireDACDSDriver;tethering;CloudService;soaprtl;soapserver;FireDACIBDriver;$(DCC_UsePackage)</DCC_UsePackage>
-        <VerInfo_Keys>package=com.mikotek.opak;label=Mikotek;versionCode=1;versionName=1.0.0;persistent=False;restoreAnyVersion=False;installLocation=auto;largeHeap=False;theme=TitleBar;hardwareAccelerated=true;apiKey=</VerInfo_Keys>
+        <VerInfo_Keys>package=com.mikotek.opak;label=Mikotek;versionCode=1;versionName=1.0.0;persistent=False;restoreAnyVersion=False;installLocation=auto;largeHeap=False;theme=TitleBar;hardwareAccelerated=true;apiKey=AIzaSyBgaViyAXc833dpBZH1m6EWjlPhND04RN8</VerInfo_Keys>
         <BT_BuildType>Debug</BT_BuildType>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <Android_LauncherIcon36>OpakSatis\LaunchGen\Android_LauncherIcon36.png</Android_LauncherIcon36>
@@ -138,6 +138,8 @@
         <DCC_DcuOutput>..\setup\$(Platform)\$(Config)</DCC_DcuOutput>
         <Android_NotificationAccentColor>#000000</Android_NotificationAccentColor>
         <EL_SecureFileSharing>true</EL_SecureFileSharing>
+        <VerInfo_AutoIncVersion>true</VerInfo_AutoIncVersion>
+        <EL_Maps>true</EL_Maps>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Android64)'!=''">
         <DCC_UsePackage>fmx;DbxCommonDriver;bindengine;IndyIPCommon;emsclient;IndyProtocols;dbxcds;FireDACSqliteDriver;DbxClientDriver;soapmidas;dbexpress;inet;FireDACDBXDriver;CustomIPTransport;IndySystem;FireDACCommon;bindcompdbx;rtl;DBXSqliteDriver;DataSnapFireDAC;FireDAC;xmlrtl;dsnap;DataSnapNativeClient;FireDACCommonDriver;IndyIPClient;bindcompfmx;TMSScripter;fmxFireDAC;DataSnapCommon;dbrtl;DBXInterBaseDriver;bindcomp;IndyCore;RESTBackendComponents;MobilePermissions;RESTComponents;IndyIPServer;dsnapxml;DataSnapClient;DataSnapProviderClient;emsclientfiredac;FireDACDSDriver;tethering;CloudService;soaprtl;soapserver;FireDACIBDriver;$(DCC_UsePackage)</DCC_UsePackage>
@@ -281,6 +283,7 @@
             <FormType>fmx</FormType>
             <DesignClass>TFrame</DesignClass>
         </DCCReference>
+        <DCCReference Include="source\OpenViewUrl.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
@@ -410,6 +413,12 @@
                     </Platform>
                 </DeployFile>
                 <DeployFile LocalName="$(BDS)\lib\android\debug\armeabi\libnative-activity.so" Configuration="Debug" Class="AndroidLibnativeArmeabiFile">
+                    <Platform Name="Android">
+                        <RemoteName>libOpakSatis.so</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="$(BDS)\lib\android\debug\armeabi\libnative-activity.so" Configuration="Debug" Class="AndroidLibnativeArmeabiFile">
                     <Platform Name="Android64">
                         <RemoteName>libOpakSatis.so</RemoteName>
                         <Overwrite>true</Overwrite>
@@ -423,6 +432,12 @@
                 </DeployFile>
                 <DeployFile LocalName="$(BDS)\lib\android\debug\armeabi\libnative-activity.so" Configuration="Release" Class="AndroidLibnativeArmeabiFile">
                     <Platform Name="Android64">
+                        <RemoteName>libOpakSatis.so</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="$(BDS)\lib\android\debug\mips\libnative-activity.so" Configuration="Debug" Class="AndroidLibnativeMipsFile">
+                    <Platform Name="Android">
                         <RemoteName>libOpakSatis.so</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
@@ -457,6 +472,11 @@
                 </DeployFile>
                 <DeployFile LocalName="$(BDS)\Redist\osx32\libcgunwind.1.0.dylib" Class="DependencyModule">
                     <Platform Name="OSX32">
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="$(NDKBasePath)\prebuilt\android-arm\gdbserver\gdbserver" Configuration="Debug" Class="AndroidGDBServer">
+                    <Platform Name="Android">
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -551,6 +571,55 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
+                <DeployFile LocalName="..\setup\Android\Debug\AndroidManifest.xml" Configuration="Debug" Class="ProjectAndroidManifest">
+                    <Platform Name="Android">
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="..\setup\Android\Debug\colors.xml" Configuration="Debug" Class="Android_Colors">
+                    <Platform Name="Android">
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="..\setup\Android\Debug\libOpakSatis.so" Configuration="Debug" Class="ProjectOutput">
+                    <Platform Name="Android">
+                        <RemoteName>libOpakSatis.so</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="..\setup\Android\Debug\OpakSatis.classes" Configuration="Debug" Class="AndroidClasses">
+                    <Platform Name="Android">
+                        <Operation>64</Operation>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="..\setup\Android\Debug\provider_paths.xml" Configuration="Debug" Class="AndroidFileProvider">
+                    <Platform Name="Android">
+                        <RemoteName>provider_paths.xml</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="..\setup\Android\Debug\splash_image_def.xml" Configuration="Debug" Class="AndroidSplashImageDef">
+                    <Platform Name="Android">
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="..\setup\Android\Debug\strings.xml" Configuration="Debug" Class="Android_Strings">
+                    <Platform Name="Android">
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="..\setup\Android\Debug\styles-v21.xml" Configuration="Debug" Class="AndroidSplashStylesV21">
+                    <Platform Name="Android">
+                        <RemoteName>styles.xml</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="..\setup\Android\Debug\styles.xml" Configuration="Debug" Class="AndroidSplashStyles">
+                    <Platform Name="Android">
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="..\setup\Android\Release\AndroidManifest.xml" Configuration="Release" Class="ProjectAndroidManifest">
                     <Platform Name="Android">
                         <Overwrite>true</Overwrite>
@@ -606,6 +675,12 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
+                <DeployFile LocalName="OpakSatis\LaunchGen\Android_LauncherIcon144.png" Configuration="Debug" Class="Android_LauncherIcon144">
+                    <Platform Name="Android">
+                        <RemoteName>ic_launcher.png</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="OpakSatis\LaunchGen\Android_LauncherIcon144.png" Configuration="Release" Class="Android_LauncherIcon144">
                     <Platform Name="Android">
                         <RemoteName>ic_launcher.png</RemoteName>
@@ -614,6 +689,12 @@
                 </DeployFile>
                 <DeployFile LocalName="OpakSatis\LaunchGen\Android_LauncherIcon144.png" Configuration="Release" Class="Android_LauncherIcon144">
                     <Platform Name="Android64">
+                        <RemoteName>ic_launcher.png</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="OpakSatis\LaunchGen\Android_LauncherIcon192.png" Configuration="Debug" Class="Android_LauncherIcon192">
+                    <Platform Name="Android">
                         <RemoteName>ic_launcher.png</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
@@ -630,6 +711,12 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
+                <DeployFile LocalName="OpakSatis\LaunchGen\Android_LauncherIcon36.png" Configuration="Debug" Class="Android_LauncherIcon36">
+                    <Platform Name="Android">
+                        <RemoteName>ic_launcher.png</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="OpakSatis\LaunchGen\Android_LauncherIcon36.png" Configuration="Release" Class="Android_LauncherIcon36">
                     <Platform Name="Android">
                         <RemoteName>ic_launcher.png</RemoteName>
@@ -638,6 +725,12 @@
                 </DeployFile>
                 <DeployFile LocalName="OpakSatis\LaunchGen\Android_LauncherIcon36.png" Configuration="Release" Class="Android_LauncherIcon36">
                     <Platform Name="Android64">
+                        <RemoteName>ic_launcher.png</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="OpakSatis\LaunchGen\Android_LauncherIcon48.png" Configuration="Debug" Class="Android_LauncherIcon48">
+                    <Platform Name="Android">
                         <RemoteName>ic_launcher.png</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
@@ -654,6 +747,12 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
+                <DeployFile LocalName="OpakSatis\LaunchGen\Android_LauncherIcon72.png" Configuration="Debug" Class="Android_LauncherIcon72">
+                    <Platform Name="Android">
+                        <RemoteName>ic_launcher.png</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="OpakSatis\LaunchGen\Android_LauncherIcon72.png" Configuration="Release" Class="Android_LauncherIcon72">
                     <Platform Name="Android">
                         <RemoteName>ic_launcher.png</RemoteName>
@@ -662,6 +761,12 @@
                 </DeployFile>
                 <DeployFile LocalName="OpakSatis\LaunchGen\Android_LauncherIcon72.png" Configuration="Release" Class="Android_LauncherIcon72">
                     <Platform Name="Android64">
+                        <RemoteName>ic_launcher.png</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="OpakSatis\LaunchGen\Android_LauncherIcon96.png" Configuration="Debug" Class="Android_LauncherIcon96">
+                    <Platform Name="Android">
                         <RemoteName>ic_launcher.png</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
@@ -678,6 +783,12 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
+                <DeployFile LocalName="OpakSatis\LaunchGen\Android_NotificationIcon24.png" Configuration="Debug" Class="Android_NotificationIcon24">
+                    <Platform Name="Android">
+                        <RemoteName>ic_notification.png</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="OpakSatis\LaunchGen\Android_NotificationIcon24.png" Configuration="Release" Class="Android_NotificationIcon24">
                     <Platform Name="Android">
                         <RemoteName>ic_notification.png</RemoteName>
@@ -686,6 +797,12 @@
                 </DeployFile>
                 <DeployFile LocalName="OpakSatis\LaunchGen\Android_NotificationIcon24.png" Configuration="Release" Class="Android_NotificationIcon24">
                     <Platform Name="Android64">
+                        <RemoteName>ic_notification.png</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="OpakSatis\LaunchGen\Android_NotificationIcon36.png" Configuration="Debug" Class="Android_NotificationIcon36">
+                    <Platform Name="Android">
                         <RemoteName>ic_notification.png</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
@@ -702,6 +819,12 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
+                <DeployFile LocalName="OpakSatis\LaunchGen\Android_NotificationIcon48.png" Configuration="Debug" Class="Android_NotificationIcon48">
+                    <Platform Name="Android">
+                        <RemoteName>ic_notification.png</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="OpakSatis\LaunchGen\Android_NotificationIcon48.png" Configuration="Release" Class="Android_NotificationIcon48">
                     <Platform Name="Android">
                         <RemoteName>ic_notification.png</RemoteName>
@@ -710,6 +833,12 @@
                 </DeployFile>
                 <DeployFile LocalName="OpakSatis\LaunchGen\Android_NotificationIcon48.png" Configuration="Release" Class="Android_NotificationIcon48">
                     <Platform Name="Android64">
+                        <RemoteName>ic_notification.png</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="OpakSatis\LaunchGen\Android_NotificationIcon72.png" Configuration="Debug" Class="Android_NotificationIcon72">
+                    <Platform Name="Android">
                         <RemoteName>ic_notification.png</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
@@ -726,6 +855,12 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
+                <DeployFile LocalName="OpakSatis\LaunchGen\Android_NotificationIcon96.png" Configuration="Debug" Class="Android_NotificationIcon96">
+                    <Platform Name="Android">
+                        <RemoteName>ic_notification.png</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="OpakSatis\LaunchGen\Android_NotificationIcon96.png" Configuration="Release" Class="Android_NotificationIcon96">
                     <Platform Name="Android">
                         <RemoteName>ic_notification.png</RemoteName>
@@ -735,6 +870,12 @@
                 <DeployFile LocalName="OpakSatis\LaunchGen\Android_NotificationIcon96.png" Configuration="Release" Class="Android_NotificationIcon96">
                     <Platform Name="Android64">
                         <RemoteName>ic_notification.png</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="OpakSatis\LaunchGen\Android_SplashImage426.png" Configuration="Debug" Class="Android_SplashImage426">
+                    <Platform Name="Android">
+                        <RemoteName>splash_image.png</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -746,6 +887,12 @@
                 </DeployFile>
                 <DeployFile LocalName="OpakSatis\LaunchGen\Android_SplashImage426.png" Configuration="Release" Class="Android_SplashImage426">
                     <Platform Name="Android64">
+                        <RemoteName>splash_image.png</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="OpakSatis\LaunchGen\Android_SplashImage470.png" Configuration="Debug" Class="Android_SplashImage470">
+                    <Platform Name="Android">
                         <RemoteName>splash_image.png</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
@@ -762,6 +909,12 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
+                <DeployFile LocalName="OpakSatis\LaunchGen\Android_SplashImage640.png" Configuration="Debug" Class="Android_SplashImage640">
+                    <Platform Name="Android">
+                        <RemoteName>splash_image.png</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="OpakSatis\LaunchGen\Android_SplashImage640.png" Configuration="Release" Class="Android_SplashImage640">
                     <Platform Name="Android">
                         <RemoteName>splash_image.png</RemoteName>
@@ -770,6 +923,12 @@
                 </DeployFile>
                 <DeployFile LocalName="OpakSatis\LaunchGen\Android_SplashImage640.png" Configuration="Release" Class="Android_SplashImage640">
                     <Platform Name="Android64">
+                        <RemoteName>splash_image.png</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="OpakSatis\LaunchGen\Android_SplashImage960.png" Configuration="Debug" Class="Android_SplashImage960">
+                    <Platform Name="Android">
                         <RemoteName>splash_image.png</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>

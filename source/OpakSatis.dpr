@@ -12,7 +12,8 @@ uses
   Genel in 'source\Genel.pas',
   Frame.Cari in 'source\Frame.Cari.pas' {FForm_Cari: TFrame},
   OMR.Cari in 'source\OMR.Cari.pas',
-  Frame.iletisim in 'source\Frame.iletisim.pas' {F_iletisim: TFrame};
+  Frame.iletisim in 'source\Frame.iletisim.pas' {F_iletisim: TFrame},
+  OpenViewUrl in 'source\OpenViewUrl.pas';
 
 {$R *.res}
 

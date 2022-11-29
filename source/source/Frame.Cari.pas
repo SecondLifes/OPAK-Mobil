@@ -19,7 +19,7 @@ uses
   uSkinItemDesignerPanelType, uSkinFireMonkeyItemDesignerPanel, System.Sensors,
   System.Sensors.Components, FMX.WebBrowser, Data.DB, MemDS, DBAccess, Uni
   ,uTimerTask, uSkinScrollBoxContentType, uSkinFireMonkeyScrollBoxContent,uUIFunction,FMX.VirtualKeyboard,
-  FMX.ListBox, uSkinFireMonkeyComboBox;
+  FMX.ListBox, uSkinFireMonkeyComboBox, FMX.Maps,Generics.Collections;
 
 type
   TFForm_Cari = class(TFBase)//IFrameVirtualKeyboardEvent
@@ -82,7 +82,6 @@ type
     msg_user: TSkinFMXLabel;
     LocationSensor1: TLocationSensor;
     btn_konum: TSkinFMXButton;
-    WebBrowser1: TWebBrowser;
     list_shop: TSkinFMXListBox;
     list_shop_designer: TSkinFMXItemDesignerPanel;
     shop_Kod: TSkinFMXLabel;
@@ -114,6 +113,8 @@ type
     ClearEditButton7: TClearEditButton;
     pnl_12: TSkinFMXPanel;
     com_cari_tipi: TSkinFMXComboBox;
+    SkinFMXButton1: TSkinFMXButton;
+    MapView1: TMapView;
     procedure btnReturnClick(Sender: TObject);
     procedure btn_kayetClick(Sender: TObject);
     procedure lbl_iletisim_telClick(Sender: TObject);
@@ -126,8 +127,12 @@ type
       NewLocation: TLocationCoord2D);
     procedure btn_konumClick(Sender: TObject);
     procedure tmrTimer(Sender: TObject);
+    procedure pnl_4DblClick(Sender: TObject);
+    procedure SkinFMXButton1Click(Sender: TObject);
+    procedure MapView1MapClick(const Position: TMapCoordinate);
   private
-
+    function MapLocationAdd(const ACariID:Integer;const AUnvan,AAdSoyad,AEnlem,ABoylam:string):TMapMarkerDescriptor;
+    function MapLocation:TMapMarkerDescriptor;
     procedure LoadCari(const ACariID:Cardinal);
     procedure SaveCari;
 
@@ -140,7 +145,7 @@ type
     procedure DoVirtualKeyboardShow(KeyboardVisible: Boolean; const Bounds: TRect);
     procedure DoVirtualKeyboardHide(KeyboardVisible: Boolean; const Bounds: TRect);
   public
-
+      FMapList:TDictionary<Integer,TMapMarkerDescriptor>;
       FCari:TCari;
       FGeocoder: TGeocoder;
       procedure BackFrame;
@@ -161,13 +166,15 @@ type
 
 implementation
 uses Form.Satis,Form.Cariler,HintFrame,WaitingFrame,MessageBoxFrame,
-Frame.iletisim,Genel,Help.uni,Help.DB,System.Threading,FMX.DialogService;
+Frame.iletisim,Genel,Help.uni,Help.DB,System.Threading,FMX.DialogService,OpenViewUrl;
 
 {$R *.fmx}
 
   procedure FormCari(const ACariID:Integer);
   begin
+
     ShowFrame(TFrame(FForm_Cari),TFForm_Cari,Application.MainForm,nil,nil,nil,Application);
+    HideVirtualKeyboard;
     WaitingFrame.ShowWaitingFrame( 'Yükleniyor...');
     FForm_Cari.tmr.Tag:=ACariID;
     FForm_Cari.tmr.Enabled:=True;
@@ -183,7 +190,8 @@ procedure TFForm_Cari.AfterConstruction;
 
 begin
   inherited AfterConstruction;
-   Self.pnl_VirtualKeyboard.Height:=0;
+  FMapList:=TDictionary<Integer,TMapMarkerDescriptor>.Create;
+  Self.pnl_VirtualKeyboard.Height:=0;
 
   btn_new_iletisim.Visible:=DBOpak.Config.Yetki.YetkiliEkle;
   btn_yetkiliEdit.Visible:=DBOpak.Config.Yetki.YetkiliDuzenle;
@@ -258,6 +266,7 @@ end;
 
 destructor TFForm_Cari.Destroy;
 begin
+  FMapList.Free;
   FCari.Free;
   inherited Destroy;
 end;
@@ -335,6 +344,7 @@ procedure TFForm_Cari.LoadCari(const ACariID: Cardinal);
 var
  itm:TRealSkinItem;
 begin
+
  ClearALL;
  pcMain.Prop.ActivePageIndex:=0;
  FCari.LoadDB(ACariID);
@@ -361,6 +371,8 @@ begin
  MesajLoad;
  ShopListLoad;
 
+ MapLocation;
+
 
      TThread.CreateAnonymousThread(
     procedure()
@@ -383,20 +395,20 @@ end;
 
 procedure TFForm_Cari.LocationSensor1LocationChanged(Sender: TObject;
   const OldLocation, NewLocation: TLocationCoord2D);
-const
-  GoogleMapsURL: String = 'https://maps.google.com/maps?q=%s,%s';
 begin
   var Enlem := NewLocation.Latitude.ToString(ffGeneral, 8, 5, TFormatSettings.Create('en-US'));
   var Boylam := NewLocation.Longitude.ToString(ffGeneral, 8, 5, TFormatSettings.Create('en-US'));
+
 
   { convert the location to latitude and longitude }
   FCari.Enlem:=Enlem;
   FCari.Boylam:=Boylam;
 
   { and track the location via Google Maps }
-  WebBrowser1.Navigate(Format(GoogleMapsURL, [Enlem, Boylam]));
+  //WebLocation(Enlem,Boylam);
   LocationSensor1.Active:=False;
   btn_konum.Enabled:=True;
+  MapLocation;
 
   exit;
     // Setup an instance of TGeocoder
@@ -415,6 +427,13 @@ begin
   // Translate location to address
   if Assigned(FGeocoder) and not FGeocoder.Geocoding then
     FGeocoder.GeocodeReverse(NewLocation);
+end;
+
+procedure TFForm_Cari.MapView1MapClick(const Position: TMapCoordinate);
+begin
+
+ // MapView1.AddMarker()
+
 end;
 
 procedure TFForm_Cari.MesajLoad;
@@ -462,8 +481,7 @@ begin
   for i := 0 to list_mesajlar.Prop.Items.Count -1 do
     begin
      itm:=list_mesajlar.Prop.Items[i];
-     FCari.Aciklama.Add(itm.Caption+'|'+itm.Detail+'|'+itm.Detail1);
-
+     FCari.Aciklama.Add(itm.Caption.Trim+'|'+itm.Detail.Trim+'|'+itm.Detail1.Trim);
     end;
   FCari.Aciklama.EndUpdate;
 end;
@@ -487,11 +505,16 @@ end;
 procedure TFForm_Cari.pcMainChanging(Sender: TObject; NewIndex: Integer;
   var AllowChange: Boolean);
 begin
-btn_kayet.Visible:=(NewIndex in [0,2]);
+btn_kayet.Visible:=(NewIndex in [0,2,4]);
 
 btn_new_iletisim.Visible:=((NewIndex=1) and (Config.Yetki.YetkiliEkle));
 btn_new_not.Visible:=((NewIndex=2) and (Config.Yetki.NotEkle));
 
+end;
+
+procedure TFForm_Cari.pnl_4DblClick(Sender: TObject);
+begin
+ DB.MakeCallPhone(FCari.Telefon);
 end;
 
 procedure TFForm_Cari.SaveCari;
@@ -551,6 +574,12 @@ begin
  list_shop.Prop.EndUpdate;
 end;
 
+procedure TFForm_Cari.SkinFMXButton1Click(Sender: TObject);
+begin
+  MapLocation;
+ //OpenNavigation(FCari.Enlem+','+FCari.Boylam);
+end;
+
 procedure TFForm_Cari.btn_not_silClick(Sender: TObject);
 begin
   list_mesajlar.Prop.Items.BeginUpdate;
@@ -605,11 +634,51 @@ end;
 
 procedure TFForm_Cari.tmrTimer(Sender: TObject);
 begin
-  inherited;
+
     FForm_Cari.LoadCari(tmr.Tag);
     WaitingFrame.HideWaitingFrame;
     tmr.Tag:=0;
     tmr.Enabled:=False;
+end;
+
+
+
+function TFForm_Cari.MapLocation:TMapMarkerDescriptor;
+begin
+
+  Result:=MapLocationAdd(FCari.CariID,FCari.Unvani,FCari.Adi+' '+FCari.SoyAdi,FCari.Enlem,FCari.Boylam);
+
+end;
+
+
+function TFForm_Cari.MapLocationAdd(const ACariID: Integer; const AUnvan,
+  AAdSoyad, AEnlem, ABoylam: string): TMapMarkerDescriptor;
+begin
+   if not AEnlem.IsEmpty or not ABoylam.IsEmpty then Exit;
+   if FMapList.ContainsKey(FCari.CariID) then
+   FMapList.Remove(FCari.CariID);
+   TDialogService.ShowMessage(
+  MapView1.Zoom.ToString+sLineBreak+AEnlem+sLineBreak+ABoylam);
+        //Format('%.6f,%.6f', [Latitude, Longitude], TFormatSettings.Create('en-US'));
+        Result := TMapMarkerDescriptor.Create(
+        TMapCoordinate.Create(
+        StrToFloat(AEnlem,TFormatSettings.Create('en-US')),
+        StrToFloat(ABoylam,TFormatSettings.Create('en-US'))
+        ),AUnvan);
+        //Result.Visible :=True;
+        Result.Snippet:=AAdSoyad;
+
+        MapView1.AddMarker(Result);
+        
+       //OpenNavigation(FCari.Enlem+','+FCari.Boylam);
+
+
+      Result.Visible:=False;
+
+        
+      Result.Draggable := True;
+      Result.Visible:=true;
+
 end;
 
 end.

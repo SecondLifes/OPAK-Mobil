@@ -381,25 +381,6 @@ begin
    end;
 end;
 
-procedure TIletisim.SaveDB;
-//var s:string;
-begin
-
- if Tag>0 then
-       DB.cn_db.ExecSQL(Format('UPDATE dbo.TBLCARITELEFONSB SET TELEFON =%s,YETKILI=%s,GOREVI=%s,CEPTEL=%s where ID='+IntToStr(Tag),
-     [IntToStr(iletisimListe.FCariId),QuotedStr(Tel.ToString),QuotedStr(Adi.ToString),QuotedStr(Gorevi.ToString),QuotedStr(Cep.ToString)]))
-  else
-    begin
-    Tag:=DB.cn_db._sqlResults(
-     Format('INSERT INTO dbo.TBLCARITELEFONSB(CARIID,TELEFON,YETKILI,GOREVI,CEPTEL) VALUES ('+IntToStr(iletisimListe.FCariId)+',%s,%s,%s,%s); select SCOPE_IDENTITY() AS ID;',
-     [IntToStr(iletisimListe.FCariId),QuotedStr(Tel.ToString),QuotedStr(Adi.ToString),QuotedStr(Gorevi.ToString),QuotedStr(Cep.ToString)]),0);
-    end;
-
-
-
-
-end;
-
 procedure TIletisim.SetValue(const Index: Integer; const Value: TValue);
 begin
    case Index of
@@ -410,6 +391,29 @@ begin
     4:Detail2:=Value.AsString;
    end;
 end;
+
+
+procedure TIletisim.SaveDB;
+var s:string;
+begin
+
+ if Tag>0 then
+     DB.cn_db.ExecSQL(Format('UPDATE dbo.TBLCARITELEFONSB SET TELEFON =%s,YETKILI=%s,GOREVI=%s,CEPTEL=%s where ID='+IntToStr(Tag),
+     [IntToStr(iletisimListe.FCariId),QuotedStr(Tel.AsString),QuotedStr(Adi.ToString),QuotedStr(Gorevi.ToString),QuotedStr(Cep.ToString)]))
+  else
+    begin
+
+     Tag:=DB.cn_db._sqlResults(
+     Format('INSERT INTO dbo.TBLCARITELEFONSB(CARIID,TELEFON,YETKILI,GOREVI,CEPTEL) VALUES ('+
+     IntToStr(iletisimListe.FCariId)+',%s,%s,%s,%s); select SCOPE_IDENTITY() AS ID;',
+     [QuotedStr(Tel.AsString),QuotedStr(Adi.ToString),QuotedStr(Gorevi.ToString),QuotedStr(Cep.ToString)]),0);
+    end;
+
+
+
+
+end;
+
 
 { TIletisimListe }
 
