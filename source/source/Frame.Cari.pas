@@ -645,7 +645,7 @@ end;
 
 function TFForm_Cari.MapLocation:TMapMarkerDescriptor;
 begin
-
+ exit;
   Result:=MapLocationAdd(FCari.CariID,FCari.Unvani,FCari.Adi+' '+FCari.SoyAdi,FCari.Enlem,FCari.Boylam);
 
 end;
@@ -657,8 +657,7 @@ begin
    if not AEnlem.IsEmpty or not ABoylam.IsEmpty then Exit;
    if FMapList.ContainsKey(FCari.CariID) then
    FMapList.Remove(FCari.CariID);
-   TDialogService.ShowMessage(
-  MapView1.Zoom.ToString+sLineBreak+AEnlem+sLineBreak+ABoylam);
+   //TDialogService.ShowMessage(MapView1.Zoom.ToString+sLineBreak+AEnlem+sLineBreak+ABoylam);
         //Format('%.6f,%.6f', [Latitude, Longitude], TFormatSettings.Create('en-US'));
         Result := TMapMarkerDescriptor.Create(
         TMapCoordinate.Create(

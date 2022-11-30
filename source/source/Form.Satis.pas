@@ -18,6 +18,7 @@ type
   public
     { Public declarations }
 
+
   end;
 
 var
@@ -31,7 +32,7 @@ implementation
   Androidapi.JNI.Os,
 {$ENDIF}
   SDK,uUIFunction,System.UIConsts, uGraphicCommon,System.IOUtils,
- FMX.VirtualKeyboard,FMX.DialogService,Frame.Login,DBOpak,Form.Cariler,Frame.Cari;
+ FMX.VirtualKeyboard,FMX.DialogService,Frame.Login,DBOpak,Form.Cariler,Frame.Cari,Frame.Map;
 {$R *.fmx}
 
 procedure TF_Satis.FormKeyUp(Sender: TObject; var Key: Word; var KeyChar: Char;
@@ -68,7 +69,8 @@ end;
 
 procedure TF_Satis.FormShow(Sender: TObject);
 begin
-  ShowFrame(TFrame(Frame_login), TFrame_login, Self, nil, nil, nil, Application, True, True, ufsefNone);
+  //ShowFrame(TFrame(Frame_login), TFrame_login, Self, nil, nil, nil, Application, True, True, ufsefNone);
+  ShowFrame(TFrame(Frame_Map), TFrame_Map, Self, nil, nil, nil, Application, True, True, ufsefNone);
 end;
 
 

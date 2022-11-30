@@ -5,7 +5,7 @@
         <FrameworkType>FMX</FrameworkType>
         <Base>True</Base>
         <Config Condition="'$(Config)'==''">Debug</Config>
-        <Platform Condition="'$(Platform)'==''">Android</Platform>
+        <Platform Condition="'$(Platform)'==''">Win32</Platform>
         <TargetedPlatforms>32785</TargetedPlatforms>
         <AppType>Application</AppType>
         <MainSource>OpakSatis.dpr</MainSource>
@@ -284,6 +284,11 @@
             <DesignClass>TFrame</DesignClass>
         </DCCReference>
         <DCCReference Include="source\OpenViewUrl.pas"/>
+        <DCCReference Include="source\Frame.Map.pas">
+            <Form>Frame_Map</Form>
+            <FormType>fmx</FormType>
+            <DesignClass>TFrame</DesignClass>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

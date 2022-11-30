@@ -13,7 +13,8 @@ uses
   Frame.Cari in 'source\Frame.Cari.pas' {FForm_Cari: TFrame},
   OMR.Cari in 'source\OMR.Cari.pas',
   Frame.iletisim in 'source\Frame.iletisim.pas' {F_iletisim: TFrame},
-  OpenViewUrl in 'source\OpenViewUrl.pas';
+  OpenViewUrl in 'source\OpenViewUrl.pas',
+  Frame.Map in 'source\Frame.Map.pas' {Frame_Map: TFrame};
 
 {$R *.res}
 
