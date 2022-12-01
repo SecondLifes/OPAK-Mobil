@@ -6,7 +6,10 @@ uses
   System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants,
   FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs,
   MobilePermissions.Model.Signature, MobilePermissions.Model.Dangerous,
-  MobilePermissions.Model.Standard, MobilePermissions.Component,FMX.Platform, FMX.PhoneDialer;
+  MobilePermissions.Model.Standard, MobilePermissions.Component,FMX.Platform, FMX.PhoneDialer,
+  FMX.TMSFNCTypes, FMX.TMSFNCUtils, FMX.TMSFNCGraphics, FMX.TMSFNCGraphicsTypes,
+  FMX.TMSFNCMapsCommonTypes, FMX.TMSFNCCustomControl, FMX.TMSFNCWebBrowser,
+  FMX.TMSFNCMaps;
 
 type
   TF_Satis = class(TForm)
@@ -69,8 +72,8 @@ end;
 
 procedure TF_Satis.FormShow(Sender: TObject);
 begin
-  //ShowFrame(TFrame(Frame_login), TFrame_login, Self, nil, nil, nil, Application, True, True, ufsefNone);
-  ShowFrame(TFrame(Frame_Map), TFrame_Map, Self, nil, nil, nil, Application, True, True, ufsefNone);
+  ShowFrame(TFrame(Frame_login), TFrame_login, Self, nil, nil, nil, Application, True, True, ufsefNone);
+  //ShowMap(Self);
 end;
 
 

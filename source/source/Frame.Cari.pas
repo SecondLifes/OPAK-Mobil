@@ -19,7 +19,8 @@ uses
   uSkinItemDesignerPanelType, uSkinFireMonkeyItemDesignerPanel, System.Sensors,
   System.Sensors.Components, FMX.WebBrowser, Data.DB, MemDS, DBAccess, Uni
   ,uTimerTask, uSkinScrollBoxContentType, uSkinFireMonkeyScrollBoxContent,uUIFunction,FMX.VirtualKeyboard,
-  FMX.ListBox, uSkinFireMonkeyComboBox, FMX.Maps,Generics.Collections;
+  FMX.ListBox, uSkinFireMonkeyComboBox, FMX.Maps,Generics.Collections,
+  FMX.Layouts;
 
 type
   TFForm_Cari = class(TFBase)//IFrameVirtualKeyboardEvent
@@ -80,8 +81,6 @@ type
     btn_not_sil: TSkinFMXButton;
     btn_not_edit: TSkinFMXButton;
     msg_user: TSkinFMXLabel;
-    LocationSensor1: TLocationSensor;
-    btn_konum: TSkinFMXButton;
     list_shop: TSkinFMXListBox;
     list_shop_designer: TSkinFMXItemDesignerPanel;
     shop_Kod: TSkinFMXLabel;
@@ -114,7 +113,6 @@ type
     pnl_12: TSkinFMXPanel;
     com_cari_tipi: TSkinFMXComboBox;
     SkinFMXButton1: TSkinFMXButton;
-    MapView1: TMapView;
     procedure btnReturnClick(Sender: TObject);
     procedure btn_kayetClick(Sender: TObject);
     procedure lbl_iletisim_telClick(Sender: TObject);
@@ -123,16 +121,10 @@ type
     procedure btn_new_iletisimClick(Sender: TObject);
     procedure btn_not_silClick(Sender: TObject);
     procedure btn_not_editClick(Sender: TObject);
-    procedure LocationSensor1LocationChanged(Sender: TObject; const OldLocation,
-      NewLocation: TLocationCoord2D);
-    procedure btn_konumClick(Sender: TObject);
     procedure tmrTimer(Sender: TObject);
     procedure pnl_4DblClick(Sender: TObject);
     procedure SkinFMXButton1Click(Sender: TObject);
-    procedure MapView1MapClick(const Position: TMapCoordinate);
   private
-    function MapLocationAdd(const ACariID:Integer;const AUnvan,AAdSoyad,AEnlem,ABoylam:string):TMapMarkerDescriptor;
-    function MapLocation:TMapMarkerDescriptor;
     procedure LoadCari(const ACariID:Cardinal);
     procedure SaveCari;
 
@@ -145,11 +137,11 @@ type
     procedure DoVirtualKeyboardShow(KeyboardVisible: Boolean; const Bounds: TRect);
     procedure DoVirtualKeyboardHide(KeyboardVisible: Boolean; const Bounds: TRect);
   public
-      FMapList:TDictionary<Integer,TMapMarkerDescriptor>;
+
       FCari:TCari;
       FGeocoder: TGeocoder;
       procedure BackFrame;
-      procedure OnGeocodeReverseEvent(const Address: TCivicAddress);
+
       procedure AfterConstruction; override;
       //constructor Create(AOwner: TComponent); override;
       destructor Destroy; override;
@@ -166,7 +158,7 @@ type
 
 implementation
 uses Form.Satis,Form.Cariler,HintFrame,WaitingFrame,MessageBoxFrame,
-Frame.iletisim,Genel,Help.uni,Help.DB,System.Threading,FMX.DialogService,OpenViewUrl;
+Frame.iletisim,Genel,Help.uni,Help.DB,System.Threading,FMX.DialogService,Frame.Map,OpenViewUrl;
 
 {$R *.fmx}
 
@@ -186,11 +178,9 @@ Frame.iletisim,Genel,Help.uni,Help.DB,System.Threading,FMX.DialogService,OpenVie
 { TF_Cari }
 
 procedure TFForm_Cari.AfterConstruction;
-
-
 begin
   inherited AfterConstruction;
-  FMapList:=TDictionary<Integer,TMapMarkerDescriptor>.Create;
+
   Self.pnl_VirtualKeyboard.Height:=0;
 
   btn_new_iletisim.Visible:=DBOpak.Config.Yetki.YetkiliEkle;
@@ -228,17 +218,6 @@ begin
 
 end;
 
-procedure TFForm_Cari.btn_konumClick(Sender: TObject);
-begin
-{$IFDEF ANDROID}
-  LocationSensor1.Active := True;
-  btn_konum.Enabled:=false;
-{$ELSE}
-  LocationSensor1.Active := False
-{$ENDIF}
-
-end;
-
 procedure TFForm_Cari.btn_new_iletisimClick(Sender: TObject);
 var
   FItem:TIletisim;
@@ -256,17 +235,17 @@ end;
 
 procedure TFForm_Cari.ClearALL;
 begin
- list_shop.Prop.BeginUpdate;
+  list_shop.Prop.BeginUpdate;
   list_shop.Prop.Items.Clear();
- list_shop.Prop.EndUpdate;
- list_mesajlar.Prop.BeginUpdate;
-    list_mesajlar.Prop.Items.Clear();
- list_mesajlar.Prop.EndUpdate;
+  list_shop.Prop.EndUpdate;
+  list_mesajlar.Prop.BeginUpdate;
+  list_mesajlar.Prop.Items.Clear();
+  list_mesajlar.Prop.EndUpdate;
 end;
 
 destructor TFForm_Cari.Destroy;
 begin
-  FMapList.Free;
+
   FCari.Free;
   inherited Destroy;
 end;
@@ -345,8 +324,8 @@ var
  itm:TRealSkinItem;
 begin
 
- ClearALL;
- pcMain.Prop.ActivePageIndex:=0;
+ //ClearALL;
+ pcMain.Prop.ActivePageIndex:=2;
  FCari.LoadDB(ACariID);
 
  lbl_cariid.Text:=FCari.CariID.ToString;
@@ -371,7 +350,7 @@ begin
  MesajLoad;
  ShopListLoad;
 
- MapLocation;
+
 
 
      TThread.CreateAnonymousThread(
@@ -380,8 +359,9 @@ begin
       TThread.Synchronize(TThread.CurrentThread,
         procedure()
         begin
+             //ShowMessage('');
+             FCariler.Tag:=0;
 
-            FCariler.Tag:=0;
          end);
 
     end).Start;
@@ -391,49 +371,6 @@ begin
  lbl_bakiye.SelfOwnMaterialToDefault.DrawCaptionParam.DrawFont.FontColor.Color:=DB.SkinTheme.SkinThemeColor2
  else
  lbl_bakiye.SelfOwnMaterialToDefault.DrawCaptionParam.DrawFont.FontColor.Color:=DB.SkinTheme.SkinThemeColor;
-end;
-
-procedure TFForm_Cari.LocationSensor1LocationChanged(Sender: TObject;
-  const OldLocation, NewLocation: TLocationCoord2D);
-begin
-  var Enlem := NewLocation.Latitude.ToString(ffGeneral, 8, 5, TFormatSettings.Create('en-US'));
-  var Boylam := NewLocation.Longitude.ToString(ffGeneral, 8, 5, TFormatSettings.Create('en-US'));
-
-
-  { convert the location to latitude and longitude }
-  FCari.Enlem:=Enlem;
-  FCari.Boylam:=Boylam;
-
-  { and track the location via Google Maps }
-  //WebLocation(Enlem,Boylam);
-  LocationSensor1.Active:=False;
-  btn_konum.Enabled:=True;
-  MapLocation;
-
-  exit;
-    // Setup an instance of TGeocoder
-  try
-    if not Assigned(FGeocoder) then
-    begin
-      if Assigned(TGeocoder.Current) then
-        FGeocoder := TGeocoder.Current.Create;
-      if Assigned(FGeocoder) then
-        FGeocoder.OnGeocodeReverse := OnGeocodeReverseEvent;
-    end;
-  except
-   // ListBoxGroupHeader1.Text := 'Geocoder service error.';
-  end;
-
-  // Translate location to address
-  if Assigned(FGeocoder) and not FGeocoder.Geocoding then
-    FGeocoder.GeocodeReverse(NewLocation);
-end;
-
-procedure TFForm_Cari.MapView1MapClick(const Position: TMapCoordinate);
-begin
-
- // MapView1.AddMarker()
-
 end;
 
 procedure TFForm_Cari.MesajLoad;
@@ -486,21 +423,7 @@ begin
   FCari.Aciklama.EndUpdate;
 end;
 
-procedure TFForm_Cari.OnGeocodeReverseEvent(const Address: TCivicAddress);
-begin
-  (*
-  Address.AdminArea;
-  Address.CountryCode;
-  Address.CountryName;
-  Address.FeatureName;
-  Address.Locality;
-  Address.PostalCode;
-  Address.SubAdminArea;
-  Address.SubLocality;
-  Address.SubThoroughfare;
-  Address.Thoroughfare;
-  *)
-end;
+
 
 procedure TFForm_Cari.pcMainChanging(Sender: TObject; NewIndex: Integer;
   var AllowChange: Boolean);
@@ -509,6 +432,8 @@ btn_kayet.Visible:=(NewIndex in [0,2,4]);
 
 btn_new_iletisim.Visible:=((NewIndex=1) and (Config.Yetki.YetkiliEkle));
 btn_new_not.Visible:=((NewIndex=2) and (Config.Yetki.NotEkle));
+
+ if NewIndex =4 then  ShowMap(nil);
 
 end;
 
@@ -576,7 +501,7 @@ end;
 
 procedure TFForm_Cari.SkinFMXButton1Click(Sender: TObject);
 begin
-  MapLocation;
+
  //OpenNavigation(FCari.Enlem+','+FCari.Boylam);
 end;
 
@@ -643,41 +568,8 @@ end;
 
 
 
-function TFForm_Cari.MapLocation:TMapMarkerDescriptor;
-begin
- exit;
-  Result:=MapLocationAdd(FCari.CariID,FCari.Unvani,FCari.Adi+' '+FCari.SoyAdi,FCari.Enlem,FCari.Boylam);
-
-end;
 
 
-function TFForm_Cari.MapLocationAdd(const ACariID: Integer; const AUnvan,
-  AAdSoyad, AEnlem, ABoylam: string): TMapMarkerDescriptor;
-begin
-   if not AEnlem.IsEmpty or not ABoylam.IsEmpty then Exit;
-   if FMapList.ContainsKey(FCari.CariID) then
-   FMapList.Remove(FCari.CariID);
-   //TDialogService.ShowMessage(MapView1.Zoom.ToString+sLineBreak+AEnlem+sLineBreak+ABoylam);
-        //Format('%.6f,%.6f', [Latitude, Longitude], TFormatSettings.Create('en-US'));
-        Result := TMapMarkerDescriptor.Create(
-        TMapCoordinate.Create(
-        StrToFloat(AEnlem,TFormatSettings.Create('en-US')),
-        StrToFloat(ABoylam,TFormatSettings.Create('en-US'))
-        ),AUnvan);
-        //Result.Visible :=True;
-        Result.Snippet:=AAdSoyad;
 
-        MapView1.AddMarker(Result);
-        
-       //OpenNavigation(FCari.Enlem+','+FCari.Boylam);
-
-
-      Result.Visible:=False;
-
-        
-      Result.Draggable := True;
-      Result.Visible:=true;
-
-end;
 
 end.

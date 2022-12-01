@@ -5,8 +5,11 @@ interface
 uses
   System.SysUtils, System.Classes, uGraphicCommon, uUrlPicture,
   uDownloadPictureManager, UniProvider, SQLServerUniProvider, Data.DB, DBAccess,
-  Uni, uDrawPicture, uSkinImageList,System.Rtti,
-  FMX.Platform, System.UITypes, FMX.Controls,FMX.Types,MemData,FMX.PhoneDialer;
+  Uni, uDrawPicture, uSkinImageList,System.Rtti,Generics.Collections,
+  FMX.Platform, System.UITypes, FMX.Controls,FMX.Types,MemData,FMX.PhoneDialer,
+  uSkinMaterial, uSkinButtonType
+  ///,FMX.TMSFNCMaps,FMX.TMSFNCGoogleMaps
+  ;
 
  const
   cFirma='Mikotek';
@@ -70,6 +73,7 @@ type
     img_Color: TSkinImageList;
     img_Color1: TSkinImageList;
     update: TUniSQL;
+    btn_konum_Material: TSkinButtonDefaultMaterial;
     procedure cn_dbConnectionLost(Sender: TObject; Component: TComponent;
       ConnLostCause: TConnLostCause; var RetryMode: TRetryMode);
     procedure DataModuleCreate(Sender: TObject);
@@ -80,6 +84,7 @@ type
     { Private declarations }
   public
     FPhoneDialerService: IFMXPhoneDialerService;
+
     { Public declarations }
     procedure MakeCallPhone(s: string);
     //property AppURL:Variant Index 0 read VGet write VSet;
@@ -214,6 +219,8 @@ procedure Init;
 procedure TDB.DataModuleCreate(Sender: TObject);
 begin
  TPlatformServices.Current.SupportsPlatformService(IFMXPhoneDialerService, FPhoneDialerService);
+
+
 end;
 
 procedure TDB.MakeCallPhone(s: string);

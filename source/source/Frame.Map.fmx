@@ -1,72 +1,429 @@
 object Frame_Map: TFrame_Map
-  Size.Width = 354.000000000000000000
-  Size.Height = 610.000000000000000000
-  Size.PlatformDefault = False
-  object pnl_ust: TSkinFMXPanel
+  Left = 0
+  Top = 0
+  ClientHeight = 585
+  ClientWidth = 379
+  Position = ScreenCenter
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop, iPhone, iPad]
+  DesignerMasterStyle = 0
+  object Location1: TTMSFNCLocation
+    Size.Width = 26.000000000000000000
+    Size.Height = 26.000000000000000000
+    Size.PlatformDefault = False
+    Position.X = 297.000000000000000000
+    Position.Y = 8.000000000000000000
+    Connection = lcHTTP
+    LocationRequests = <>
+  end
+  object rect_back: TSkinFMXCalloutRect
     ParentMouseEvent = False
     DirectUIVisible = False
     ComponentTypeUseKind = ctukDefault
     MaterialUseKind = mukSelfOwn
     KeepSelfOwnMaterial = True
-    SelfOwnMaterial.BackColor.Color = claWhite
+    SelfOwnMaterial.BackColor.Color = xFF00ABFF
+    SelfOwnMaterial.BackColor.IsFill = True
+    SelfOwnMaterial.BackColor.FillColor.UseThemeColor = ctThemeColor1
+    SelfOwnMaterial.BackColor.FillColor.Color = xFF00ABFF
     SelfOwnMaterial.BackColor.DrawEffectSetting.MouseDownEffect.FillColorChangeType = cctNone
     SelfOwnMaterial.BackColor.DrawEffectSetting.MouseOverEffect.FillColorChangeType = cctNone
     SelfOwnMaterial.BackColor.DrawEffectSetting.PushedEffect.FillColorChangeType = cctNone
     SelfOwnMaterial.BackColor.DrawEffectSetting.DisabledEffect.FillColorChangeType = cctNone
     SelfOwnMaterial.BackColor.DrawEffectSetting.FocusedEffect.FillColorChangeType = cctNone
+    SelfOwnMaterial.IsTransparent = False
     SelfOwnMaterial.DrawCaptionParam.FontTrimming = fttNone
     SelfOwnMaterial.DrawCaptionParam.FontHorzAlign = fhaLeft
     SelfOwnMaterial.DrawCaptionParam.FontVertAlign = fvaTop
+    SelfOwnMaterial.CalloutWidth = 23.000000000000000000
+    SelfOwnMaterial.CalloutLength = 11.000000000000000000
+    SelfOwnMaterial.DrawPathParam.PathActions = <
+      item
+        Y = 11.000000000000000000
+        SizeType = dpstPixel
+        ActionType = patMoveTo
+      end
+      item
+        Y = 11.000000000000000000
+        Y1 = 11.000000000000000000
+        Y2 = 11.000000000000000000
+        SizeType = dpstPixel
+        ActionType = patCurveTo
+      end
+      item
+        X = 178.000000000000000000
+        Y = 11.000000000000000000
+        SizeType = dpstPixel
+        ActionType = patLineTo
+      end
+      item
+        X = 189.500000000000000000
+        SizeType = dpstPixel
+        ActionType = patLineTo
+      end
+      item
+        X = 201.000000000000000000
+        Y = 11.000000000000000000
+        SizeType = dpstPixel
+        ActionType = patLineTo
+      end
+      item
+        X = 379.000000000000000000
+        Y = 11.000000000000000000
+        SizeType = dpstPixel
+        ActionType = patLineTo
+      end
+      item
+        X = 379.000000000000000000
+        Y = 11.000000000000000000
+        X1 = 379.000000000000000000
+        Y1 = 11.000000000000000000
+        X2 = 379.000000000000000000
+        Y2 = 11.000000000000000000
+        SizeType = dpstPixel
+        ActionType = patCurveTo
+      end
+      item
+        X = 379.000000000000000000
+        Y = 585.000000000000000000
+        SizeType = dpstPixel
+        ActionType = patLineTo
+      end
+      item
+        X = 379.000000000000000000
+        Y = 585.000000000000000000
+        X1 = 379.000000000000000000
+        Y1 = 585.000000000000000000
+        X2 = 379.000000000000000000
+        Y2 = 585.000000000000000000
+        SizeType = dpstPixel
+        ActionType = patCurveTo
+      end
+      item
+        Y = 585.000000000000000000
+        SizeType = dpstPixel
+        ActionType = patLineTo
+      end
+      item
+        Y = 585.000000000000000000
+        Y1 = 585.000000000000000000
+        Y2 = 585.000000000000000000
+        SizeType = dpstPixel
+        ActionType = patCurveTo
+      end
+      item
+        Y = 11.000000000000000000
+        SizeType = dpstPixel
+        ActionType = patLineTo
+      end
+      item
+        SizeType = dpstPixel
+        ActionType = patDrawPath
+      end>
     MouseDownFocus = False
-    Align = Top
-    Size.Width = 354.000000000000000000
-    Size.Height = 65.000000000000000000
+    Align = Client
+    Size.Width = 379.000000000000000000
+    Size.Height = 585.000000000000000000
     Size.PlatformDefault = False
     TabOrder = 0
-    Properties.IsToolBar = False
-    object lbl1: TLabel
-      Position.X = 16.000000000000000000
-      Position.Y = 8.000000000000000000
-      Text = 'lbl1'
+    object rect_orta: TSkinFMXCalloutRect
+      ParentMouseEvent = False
+      DirectUIVisible = False
+      ComponentTypeUseKind = ctukDefault
+      MaterialUseKind = mukSelfOwn
+      KeepSelfOwnMaterial = True
+      SelfOwnMaterial.BackColor.Color = claWhite
+      SelfOwnMaterial.BackColor.RectCorners = [rcTopLeft, rcTopRight]
+      SelfOwnMaterial.BackColor.IsFill = True
+      SelfOwnMaterial.BackColor.IsRound = True
+      SelfOwnMaterial.BackColor.RoundWidth = 50.000000000000000000
+      SelfOwnMaterial.BackColor.RoundHeight = 50.000000000000000000
+      SelfOwnMaterial.BackColor.DrawEffectSetting.MouseDownEffect.FillColorChangeType = cctNone
+      SelfOwnMaterial.BackColor.DrawEffectSetting.MouseOverEffect.FillColorChangeType = cctNone
+      SelfOwnMaterial.BackColor.DrawEffectSetting.PushedEffect.FillColorChangeType = cctNone
+      SelfOwnMaterial.BackColor.DrawEffectSetting.DisabledEffect.FillColorChangeType = cctNone
+      SelfOwnMaterial.BackColor.DrawEffectSetting.FocusedEffect.FillColorChangeType = cctNone
+      SelfOwnMaterial.IsTransparent = False
+      SelfOwnMaterial.DrawCaptionParam.FontTrimming = fttNone
+      SelfOwnMaterial.DrawCaptionParam.FontHorzAlign = fhaLeft
+      SelfOwnMaterial.DrawCaptionParam.FontVertAlign = fvaTop
+      SelfOwnMaterial.CalloutWidth = 23.000000000000000000
+      SelfOwnMaterial.CalloutLength = 11.000000000000000000
+      SelfOwnMaterial.DrawPathParam.PathActions = <
+        item
+          Y = 11.000000000000000000
+          SizeType = dpstPixel
+          ActionType = patMoveTo
+        end
+        item
+          Y = 11.000000000000000000
+          Y1 = 11.000000000000000000
+          Y2 = 11.000000000000000000
+          SizeType = dpstPixel
+          ActionType = patCurveTo
+        end
+        item
+          X = 178.000000000000000000
+          Y = 11.000000000000000000
+          SizeType = dpstPixel
+          ActionType = patLineTo
+        end
+        item
+          X = 189.500000000000000000
+          SizeType = dpstPixel
+          ActionType = patLineTo
+        end
+        item
+          X = 201.000000000000000000
+          Y = 11.000000000000000000
+          SizeType = dpstPixel
+          ActionType = patLineTo
+        end
+        item
+          X = 379.000000000000000000
+          Y = 11.000000000000000000
+          SizeType = dpstPixel
+          ActionType = patLineTo
+        end
+        item
+          X = 379.000000000000000000
+          Y = 11.000000000000000000
+          X1 = 379.000000000000000000
+          Y1 = 11.000000000000000000
+          X2 = 379.000000000000000000
+          Y2 = 11.000000000000000000
+          SizeType = dpstPixel
+          ActionType = patCurveTo
+        end
+        item
+          X = 379.000000000000000000
+          Y = 535.000000000000000000
+          SizeType = dpstPixel
+          ActionType = patLineTo
+        end
+        item
+          X = 379.000000000000000000
+          Y = 535.000000000000000000
+          X1 = 379.000000000000000000
+          Y1 = 535.000000000000000000
+          X2 = 379.000000000000000000
+          Y2 = 535.000000000000000000
+          SizeType = dpstPixel
+          ActionType = patCurveTo
+        end
+        item
+          Y = 535.000000000000000000
+          SizeType = dpstPixel
+          ActionType = patLineTo
+        end
+        item
+          Y = 535.000000000000000000
+          Y1 = 535.000000000000000000
+          Y2 = 535.000000000000000000
+          SizeType = dpstPixel
+          ActionType = patCurveTo
+        end
+        item
+          Y = 11.000000000000000000
+          SizeType = dpstPixel
+          ActionType = patLineTo
+        end
+        item
+          SizeType = dpstPixel
+          ActionType = patDrawPath
+        end>
+      MouseDownFocus = False
+      Align = Client
+      Padding.Left = 5.000000000000000000
+      Padding.Right = 5.000000000000000000
+      Size.Width = 379.000000000000000000
+      Size.Height = 535.000000000000000000
+      Size.PlatformDefault = False
       TabOrder = 0
+      object Maps1: TTMSFNCGoogleMaps
+        Align = Client
+        Size.Width = 369.000000000000000000
+        Size.Height = 535.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 1
+        OnMapMoveEnd = Maps1MapMoveEnd
+        OnMarkerClick = Maps1MarkerClick
+        OnGetCenterCoordinate = Maps1GetCenterCoordinate
+        APIKey = 'AIzaSyBgaViyAXc833dpBZH1m6EWjlPhND04RN8'
+        Polylines = <>
+        Polygons = <>
+        Circles = <>
+        Rectangles = <>
+        Markers = <>
+        Options.Locale = 'tr-TR'
+        Options.DefaultLatitude = 37.934913000000000000
+        Options.DefaultLongitude = 32.545860000000000000
+        Options.DefaultZoomLevel = 17.000000000000000000
+        Options.ShowMapTypeControl = False
+        Options.ShowKeyboardShortcuts = False
+        Options.BackgroundColor = claNull
+        Options.DisablePOI = False
+        Options.Version = 'beta'
+        ElementContainers = <>
+        HeadLinks = <>
+        KMLLayers = <>
+        Directions = <>
+        Clusters = <>
+        OverlayViews = <>
+      end
+    end
+    object pnl_ToolBar: TSkinFMXPanel
+      ParentMouseEvent = False
+      DirectUIVisible = False
+      ComponentTypeUseKind = ctukDefault
+      MaterialUseKind = mukSelfOwn
+      KeepSelfOwnMaterial = True
+      SelfOwnMaterial.BackColor.Color = xFF00ABFF
+      SelfOwnMaterial.BackColor.IsFill = True
+      SelfOwnMaterial.BackColor.FillColor.UseThemeColor = ctThemeColor1
+      SelfOwnMaterial.BackColor.FillColor.Color = xFF00ABFF
+      SelfOwnMaterial.BackColor.DrawEffectSetting.MouseDownEffect.FillColorChangeType = cctNone
+      SelfOwnMaterial.BackColor.DrawEffectSetting.MouseOverEffect.FillColorChangeType = cctNone
+      SelfOwnMaterial.BackColor.DrawEffectSetting.PushedEffect.FillColorChangeType = cctNone
+      SelfOwnMaterial.BackColor.DrawEffectSetting.DisabledEffect.FillColorChangeType = cctNone
+      SelfOwnMaterial.BackColor.DrawEffectSetting.FocusedEffect.FillColorChangeType = cctNone
+      SelfOwnMaterial.IsTransparent = False
+      SelfOwnMaterial.DrawCaptionParam.FontTrimming = fttNone
+      SelfOwnMaterial.DrawCaptionParam.FontHorzAlign = fhaLeft
+      SelfOwnMaterial.DrawCaptionParam.FontVertAlign = fvaTop
+      MouseDownFocus = False
+      Align = Top
+      Size.Width = 379.000000000000000000
+      Size.Height = 50.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 2
+      Properties.IsToolBar = False
+      object btn_konum: TSkinFMXButton
+        ParentMouseEvent = False
+        DirectUIVisible = False
+        ComponentTypeUseKind = ctukDefault
+        MaterialUseKind = mukRef
+        KeepSelfOwnMaterial = False
+        RefMaterial = DB.btn_konum_Material
+        MouseDownFocus = False
+        Margins.Left = 10.000000000000000000
+        Margins.Right = 10.000000000000000000
+        Position.X = 99.000000000000000000
+        Size.Width = 111.000000000000000000
+        Size.Height = 46.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 11
+        OnClick = btn_konumClick
+        Caption = 'K O N U M   A L'
+        Text = 'K O N U M   A L'
+        Properties.AutoSize = False
+        Properties.IsAutoPush = False
+        Properties.IsPushed = False
+        Properties.Icon.IsClipRound = False
+        Properties.PushedIcon.IsClipRound = False
+        Properties.ButtonIndex = -1
+        Properties.PushedGroupIndex = 0
+      end
+      object btn1: TButton
+        Position.X = 224.000000000000000000
+        Position.Y = 9.000000000000000000
+        Size.Width = 145.000000000000000000
+        Size.Height = 41.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 0
+        Text = 'btn1'
+        OnClick = btn1Click
+      end
+      object btnReturn: TSkinFMXButton
+        ParentMouseEvent = False
+        DirectUIVisible = False
+        ComponentTypeUseKind = ctukName
+        MaterialUseKind = mukSelfOwn
+        KeepSelfOwnMaterial = True
+        ComponentTypeName = 'NormalPushed'
+        SelfOwnMaterial.BackColor.Color = claWhite
+        SelfOwnMaterial.BackColor.DrawRectSetting.Width = 100.000000000000000000
+        SelfOwnMaterial.BackColor.DrawRectSetting.Height = 100.000000000000000000
+        SelfOwnMaterial.BackColor.DrawEffectSetting.MouseDownEffect.CommonEffectTypes = [dpcetAlphaChange]
+        SelfOwnMaterial.BackColor.DrawEffectSetting.MouseDownEffect.BorderWidth = 1.000000000000000000
+        SelfOwnMaterial.BackColor.DrawEffectSetting.MouseDownEffect.FillColorChangeType = cctDarkness
+        SelfOwnMaterial.BackColor.DrawEffectSetting.MouseDownEffect.EffectTypes = [drpetFillColorChange]
+        SelfOwnMaterial.BackColor.DrawEffectSetting.MouseOverEffect.BorderWidth = 1.000000000000000000
+        SelfOwnMaterial.BackColor.DrawEffectSetting.MouseOverEffect.FillColorChangeType = cctNone
+        SelfOwnMaterial.BackColor.DrawEffectSetting.PushedEffect.BorderWidth = 1.000000000000000000
+        SelfOwnMaterial.BackColor.DrawEffectSetting.PushedEffect.FillColorChangeType = cctNone
+        SelfOwnMaterial.BackColor.DrawEffectSetting.DisabledEffect.FillColorChangeType = cctNone
+        SelfOwnMaterial.BackColor.DrawEffectSetting.FocusedEffect.FillColorChangeType = cctNone
+        SelfOwnMaterial.IsTransparent = False
+        SelfOwnMaterial.IsAutoCenterIconAndCaption = False
+        SelfOwnMaterial.DrawDetailParam.FontTrimming = fttNone
+        SelfOwnMaterial.DrawDetailParam.FontHorzAlign = fhaLeft
+        SelfOwnMaterial.DrawDetailParam.FontVertAlign = fvaBottom
+        SelfOwnMaterial.DrawDetail1Param.FontTrimming = fttNone
+        SelfOwnMaterial.DrawDetail1Param.FontHorzAlign = fhaLeft
+        SelfOwnMaterial.DrawDetail1Param.FontVertAlign = fvaTop
+        SelfOwnMaterial.DrawHelpTextParam.FontColor = claGray
+        SelfOwnMaterial.DrawHelpTextParam.DrawFont.Color = claGray
+        SelfOwnMaterial.DrawHelpTextParam.DrawFont.FontColor.Color = claGray
+        SelfOwnMaterial.DrawHelpTextParam.FontTrimming = fttNone
+        SelfOwnMaterial.DrawHelpTextParam.FontHorzAlign = fhaLeft
+        SelfOwnMaterial.DrawHelpTextParam.FontVertAlign = fvaTop
+        SelfOwnMaterial.DrawIconParam.IsAutoFit = True
+        SelfOwnMaterial.DrawIconParam.PictureVertAlign = pvaCenter
+        SelfOwnMaterial.DrawIconParam.DrawRectSetting.Width = 100.000000000000000000
+        SelfOwnMaterial.DrawIconParam.DrawRectSetting.Height = 100.000000000000000000
+        SelfOwnMaterial.DrawIconParam.DrawEffectSetting.MouseDownEffect.CommonEffectTypes = [dpcetOffsetChange]
+        SelfOwnMaterial.DrawCaptionParam.FontSize = 16.000000000000000000
+        SelfOwnMaterial.DrawCaptionParam.FontColor = claWhite
+        SelfOwnMaterial.DrawCaptionParam.DrawFont.Size = 16.000000000000000000
+        SelfOwnMaterial.DrawCaptionParam.DrawFont.Color = claWhite
+        SelfOwnMaterial.DrawCaptionParam.DrawFont.FontColor.Color = claWhite
+        SelfOwnMaterial.DrawCaptionParam.FontTrimming = fttNone
+        SelfOwnMaterial.DrawCaptionParam.FontHorzAlign = fhaLeft
+        SelfOwnMaterial.DrawCaptionParam.FontVertAlign = fvaCenter
+        SelfOwnMaterial.DrawCaptionParam.DrawRectSetting.Left = 20.000000000000000000
+        SelfOwnMaterial.DrawCaptionParam.DrawRectSetting.Enabled = True
+        SelfOwnMaterial.DrawCaptionParam.DrawRectSetting.SizeType = dpstPixel
+        SelfOwnMaterial.NormalPicture.IsClipRound = False
+        SelfOwnMaterial.NormalPicture.ImageIndex = 0
+        SelfOwnMaterial.HoverPicture.IsClipRound = False
+        SelfOwnMaterial.DownPicture.IsClipRound = False
+        SelfOwnMaterial.DisabledPicture.IsClipRound = False
+        SelfOwnMaterial.FocusedPicture.IsClipRound = False
+        SelfOwnMaterial.PushedPicture.IsClipRound = False
+        SelfOwnMaterial.PushedPicture.ImageIndex = 0
+        SelfOwnMaterial.DrawPictureParam.IsStretch = True
+        SelfOwnMaterial.DrawPictureParam.PictureHorzAlign = phaCenter
+        SelfOwnMaterial.DrawPictureParam.PictureVertAlign = pvaCenter
+        SelfOwnMaterial.DrawPictureParam.DrawRectSetting.Width = 100.000000000000000000
+        SelfOwnMaterial.DrawPictureParam.DrawRectSetting.Height = 100.000000000000000000
+        MouseDownFocus = False
+        Align = Left
+        ClipChildren = True
+        Size.Width = 50.000000000000000000
+        Size.Height = 50.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 1
+        OnClick = btnReturnClick
+        Properties.AutoSize = False
+        Properties.IsAutoPush = False
+        Properties.IsPushed = False
+        Properties.Icon.IsClipRound = False
+        Properties.Icon.ImageIndex = 6
+        Properties.Icon.SkinImageList = DB.img_white
+        Properties.PushedIcon.IsClipRound = False
+        Properties.PushedIcon.ImageIndex = 0
+        Properties.ButtonIndex = -1
+        Properties.PushedGroupIndex = 0
+      end
     end
   end
-  object Maps1: TTMSFNCGoogleMaps
-    Align = Client
-    Size.Width = 354.000000000000000000
-    Size.Height = 545.000000000000000000
-    Size.PlatformDefault = False
-    TabOrder = 1
-    OnGetCenterCoordinate = Maps1GetCenterCoordinate
-    APIKey = 'AIzaSyBgaViyAXc833dpBZH1m6EWjlPhND04RN8'
-    Polylines = <>
-    Polygons = <>
-    Circles = <>
-    Rectangles = <>
-    Markers = <>
-    Options.Locale = 'tr-TR'
-    Options.DefaultLatitude = 0.000000000000000000
-    Options.DefaultLongitude = 0.000000000000000000
-    Options.DefaultZoomLevel = 12.000000000000000000
-    Options.ShowMapTypeControl = False
-    Options.ShowKeyboardShortcuts = False
-    Options.BackgroundColor = claNull
-    Options.DisablePOI = False
-    Options.Version = 'beta'
-    ElementContainers = <>
-    HeadLinks = <>
-    KMLLayers = <>
-    Directions = <>
-    Clusters = <>
-    OverlayViews = <>
-  end
-  object Location1: TTMSFNCLocation
-    Size.Width = 26.000000000000000000
-    Size.Height = 26.000000000000000000
-    Size.PlatformDefault = False
-    Position.X = 168.000000000000000000
-    Position.Y = 256.000000000000000000
-    Connection = lcHTTP
-    LocationRequests = <>
+  object LocationSensor1: TLocationSensor
+    ActivityType = Other
+    UsageAuthorization = WhenInUse
+    OnLocationChanged = LocationSensor1LocationChanged
+    Left = 320
+    Top = 8
   end
 end
