@@ -433,7 +433,12 @@ btn_kayet.Visible:=(NewIndex in [0,2,4]);
 btn_new_iletisim.Visible:=((NewIndex=1) and (Config.Yetki.YetkiliEkle));
 btn_new_not.Visible:=((NewIndex=2) and (Config.Yetki.NotEkle));
 
- if NewIndex =4 then  ShowMap(nil);
+ if NewIndex = 4 then
+  begin
+   AllowChange:=False;
+   ShowMap(FCari).AddOrSetCari(True);
+
+  end;
 
 end;
 

@@ -103,6 +103,7 @@ var
   DB: TDB;
   Config:TConfig;
   FolderApp:string;
+  FormatEN:TFormatSettings;
 
 implementation
   uses sdk,System.IOUtils,FMX.Forms,FMX.DialogService,
@@ -198,6 +199,7 @@ end;
 
 procedure Init;
  begin
+   FormatEN:=TFormatSettings.Create('en-US');
  {$IF defined(MSWINDOWS)}
     FolderApp := TPath.GetHomePath + TPath.DirectorySeparatorChar + 'mikotek' + TPath.DirectorySeparatorChar;
 {$ELSEIF defined(ANDROID)}

@@ -12,7 +12,7 @@ uses
   FMX.TMSFNCLocation, FMX.TMSFNCGoogleMaps, FMX.Controls.Presentation,
   FMX.TMSFNCMapKit,Generics.Collections, System.Sensors,DBOpak,
   System.Sensors.Components, uSkinButtonType, uSkinFireMonkeyButton,
-  uSkinCalloutRectType;
+  uSkinCalloutRectType,OMR.Cari;
 
 type
  //TIconType =(Current)
@@ -41,24 +41,27 @@ type
     procedure btnReturnClick(Sender: TObject);
   private
     { Private declarations }
+    FCari:TCari;
     FCariMaplist:TDictionary<Cardinal,TTMSFNCGoogleMapsMarker>;
     DoAddMarker:Boolean;
-    
+      function AddOrSetMarker(const ACariID:Integer; ATitle: string; ALatitude,ALongitude: Double; AIconName: string='LogoMavi'):TTMSFNCGoogleMapsMarker; overload;
+      function AddOrSetMarker(const ACariID:Integer; ATitle, ALatitude,ALongitude: string; AIconName: string='LogoMavi'):TTMSFNCGoogleMapsMarker;overload;
+
   public
     { Public declarations }
       FLastMaker:TTMSFNCGoogleMapsMarker;
       procedure AfterConstruction; override;
       destructor Destroy; override;
-      //function AddOrSetMarker(const ACariID:Integer; ATitle: string; ALatitude,ALongitude: Double; AIconName: string):TTMSFNCGoogleMapsMarker;
-
+      function AddOrSetCari(const ADef:Boolean=True):TTMSFNCGoogleMapsMarker;
   end;
+
 
   TTMSFNCGoogleMapsMarkerHelp = class helper for TTMSFNCGoogleMapsMarker
+   procedure Edit(const ADef:Boolean=True);
 
-    
   end;
 
-   function ShowMap(const AObject:TFmxObject):TFrame_Map;
+   function ShowMap(const ACari:TCari=nil):TFrame_Map;
 
 
 implementation
@@ -118,31 +121,53 @@ LogoMavi = 'data:image/png;base64,'
 
 {$R *.fmx}
 
-function ShowMap(const AObject:TFmxObject):TFrame_Map;
+function ShowMap(const ACari:TCari=nil):TFrame_Map;
 begin
-  //ShowFrame(TFrame(Frame_Map), TFrame_Map, AObject, nil, nil, nil, Application, True, True, ufsefNone);
   if Frame_Map=nil then Frame_Map:=TFrame_Map.Create(Application);
-  try
-    //Frame_Map.Visible:=False;
-
-    Frame_Map.Show;
-
+  Frame_Map.FCari:=nil;
+  Frame_Map.FLastMaker:=nil;
   Result:=Frame_Map;
-  finally
-    //Frame_Map.Visible:=True;
-  end;     
+  Frame_Map.Show;
 exit;
-TThread.CreateAnonymousThread(
-procedure ()
- begin
 
- end
- );
-   if not Assigned(Frame_Map) then
-   Frame_Map:=TFrame_Map.Create(Application);
-   Frame_Map.Parent:=AObject;
    Frame_Map.Maps1.Initialize;
 
+end;
+
+
+
+function TFrame_Map.AddOrSetMarker(const ACariID: Integer; ATitle: string;
+  ALatitude, ALongitude: Double; AIconName: string): TTMSFNCGoogleMapsMarker;
+  var
+   rs:TTMSFNCGoogleMapsMarker;
+begin
+  if not FCariMaplist.TryGetValue(ACariID,Result) then
+   begin
+    Maps1.BeginUpdate;
+    Result:=Maps1.AddMarker(ALatitude, ALongitude, ATitle,LogoKirmizi);
+    Result.Clickable:=True;
+    Result.Draggable:=True;
+    Maps1.EndUpdate;
+   end;
+end;
+
+function TFrame_Map.AddOrSetMarker(const ACariID: Integer; ATitle, ALatitude, ALongitude, AIconName: string): TTMSFNCGoogleMapsMarker;
+var
+ d1 ,d2:Double;
+begin
+
+   d1:=StrToFloatDef(ALatitude,0,FormatEN);
+   d2:=StrToFloatDef(ALongitude,0,FormatEN);
+   if (d1=0) or (d2=0) then Exit;
+
+   Result:=AddOrSetMarker(ACariID,ATitle,d1,d2,AIconName);
+end;
+
+function TFrame_Map.AddOrSetCari(const ADef: Boolean): TTMSFNCGoogleMapsMarker;
+begin
+   if FCari=nil then Exit;
+   Result:=AddOrSetMarker(FCari.CariID,FCari.Unvani,FCari.Enlem,FCari.Boylam);
+   Result.Edit(ADef);
 end;
 
 
@@ -155,7 +180,11 @@ end;
 
 procedure TFrame_Map.btn1Click(Sender: TObject);
 begin
+  FLastMaker.Recreate:=True;
+  FLastMaker.Draggable:=True;
 
+  Maps1.MapsInstance.GetAddOrUpdateMarker;
+  Exit;
   DoAddMarker := True;
   Maps1.GetCenterCoordinate;
  //Maps1.AddMarker(ALatitude, ALongitude, ATitle, 'https://tmssoftware.com/site/img/'+AIconName);
@@ -178,11 +207,17 @@ procedure TFrame_Map.LocationSensor1LocationChanged(Sender: TObject;
   const OldLocation, NewLocation: TLocationCoord2D);
 begin
   LocationSensor1.Active:=False;
-  var Enlem := NewLocation.Latitude.ToString(ffGeneral, 8, 5, TFormatSettings.Create('en-US'));
-  var Boylam := NewLocation.Longitude.ToString(ffGeneral, 8, 5, TFormatSettings.Create('en-US'));
+  FCari.Enlem  := NewLocation.Latitude.ToString(ffGeneral, 8, 5, FormatEN);
+  FCari.Boylam := NewLocation.Longitude.ToString(ffGeneral, 8, 5, FormatEN);
 
-  FLastMaker.Coordinate.Latitude:=NewLocation.Latitude;
-  FLastMaker.Coordinate.Longitude:=NewLocation.Longitude;
+  if FLastMaker=nil then
+   begin
+
+    FLastMaker.Coordinate.Latitude:=NewLocation.Latitude;
+    FLastMaker.Coordinate.Longitude:=NewLocation.Longitude;
+    AddOrSetCari()
+   end;
+
 
 
   //Maps1.ShowPopup(FLastMaker.Coordinate.ToRec,'');
@@ -191,12 +226,12 @@ begin
 
 end;
 
-procedure TFrame_Map.Maps1GetCenterCoordinate(Sender: TObject;
-  ACoordinate: TTMSFNCMapsCoordinateRec);
+procedure TFrame_Map.Maps1GetCenterCoordinate(Sender: TObject; ACoordinate: TTMSFNCMapsCoordinateRec);
 
 begin
   if DoAddMarker then
   begin
+    if FLastMaker=nil then
     FLastMaker:=Maps1.AddMarker(ACoordinate, 'Mikotek ELEKTRONÝK', LogoKirmizi); //http://maps.google.com/mapfiles/kml/paddle/M.png
     FLastMaker.Draggable:=True;
     DoAddMarker := False;
@@ -243,6 +278,25 @@ begin
 {$ELSE}
   LocationSensor1.Active := False
 {$ENDIF}
+end;
+
+{ TTMSFNCGoogleMapsMarkerHelp }
+
+
+procedure TTMSFNCGoogleMapsMarkerHelp.Edit(const ADef: Boolean);
+begin
+  if ADef then
+   begin
+    Self.Draggable:=True;
+    Self.IconURL:='http://maps.google.com/mapfiles/kml/paddle/M.png';//LogoKirmizi;
+   end
+   else
+   begin
+    Self.Draggable:=False;
+    Self.IconURL:=LogoMavi;
+   end;
+
+  //DEFAULT_ICONURL
 end;
 
 end.
