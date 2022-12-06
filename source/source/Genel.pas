@@ -370,14 +370,15 @@ end;
 
 { TIletisim }
 
+
 function TIletisim.GetValue(const Index: Integer): TValue;
 begin
    case Index of
-    0:Result:=Tag;
-    1:Result:=Caption;
-    2:Result:=Detail;
-    3:Result:=Detail1;
-    4:Result:=Detail2;
+    0:Result:=Tag; //ID
+    1:Result:=Caption; //Görevi
+    2:Result:=Detail;  //Adý
+    3:Result:=Detail1; //TEl
+    4:Result:=Detail2; //Cep
    end;
 end;
 
@@ -399,7 +400,7 @@ begin
 
  if Tag>0 then
      DB.cn_db.ExecSQL(Format('UPDATE dbo.TBLCARITELEFONSB SET TELEFON =%s,YETKILI=%s,GOREVI=%s,CEPTEL=%s where ID='+IntToStr(Tag),
-     [IntToStr(iletisimListe.FCariId),QuotedStr(Tel.AsString),QuotedStr(Adi.ToString),QuotedStr(Gorevi.ToString),QuotedStr(Cep.ToString)]))
+     [QuotedStr(Tel.AsString),QuotedStr(Adi.ToString),QuotedStr(Gorevi.ToString),QuotedStr(Cep.ToString)]))
   else
     begin
 
@@ -419,7 +420,7 @@ end;
 
 procedure TIletisimListe.LoadDB(const AFiltre: string; AClearFiltre: Boolean);
 var
- s,TempStr:string;
+ s:string;
 begin
   prop.Items.BeginUpdate;
   prop.Items.Clear();
@@ -436,7 +437,7 @@ begin
        begin
 
          ID:=dt._I['ID'];
-         Gorevi:=dt._S['GOREVI'].Trim+TempStr;
+         Gorevi:=dt._S['GOREVI'].Trim;
          Adi:=dt._S['YETKILI'];
          Tel:=dt._S['TELEFON'].Trim;;
          Cep:=dt._S['CEPTEL'].Trim;

@@ -38,7 +38,7 @@ interface
     procedure Clear;
     procedure LoadDB(const ACariID:Cardinal=0);
     function SaveDB:Boolean;
-
+    function SaveDBKonum:Boolean;
     procedure IletisimSil(const AId:Integer);
   //select ID,GOREVI,YETKILI,TELEFON,CEPTEL from TBLCARITELEFONSB where CARIID=1491
     property CariID:Integer read FCariID;
@@ -221,7 +221,7 @@ begin
      ' WHERE ID = '+IntToStr(FCariID);
 
  try
-     TDialogService.ShowMessage(AKonum);
+     //TDialogService.ShowMessage(AKonum);
      DB.cn_db.ExecSQL(s);
      Result:=True;
  except
@@ -231,5 +231,19 @@ begin
 end;
 
 
+
+function TCari.SaveDBKonum: Boolean;
+begin
+ if (FEnlem.IsEmpty) and (FBoylam.IsEmpty) then Exit;
+var   s:='UPDATE dbo.TBLCARISB SET '+
+     ' ACIKLAMA10='+QuotedStr(FEnlem+','+FBoylam)+
+     ' WHERE ID = '+IntToStr(FCariID);
+    try
+     DB.cn_db.ExecSQL(s);
+     Result:=True;
+   except
+      Result:=False;
+   end;
+end;
 
 end.

@@ -112,7 +112,6 @@ type
     ClearEditButton7: TClearEditButton;
     pnl_12: TSkinFMXPanel;
     com_cari_tipi: TSkinFMXComboBox;
-    SkinFMXButton1: TSkinFMXButton;
     procedure btnReturnClick(Sender: TObject);
     procedure btn_kayetClick(Sender: TObject);
     procedure lbl_iletisim_telClick(Sender: TObject);
@@ -123,7 +122,6 @@ type
     procedure btn_not_editClick(Sender: TObject);
     procedure tmrTimer(Sender: TObject);
     procedure pnl_4DblClick(Sender: TObject);
-    procedure SkinFMXButton1Click(Sender: TObject);
   private
     procedure LoadCari(const ACariID:Cardinal);
     procedure SaveCari;
@@ -157,7 +155,7 @@ type
  procedure FormCari(const ACariID:Integer);
 
 implementation
-uses Form.Satis,Form.Cariler,HintFrame,WaitingFrame,MessageBoxFrame,
+uses Form.Satis,Form.Cariler,HintFrame,WaitingFrame,MessageBoxFrame,FMX.TMSFNCGoogleMaps,
 Frame.iletisim,Genel,Help.uni,Help.DB,System.Threading,FMX.DialogService,Frame.Map,OpenViewUrl;
 
 {$R *.fmx}
@@ -418,15 +416,14 @@ begin
   for i := 0 to list_mesajlar.Prop.Items.Count -1 do
     begin
      itm:=list_mesajlar.Prop.Items[i];
-     FCari.Aciklama.Add(itm.Caption.Trim+'|'+itm.Detail.Trim+'|'+itm.Detail1.Trim);
+     FCari.Aciklama.Add(itm.Caption.Trim+'|'+itm.Detail.Trim+'|'+itm.Detail1.Trim{$IFDEF POSIX} {$ENDIF});
     end;
   FCari.Aciklama.EndUpdate;
 end;
 
 
 
-procedure TFForm_Cari.pcMainChanging(Sender: TObject; NewIndex: Integer;
-  var AllowChange: Boolean);
+procedure TFForm_Cari.pcMainChanging(Sender: TObject; NewIndex: Integer; var AllowChange: Boolean);
 begin
 btn_kayet.Visible:=(NewIndex in [0,2,4]);
 
@@ -437,6 +434,8 @@ btn_new_not.Visible:=((NewIndex=2) and (Config.Yetki.NotEkle));
   begin
    AllowChange:=False;
    ShowMap(FCari).AddOrSetCari(True);
+
+
 
   end;
 
@@ -502,12 +501,6 @@ begin
  );
 
  list_shop.Prop.EndUpdate;
-end;
-
-procedure TFForm_Cari.SkinFMXButton1Click(Sender: TObject);
-begin
-
- //OpenNavigation(FCari.Enlem+','+FCari.Boylam);
 end;
 
 procedure TFForm_Cari.btn_not_silClick(Sender: TObject);

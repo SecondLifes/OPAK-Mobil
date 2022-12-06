@@ -15,7 +15,7 @@ uses
   cFirma='Mikotek';
   cAppURL='http://88.247.42.50:8080/bin/OpakSatis.apk';
   cAppName='MSS';
-  cAppVersiyon='1.0.3';
+  cAppVersiyon='1.0.9';
 
 type
 

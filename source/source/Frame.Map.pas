@@ -20,30 +20,34 @@ type
 
   TFrame_Map = class(TForm)
     Location1: TTMSFNCLocation;
-    btn1: TButton;
-    Maps1: TTMSFNCGoogleMaps;
     LocationSensor1: TLocationSensor;
     btn_konum: TSkinFMXButton;
     rect_back: TSkinFMXCalloutRect;
     rect_orta: TSkinFMXCalloutRect;
     pnl_ToolBar: TSkinFMXPanel;
     btnReturn: TSkinFMXButton;
-    procedure Maps1GetCenterCoordinate(Sender: TObject;
-      ACoordinate: TTMSFNCMapsCoordinateRec);
-    procedure btn1Click(Sender: TObject);
-    procedure Maps1MapMoveEnd(Sender: TObject;
-      AEventData: TTMSFNCMapsEventData);
+    btn_kayet: TSkinFMXButton;
+    SkinFMXButton1: TSkinFMXButton;
+    tmr1: TTimer;
+    Maps1: TTMSFNCGoogleMaps;
     procedure Maps1MarkerClick(Sender: TObject;
       AEventData: TTMSFNCMapsEventData);
     procedure btn_konumClick(Sender: TObject);
     procedure LocationSensor1LocationChanged(Sender: TObject; const OldLocation,
       NewLocation: TLocationCoord2D);
     procedure btnReturnClick(Sender: TObject);
+    procedure btn_kayetClick(Sender: TObject);
+    procedure Maps1MarkerDragEnd(Sender: TObject;
+      AEventData: TTMSFNCMapsEventData);
+    procedure SkinFMXButton1Click(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure tmr1Timer(Sender: TObject);
   private
     { Private declarations }
     FCari:TCari;
     FCariMaplist:TDictionary<Cardinal,TTMSFNCGoogleMapsMarker>;
-    DoAddMarker:Boolean;
+    FSelectMap:TTMSFNCGoogleMapsMarker;
+ 
       function AddOrSetMarker(const ACariID:Integer; ATitle: string; ALatitude,ALongitude: Double; AIconName: string='LogoMavi'):TTMSFNCGoogleMapsMarker; overload;
       function AddOrSetMarker(const ACariID:Integer; ATitle, ALatitude,ALongitude: string; AIconName: string='LogoMavi'):TTMSFNCGoogleMapsMarker;overload;
 
@@ -57,7 +61,8 @@ type
 
 
   TTMSFNCGoogleMapsMarkerHelp = class helper for TTMSFNCGoogleMapsMarker
-   procedure Edit(const ADef:Boolean=True);
+   function Edit(const ADef:Boolean=True):TTMSFNCGoogleMapsMarker;
+   function SetZoom:TTMSFNCGoogleMapsMarker; 
 
   end;
 
@@ -65,7 +70,7 @@ type
 
 
 implementation
-uses uUIFunction, Frame.Login;
+uses uUIFunction,WaitingFrame,HintFrame, Frame.Login,OpenViewUrl,FMX.DialogService;
 var
   Frame_Map:TFrame_Map=nil;
 const
@@ -123,14 +128,42 @@ LogoMavi = 'data:image/png;base64,'
 
 function ShowMap(const ACari:TCari=nil):TFrame_Map;
 begin
-  if Frame_Map=nil then Frame_Map:=TFrame_Map.Create(Application);
-  Frame_Map.FCari:=nil;
+
+
+  if Frame_Map=nil then 
+  begin
+   Frame_Map:=TFrame_Map.Create(Application);
+
+      var d1:=StrToFloatDef(ACari.Enlem,0,FormatEN);
+      var d2:=StrToFloatDef(ACari.Boylam,0,FormatEN);
+     if (d1<>0) or (d2<>0) then
+      begin
+       Frame_Map.Maps1.Options.DefaultLatitude:=d1;
+       Frame_Map.Maps1.Options.DefaultLongitude:=d2;
+      end;
+        with Frame_Map do
+        begin
+          // Maps1.APIKey:= 'AIzaSyBgaViyAXc833dpBZH1m6EWjlPhND04RN8';
+           Maps1.OnMarkerClick:= Maps1MarkerClick;
+          // Maps1.Options.Locale:= 'tr-TR';
+           Maps1.Options.ShowMapTypeControl:= False;
+           Maps1.Options.ShowKeyboardShortcuts:=False;
+           Maps1.OnMarkerDragEnd:= Maps1MarkerDragEnd;
+           Maps1.Options.DefaultZoomLevel:= 17.000000000000000000;
+
+        end;
+
+
+  end;
+  Frame_Map.FCari:=ACari;
   Frame_Map.FLastMaker:=nil;
   Result:=Frame_Map;
-  Frame_Map.Show;
-exit;
 
-   Frame_Map.Maps1.Initialize;
+  Frame_Map.Show;
+
+
+
+
 
 end;
 
@@ -138,17 +171,33 @@ end;
 
 function TFrame_Map.AddOrSetMarker(const ACariID: Integer; ATitle: string;
   ALatitude, ALongitude: Double; AIconName: string): TTMSFNCGoogleMapsMarker;
-  var
-   rs:TTMSFNCGoogleMapsMarker;
 begin
-  if not FCariMaplist.TryGetValue(ACariID,Result) then
-   begin
+ try
     Maps1.BeginUpdate;
+
+   if FCariMaplist.TryGetValue(ACariID,Result) then
+      begin
+       Maps1.Markers.Delete(Result.Index);
+       FCariMaplist.Remove(ACariID);
+      end;
+
     Result:=Maps1.AddMarker(ALatitude, ALongitude, ATitle,LogoKirmizi);
+    Result.IconURL:='http://maps.google.com/mapfiles/kml/paddle/M.png';
     Result.Clickable:=True;
-    Result.Draggable:=True;
-    Maps1.EndUpdate;
-   end;
+    Result.Draggable:=False;
+    //Result.IconWidth :=32;
+    //Result.IconHeight:=32;
+    Result.DefaultIconSize:=False;
+
+    FCariMaplist.Add(ACariID,Result);
+
+ finally
+  //Maps1.SetCenterCoordinate(Result.Coordinate.ToRec);
+  tmr1.Enabled:=True;
+  Maps1.EndUpdate;
+
+ 
+ end;
 end;
 
 function TFrame_Map.AddOrSetMarker(const ACariID: Integer; ATitle, ALatitude, ALongitude, AIconName: string): TTMSFNCGoogleMapsMarker;
@@ -158,7 +207,7 @@ begin
 
    d1:=StrToFloatDef(ALatitude,0,FormatEN);
    d2:=StrToFloatDef(ALongitude,0,FormatEN);
-   if (d1=0) or (d2=0) then Exit;
+   if (d1=0) or (d2=0) then begin Result:=nil; Exit; end;
 
    Result:=AddOrSetMarker(ACariID,ATitle,d1,d2,AIconName);
 end;
@@ -166,8 +215,18 @@ end;
 function TFrame_Map.AddOrSetCari(const ADef: Boolean): TTMSFNCGoogleMapsMarker;
 begin
    if FCari=nil then Exit;
-   Result:=AddOrSetMarker(FCari.CariID,FCari.Unvani,FCari.Enlem,FCari.Boylam);
-   Result.Edit(ADef);
+   Maps1.BeginUpdate;
+   try
+
+     Result:=AddOrSetMarker(FCari.CariID,FCari.Unvani,FCari.Enlem,FCari.Boylam);
+     if Result=nil then Exit;
+
+     FLastMaker:=Result;
+     Result.Edit(ADef);
+   finally
+     Maps1.EndUpdate;
+   end;
+
 end;
 
 
@@ -178,29 +237,22 @@ begin
  FCariMaplist:=TDictionary<Cardinal,TTMSFNCGoogleMapsMarker>.Create;
 end;
 
-procedure TFrame_Map.btn1Click(Sender: TObject);
-begin
-  FLastMaker.Recreate:=True;
-  FLastMaker.Draggable:=True;
-
-  Maps1.MapsInstance.GetAddOrUpdateMarker;
-  Exit;
-  DoAddMarker := True;
-  Maps1.GetCenterCoordinate;
- //Maps1.AddMarker(ALatitude, ALongitude, ATitle, 'https://tmssoftware.com/site/img/'+AIconName);
-end;
-
-
-
 procedure TFrame_Map.btnReturnClick(Sender: TObject);
 begin
- Hide;
+ Close;
 end;
 
 destructor TFrame_Map.Destroy;
 begin
   FCariMaplist.Free;
   inherited Destroy;
+end;
+
+procedure TFrame_Map.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+ if FLastMaker<>nil then FLastMaker.Edit(False);
+ Maps1.CloseAllPopups;
+ 
 end;
 
 procedure TFrame_Map.LocationSensor1LocationChanged(Sender: TObject;
@@ -210,14 +262,7 @@ begin
   FCari.Enlem  := NewLocation.Latitude.ToString(ffGeneral, 8, 5, FormatEN);
   FCari.Boylam := NewLocation.Longitude.ToString(ffGeneral, 8, 5, FormatEN);
 
-  if FLastMaker=nil then
-   begin
-
-    FLastMaker.Coordinate.Latitude:=NewLocation.Latitude;
-    FLastMaker.Coordinate.Longitude:=NewLocation.Longitude;
-    AddOrSetCari()
-   end;
-
+  AddOrSetCari(True);
 
 
   //Maps1.ShowPopup(FLastMaker.Coordinate.ToRec,'');
@@ -226,33 +271,16 @@ begin
 
 end;
 
-procedure TFrame_Map.Maps1GetCenterCoordinate(Sender: TObject; ACoordinate: TTMSFNCMapsCoordinateRec);
-
-begin
-  if DoAddMarker then
-  begin
-    if FLastMaker=nil then
-    FLastMaker:=Maps1.AddMarker(ACoordinate, 'Mikotek ELEKTRONÝK', LogoKirmizi); //http://maps.google.com/mapfiles/kml/paddle/M.png
-    FLastMaker.Draggable:=True;
-    DoAddMarker := False;
-  end;
 
   //lbl1.Text:=Format('%.6f,%.6f', [ACoordinate.Latitude, ACoordinate.Longitude], TFormatSettings.Create('en-US'));
-
-end;
-
-procedure TFrame_Map.Maps1MapMoveEnd(Sender: TObject;
-  AEventData: TTMSFNCMapsEventData);
-begin
   //SetCenterCoordinate(AEventData.Coordinate.ToRec);
   //lbl1.Text:=Format('%.6f,%.6f', [AEventData.Coordinate.Latitude, AEventData.Coordinate.Longitude], TFormatSettings.Create('en-US'));
-end;
 
-procedure TFrame_Map.Maps1MarkerClick(Sender: TObject;
-  AEventData: TTMSFNCMapsEventData);
-var
-  s: string;
+
+procedure TFrame_Map.Maps1MarkerClick(Sender: TObject; AEventData: TTMSFNCMapsEventData);
+var  s: string;
 begin
+ (*
   s := '';
   case AEventData.Marker.DataInteger of
     1: s := '<b>Chongqing</b><br><img width="200" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/SkylineOfChongqing.jpg/2880px-SkylineOfChongqing.jpg"/>';
@@ -261,30 +289,69 @@ begin
     4: s := '<b>Central Park</b>';
   end;
   s := '<b>Highway 10</b><br><iframe src="https://giphy.com/embed/10pk8d1EoR7HrO" width="200" height="200" frameBorder="0" class="giphy-embed"></iframe>';
-  if s <> '' then
-  begin
-    s := s + '<br>Longitude: <i>'+ AEventData.Marker.Longitude.ToString +'</i><br>Latitude: <i>'+ AEventData.Marker.Latitude.ToString +'</i>';
-
+  s := s + '<br>Longitude: <i>'+ AEventData.Marker.Longitude.ToString +'</i><br>Latitude: <i>'+ AEventData.Marker.Latitude.ToString +'</i>';
+  *)
+    if FCari=nil then Exit;
+    
+    FSelectMap:=AEventData.Marker as TTMSFNCGoogleMapsMarker;
+    s:='<b>'+FCari.Unvani+'</b><br>'
+    +FCari.Adi+' '+FCari.SoyAdi+'<br>'
+    +'<b>Alacak:</b><i>'+Cur2Str(FCari.Alacak)+'</i><br>'
+    +'<b>Borç  :</b><i>'+Cur2Str(FCari.Borc)+'</i><br>'
+    +'<b>Bakiye:</b><i>'+Cur2Str(FCari.Bakiye)+'</i><br>'
+    //+'<b>YolTarifi</b>'
+    ;
+    
     Maps1.ShowPopup(AEventData.Marker.Coordinate.ToRec, s);
+
+end;
+
+procedure TFrame_Map.Maps1MarkerDragEnd(Sender: TObject;
+  AEventData: TTMSFNCMapsEventData);
+begin
+ AEventData.Marker.Coordinate:=AEventData.Coordinate;
+end;
+
+procedure TFrame_Map.SkinFMXButton1Click(Sender: TObject);
+begin
+  if FSelectMap=nil then exit;
+  OpenNavigation(FSelectMap.Coordinate.Latitude.ToString(ffGeneral, 8, 5, FormatEN)+','+FSelectMap.Coordinate.Longitude.ToString(ffGeneral, 8, 5, FormatEN));
+end;
+
+procedure TFrame_Map.tmr1Timer(Sender: TObject);
+begin
+ tmr1.Enabled:=false;
+ if FLastMaker<>nil then FLastMaker.SetZoom;
+ 
+end;
+
+procedure TFrame_Map.btn_kayetClick(Sender: TObject);
+begin
+ if (FCari<>nil) and (FLastMaker<>nil) then
+  begin
+   FCari.Enlem  := FLastMaker.Coordinate.Latitude.ToString(ffGeneral, 8, 5, FormatEN);
+   FCari.Boylam := FLastMaker.Coordinate.Longitude.ToString(ffGeneral, 8, 5, FormatEN);
+   if FCari.SaveDBKonum then
+    HintFrame.ShowHintFrame(Self,'Konum Kayýt Edildi.');
   end;
 end;
 
 procedure TFrame_Map.btn_konumClick(Sender: TObject);
 begin
-{$IFDEF ANDROID}
-    
-  LocationSensor1.Active := True;
-  btn_konum.Enabled:=false;
-{$ELSE}
-  LocationSensor1.Active := False
-{$ENDIF}
+ {$IFDEF ANDROID}
+   LocationSensor1.Active := True;
+   btn_konum.Enabled:=false;
+    {$ELSE}
+   LocationSensor1.Active := False
+ {$ENDIF}
 end;
 
 { TTMSFNCGoogleMapsMarkerHelp }
 
 
-procedure TTMSFNCGoogleMapsMarkerHelp.Edit(const ADef: Boolean);
+function TTMSFNCGoogleMapsMarkerHelp.Edit(const ADef: Boolean):TTMSFNCGoogleMapsMarker;
 begin
+  Result:=Self;
   if ADef then
    begin
     Self.Draggable:=True;
@@ -292,11 +359,21 @@ begin
    end
    else
    begin
+    Self.IconURL:='http://maps.google.com/mapfiles/kml/pushpin/red-pushpin.png';
     Self.Draggable:=False;
-    Self.IconURL:=LogoMavi;
    end;
 
-  //DEFAULT_ICONURL
+  //DEFAULT_ICONURL;
+  //https://mapmarker.io/documentation
+  //http://kml4earth.appspot.com/icons.html
+  //http://maps.google.com/mapfiles/kml/paddle/M.png
+end;
+
+function TTMSFNCGoogleMapsMarkerHelp.SetZoom: TTMSFNCGoogleMapsMarker;
+begin
+ Result:=Self;
+ Frame_Map.Maps1.SetCenterCoordinate(Coordinate.ToRec);
+ Frame_Map.Maps1.SetZoomLevel(17);
 end;
 
 end.
