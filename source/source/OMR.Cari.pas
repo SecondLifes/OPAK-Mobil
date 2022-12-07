@@ -110,6 +110,8 @@ constructor TCari.Create(const ACariID: Cardinal);
 begin
   FCariID:=0;
   FAciklama:=TStringList.Create;
+
+
   if FCariID>0 then LoadDB(ACariID);
 
 
@@ -178,6 +180,8 @@ begin
     FBorc:=dt._D['BORC'];
     FAlacak:=dt._D['ALACAK'];
     FAciklama.Text:=dt._S['ACIKLAMA'];
+
+    //TDialogService.ShowMessage(FAciklama.Text);
   end
   );
 
@@ -185,7 +189,8 @@ end;
 
 function TCari.SaveDB:Boolean;
 var
-  s,AKonum:string;
+  s,ANot,AKonum:string;
+  i:Integer;
 begin
   Result:=False;
   if FCariID<1 then
@@ -202,6 +207,23 @@ begin
   if (not FEnlem.IsEmpty) and (not FBoylam.IsEmpty) then
   AKonum:=',ACIKLAMA10='+QuotedStr(FEnlem+','+FBoylam) else AKonum:='';
 
+   for i := 0 to FAciklama.Count -1 do
+     begin
+      //s:=Trim(StringReplace(FAciklama.Strings[i],sLineBreak,' ',[rfReplaceAll]));
+      s:=FAciklama.Strings[i];
+      if not s.IsEmpty then
+       begin
+        if ANot.IsEmpty then
+         ANot:=QuotedStr(s) else
+         ANot:=ANot+'+CHAR(13)+CHAR(10)+'+QuotedStr(s)
+       end;
+
+
+      //ACIKLAMA='21.11.2022|1|Kerim'+ CHAR(13)+CHAR(10) + '
+     end;
+
+
+
   s:='UPDATE dbo.TBLCARISB SET '+
      ' ADI='+QuotedStr(FUnvani)+
      ',CARIADI='+QuotedStr(FAdi)+
@@ -216,12 +238,12 @@ begin
      ',EMAIL='+QuotedStr(FEMail)+
      ',VERGI_DAIRESI='+QuotedStr(VergiDairesi)+
      ',VERGINO='+QuotedStr(FVergiNo)+
-     ',ACIKLAMA='+QuotedStr(FAciklama.Text)+
+     ',ACIKLAMA='+ANot+
        AKonum+
      ' WHERE ID = '+IntToStr(FCariID);
 
  try
-     //TDialogService.ShowMessage(AKonum);
+     //TDialogService.ShowMessage(s);
      DB.cn_db.ExecSQL(s);
      Result:=True;
  except

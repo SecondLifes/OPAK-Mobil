@@ -14,7 +14,8 @@ uses
   OMR.Cari in 'source\OMR.Cari.pas',
   Frame.iletisim in 'source\Frame.iletisim.pas' {F_iletisim: TFrame},
   OpenViewUrl in 'source\OpenViewUrl.pas',
-  Frame.Map in 'source\Frame.Map.pas' {Frame_Map: TFrame};
+  Frame.Map in 'source\Frame.Map.pas' {Frame_Map: TFrame},
+  Frame.Note in 'source\Frame.Note.pas' {F_Note: TFrame};
 
 {$R *.res}
 

@@ -155,7 +155,7 @@ type
  procedure FormCari(const ACariID:Integer);
 
 implementation
-uses Form.Satis,Form.Cariler,HintFrame,WaitingFrame,MessageBoxFrame,FMX.TMSFNCGoogleMaps,
+uses Form.Satis,Form.Cariler,HintFrame,WaitingFrame,MessageBoxFrame,FMX.TMSFNCGoogleMaps,Frame.Note,
 Frame.iletisim,Genel,Help.uni,Help.DB,System.Threading,FMX.DialogService,Frame.Map,OpenViewUrl;
 
 {$R *.fmx}
@@ -410,14 +410,19 @@ procedure TFForm_Cari.MesajSave;
  var
   i:Integer;
   itm:TRealSkinItem;
+  s,TempStr:string;
 begin
   FCari.Aciklama.BeginUpdate;
   FCari.Aciklama.Clear;
   for i := 0 to list_mesajlar.Prop.Items.Count -1 do
     begin
      itm:=list_mesajlar.Prop.Items[i];
-     FCari.Aciklama.Add(itm.Caption.Trim+'|'+itm.Detail.Trim+'|'+itm.Detail1.Trim{$IFDEF POSIX} {$ENDIF});
+     s:=itm.Detail1.Trim.Replace(sLineBreak,' ',[rfReplaceAll]);
+     if not s.IsEmpty then     
+     //TempStr:=TempStr+sLineBreak+itm.Caption.Trim+'|'+itm.Detail.Trim+'|'+s;
+     FCari.Aciklama.Add(itm.Caption.Trim+'|'+itm.Detail.Trim+'|'+s{$IFDEF POSIX}{$ENDIF});
     end;
+
   FCari.Aciklama.EndUpdate;
 end;
 
@@ -518,6 +523,14 @@ var
  i:Integer;
  TempStr:string;
 begin
+ list_mesajlar.Prop.StopItemPanDrag;
+  i:=TFmxObject(Sender).Tag;
+   if i>1 then
+ NoteEdit(list_mesajlar.Prop.Items,list_mesajlar.Prop.InteractiveItem)
+ else
+ NoteEdit(list_mesajlar.Prop.Items);
+
+ Exit;
    i:=TFmxObject(Sender).Tag;
    if i>1 then
      begin

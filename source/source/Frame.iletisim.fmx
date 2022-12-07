@@ -562,8 +562,8 @@ inherited F_iletisim: TF_iletisim
     DrawHelpIconParam.DrawRectSetting.SizeType = dpstPixel
     DrawHelpIconParam.DrawRectSetting.PositionHorzType = dpphtLeft
     DrawHelpIconParam.DrawRectSetting.PositionVertType = dppvtCenter
-    Left = 192
-    Top = 504
+    Left = 160
+    Top = 408
   end
   object SkinFMXPanel1_Material: TSkinPanelDefaultMaterial
     BackColor.BorderEadges = [beBottom]

@@ -289,6 +289,11 @@
             <FormType>fmx</FormType>
             <DesignClass>TFrame</DesignClass>
         </DCCReference>
+        <DCCReference Include="source\Frame.Note.pas">
+            <Form>F_Note</Form>
+            <FormType>fmx</FormType>
+            <DesignClass>TFrame</DesignClass>
+        </DCCReference>
         <JavaReference Include="C:\1\TMS\FNC\Maps\Android Support\WebChromeClient\FNCWebChromeClient.jar">
             <Disabled/>
         </JavaReference>
